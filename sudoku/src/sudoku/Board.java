@@ -28,8 +28,11 @@ public class Board
                     {
                     if (l_block[i] == l_block[j])
                         {
-                        l_block[i] = generate_random_integer(l_random);
-                        j = 0;
+                        while (l_block[i] == l_block[j])
+                            {
+                            l_block[i] = generate_random_integer(l_random);
+                            j = 0;
+                            }
                         }
                     }
                 log("Generated: " + l_block[i]);
