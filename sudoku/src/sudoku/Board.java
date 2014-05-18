@@ -30,6 +30,11 @@ public class Board extends ArrayList <Block>
                         {
                         l_block.cell.set(i, generate_random_integer(l_random));
                         j = 0;
+                        while (l_block.cell.get(i) == l_block.cell.get(j))
+                            {
+                            l_block.cell.set(i, generate_random_integer(l_random));
+                            j = 0;
+                            }
                         }
                     }
                 }
