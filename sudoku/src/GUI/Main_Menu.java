@@ -1,4 +1,4 @@
-package sudoku;
+package GUI;
 
 import java.util.Scanner;
 
