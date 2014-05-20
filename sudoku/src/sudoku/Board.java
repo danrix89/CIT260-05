@@ -1,6 +1,7 @@
 package sudoku;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /*
@@ -19,6 +20,7 @@ public class Board extends ArrayList <Block>
         {          
             Block l_block = new Block();
             Random l_random = new Random();
+            int[] l_numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
             l_block.cell.set(0, generate_random_integer(l_random));
             for (int i = 1; i <= 8; i++)
