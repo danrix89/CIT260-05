@@ -28,13 +28,13 @@ public class Help_Menu
         }
 
     public void get_player_input()
-            // Display the help menu and get the end player input selection
+            // Display the help menu and get the player's input
         {                    
             String l_command;
             Scanner l_input = new Scanner(System.in);        
             do 
                 {
-                this.display();
+                display();
                 l_command = l_input.nextLine();
                 l_command = l_command.trim().toUpperCase();
                 switch (l_command) 
@@ -62,8 +62,8 @@ public class Help_Menu
             return;
         }    
     
-    private Help_Menu_Commands internal_help_menu = new Help_Menu_Commands();
-            // Internal instance of Help_Menu_Commands.
+    private Help_Menu_Control internal_help_menu = new Help_Menu_Control();
+            // Internal instance of Help_Menu_Control
     
     private final static String[][] menu_items = {
                                                     {"R", "Rules of Sudoku"},
