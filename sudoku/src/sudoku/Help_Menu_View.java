@@ -6,21 +6,22 @@ import java.util.Scanner;
 Class Description: Representation of the Help Menu interface.
 */
 
-public class Help_Menu 
+public class Help_Menu_View 
 {
 
-    public Help_Menu() 
+    public Help_Menu_View() 
             // default constructor
-        {   
+        {
+            get_player_input();
         } 
     
     public final void display()
             // Displays Current.
-        {
+                {
             print("\n\t===============================================================");
             print("\tEnter the letter associated with one of the following commands:");
 
-            for (int i = 0; i < Help_Menu.menu_items.length; i++) 
+            for (int i = 0; i < Help_Menu_View.menu_items.length; i++) 
                 {
                 print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
                 }

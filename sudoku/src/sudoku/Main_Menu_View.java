@@ -6,10 +6,10 @@ import java.util.Scanner;
 Class Description: Representation of the sudoku Main Menu.
 */
 
-public class Main_Menu
+public class Main_Menu_View
 {    
 
-    public Main_Menu() 
+    public Main_Menu_View() 
             // default constructor
         {
             get_player_input();
@@ -17,11 +17,11 @@ public class Main_Menu
     
     public final void display()
             // Displays Current.
-        {
+                {
             print("\n\t===============================================================");
             print("\tEnter the letter associated with one of the following commands:");
 
-            for (int i = 0; i < Main_Menu.menu_items.length; i++) 
+            for (int i = 0; i < Main_Menu_View.menu_items.length; i++) 
                 {
                 print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
                 }
