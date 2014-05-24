@@ -1,17 +1,22 @@
-package sudoku;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /*
-Class Description: Representation of the sudoku difficulty menu.
-*/
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-public final class Difficulty_Menu_View 
+package sudoku;
+import java.util.Scanner;
+/**
+ * You can type D now and low level of sudoku A. 
+ * @author Janghun Yu
+ */
+public final class Difficulty_Menu_View
 {
             public Difficulty_Menu_View() 
             // default constructor
         {   
-                get_player_input();
+              get_player_input();  
         } 
     
     public final void display()
@@ -39,17 +44,15 @@ public final class Difficulty_Menu_View
                 l_command = l_command.trim().toUpperCase();
                 switch (l_command) 
                     {
-                    case "E":
-                        //internal_game.set_difficulty(l_command)
+                    case "A":
+                      Board generateNumbers = new Board();
+                      generateNumbers.populate_block();// I called board class but board class is not work. Maybe my code is worng. Idon know 
                         break;
-                    case "M":
-                        //internal_game.set_difficulty(l_command)
-                        break;
-                    case "H":
-                        //internal_game.set_difficulty(l_command)
+                    case "B":
+                      //  generateNumbers.populate_block(); <<< I think we need make another Board
                         break;
                     case "C":
-                        new Custom_Game_Menu_View();
+                      //  generateNumbers.populate_block(); << for this too
                         break;
                     case "X": 
                         break;
@@ -62,14 +65,13 @@ public final class Difficulty_Menu_View
             return;
         }    
     
-    private Game internal_game = new Game();
-            // Internal instance of Game.
+    private Difficulty_Menu_Control internal_main_menu = new Difficulty_Menu_Control();
+            // Internal instance of Help_Menu_Control
     
     private final static String[][] menu_items = {
-                                                    {"E", "Easy - 25 cells are prefilled at the beginning of the game with 3 hints"},
-                                                    {"M", "Medium - 20 cells are prefilled at the beginning of the game with 2 hints"}, 
-                                                    {"H", "Hard - 10 cells are prefilled at the beginning of the game with 1 hints"},
-                                                    {"C", "Custom - Set the number of prefilled cells and hints."},
+                                                    {"A", "25 cells are prefilled with 3 hints"},
+                                                    {"B", "20 cells are prefilled with 2 hints"}, 
+                                                    {"C", "10 cells are prefilled with 1 hints"},
                                                     {"X", "Exit Menu"}        
                                                  };
     
@@ -79,3 +81,5 @@ public final class Difficulty_Menu_View
         }
 
 }
+
+
