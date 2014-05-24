@@ -48,6 +48,9 @@ public final class Difficulty_Menu_View
                     case "H":
                         //internal_game.set_difficulty(l_command)
                         break;
+                    case "C":
+                        new Custom_Game_Menu_View();
+                        break;
                     case "X": 
                         break;
                     default: 
@@ -66,6 +69,7 @@ public final class Difficulty_Menu_View
                                                     {"E", "Easy - 25 cells are prefilled at the beginning of the game with 3 hints"},
                                                     {"M", "Medium - 20 cells are prefilled at the beginning of the game with 2 hints"}, 
                                                     {"H", "Hard - 10 cells are prefilled at the beginning of the game with 1 hints"},
+                                                    {"C", "Custom - Set the number of prefilled cells and hints."},
                                                     {"X", "Exit Menu"}        
                                                  };
     

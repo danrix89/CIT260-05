@@ -10,6 +10,7 @@ package sudoku;
  *
  * @author Larry
  */
-public class Difficulty_Menu_Control {
+public class Difficulty_Menu_Control 
+{
     
 }
