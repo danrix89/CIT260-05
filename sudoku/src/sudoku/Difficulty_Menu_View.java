@@ -1,16 +1,10 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package sudoku;
 import java.util.Scanner;
-/**
- * You can type D now and low level of sudoku A. 
- * @author Janghun Yu
- */
+
+/*
+ Class Description: Representation of the sudoku difficulty menu.
+*/
+
 public final class Difficulty_Menu_View
 {
             public Difficulty_Menu_View() 
@@ -45,14 +39,13 @@ public final class Difficulty_Menu_View
                 switch (l_command) 
                     {
                     case "A":
-                      Board generateNumbers = new Board();
-                      generateNumbers.populate_block();// I called board class but board class is not work. Maybe my code is worng. Idon know 
+                        // internal_game.set_difficulty
                         break;
                     case "B":
-                      //  generateNumbers.populate_block(); <<< I think we need make another Board
+                        // internal_game.set_difficulty
                         break;
                     case "C":
-                      //  generateNumbers.populate_block(); << for this too
+                        // internal_game.set_difficulty
                         break;
                     case "X": 
                         break;
@@ -65,8 +58,8 @@ public final class Difficulty_Menu_View
             return;
         }    
     
-    private Difficulty_Menu_Control internal_main_menu = new Difficulty_Menu_Control();
-            // Internal instance of Help_Menu_Control
+    private Game internal_game = new Game();
+            // Internal instance of Game
     
     private final static String[][] menu_items = {
                                                     {"A", "25 cells are prefilled with 3 hints"},

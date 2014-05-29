@@ -14,7 +14,7 @@ public class Player_Input_View {
 
         } 
     
-    public String get_player_input(Player player)
+    public String get_player_input(Player a_player)
             //
         {
 
@@ -23,7 +23,7 @@ public class Player_Input_View {
             boolean l_boolean = true;
             while (l_boolean) 
                 {
-                print("\n\t" + player.name + ", enter a single character that will be used to mark your squares in the game.");          
+                print("\n\t" + a_player.name + ", enter a single character that will be used to mark your squares in the game.");          
                 l_number = l_input.nextLine();
                 if (l_number == null  || l_number.length() < 1) 
                     {

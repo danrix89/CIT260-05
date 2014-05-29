@@ -10,7 +10,8 @@ public class Sudoku
     public static void main(String[] args)
             // Initializes application.
         {
-            new Main_Menu_View();
+//            new Main_Menu_View();
+            new Game_View();
         }   
     
 }
