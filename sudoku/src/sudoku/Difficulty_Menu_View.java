@@ -58,9 +58,6 @@ public final class Difficulty_Menu_View
             return;
         }    
     
-    private Game internal_game = new Game();
-            // Internal instance of Game
-    
     private final static String[][] menu_items = {
                                                     {"A", "25 cells are prefilled with 3 hints"},
                                                     {"B", "20 cells are prefilled with 2 hints"}, 

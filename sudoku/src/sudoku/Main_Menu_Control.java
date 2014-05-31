@@ -12,10 +12,10 @@ public class Main_Menu_Control
         {
         }
     
-    public Game new_game()
+    public Game_View new_game()
             // Starts a new game of Sudoku.
         {
-            Game l_game = new Game();
+            Game_View l_game = new Game_View();
             
             return l_game;
         }

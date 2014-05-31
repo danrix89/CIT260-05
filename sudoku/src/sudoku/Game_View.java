@@ -17,7 +17,8 @@ public class Game_View
     public Game_View()
             //
         {
-            new Game();
+            String l_name = get_player_name();
+            Game l_game = new Game(l_name);            
         }
 
     public String get_player_name()
@@ -29,7 +30,7 @@ public class Game_View
             
             while (l_boolean) 
                 {
-                print("\n\tPlease enter your name or \"Q\" to return.");          
+                print("\n\tPlease enter your name or \"R\" to return. \n");          
                 l_name = l_input.nextLine();
                 
                 if (l_name == null  || l_name.length() < 1) 
@@ -37,23 +38,14 @@ public class Game_View
                     continue;
                     }
                 
-                else if (l_name.equals("Q"))
+                else if (l_name.equals("R"))
                     {
                     return null;
                     }
-                
-                else
-                    {
-                    //internal_game.set_player_name(l_name);
-                    // is_name_set = true;
-                    }
                 l_boolean = false;
                 }
-            return "Your player name is now set to: " + l_name;
+            return l_name;
         }
-        
-    private Game internal_game = new Game();
-            // Internal instance of Main_Menu_Control
 
     private void print(String a_message)
         {

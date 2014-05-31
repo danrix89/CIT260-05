@@ -7,39 +7,37 @@ import java.util.Random;
 Class Description: Representation of a 3x3 block of cells on a sudoku game board.
 */
 
-public class Block extends ArrayList <Cell>
+public class Block extends ArrayList <Integer>
 {
+    
     public Block populate()
                 /* Populates Current (which is a 9 element array representing a 
                     3x3 Cartesian block of cells) with generated unique random integers
-                    in the range 1-9. Temporarily prints to the console to prove
-                    it works.
+                    in the range 1-9.
                 */
         {          
-            Block l_block = new Block();
             Random l_random = new Random();
 
-            l_block.cell.set(0, generate_random_integer(l_random));
+            this.add(0, generate_random_integer(l_random));
             for (int i = 1; i <= 8; i++)
                 {
-                l_block.cell.set(i, generate_random_integer(l_random));
+                this.add(i, generate_random_integer(l_random));
                 for (int j = 0; j < i; j++)
                     {
-                    if (l_block.cell.get(i) == l_block.cell.get(j))
+                    if (this.get(i).intValue() == this.get(j).intValue())
                         {
-                        l_block.cell.set(i, generate_random_integer(l_random));
-                        j = 0;
-                        while (l_block.cell.get(i) == l_block.cell.get(j))
+                        this.set(i, generate_random_integer(l_random));
+                        while (this.get(i).intValue() == this.get(j).intValue())
                             {
-                            l_block.cell.set(i, generate_random_integer(l_random));
-                            j = 0;
+                            this.set(i, generate_random_integer(l_random));
                             }
+                        j = -1;
                         }
                     }
                 }
-            return l_block;
+            return this;
         }
-  
+    
     private static Integer generate_random_integer(Random a_random)
         {
           // calculate the range, casting int --> long
@@ -52,9 +50,6 @@ public class Block extends ArrayList <Cell>
           // return generated random number in a range of l_start to l_end
           return l_random_number;
         }
-
-    
-    Cell cell;
     
     private void capacity()
             // Capactiy constant of Current.

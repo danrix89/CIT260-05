@@ -6,24 +6,22 @@ Class Description: Representation of a sudoku game.
 
 public class Game
 {
-    public Game()
+    public Game(String a_name)
             // Default constructor of Current.
         {
+            player = new Player();
+            player.set_name(a_name);
+            print("\n\tYour player name has been set to: " + a_name);
+            
+            board = new Board();
+            new Player_Input_View(this);
         }
+    
+    
     
     Player player;
     Board board;
     Timer timer;
-    
-    public void set_player_name(String a_name)
-            //
-    {
-        if (!(a_name == null))
-        {
-           player.set_name(a_name);
-        }
-    }
-    
 
     private void print(String a_message)
         {

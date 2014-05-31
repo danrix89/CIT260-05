@@ -7,43 +7,35 @@ Class Description: View that gets and handles player input during the game.
 
 public class Player_Input_View {
 
-    public Player_Input_View(Game game)
+    public Player_Input_View(Game a_game)
             // Default constructor of Current.
         {
-            this.game = game;
-
+            this.game = a_game;
+            get_player_input(game.player);
         } 
     
     public String get_player_input(Player a_player)
             //
         {
 
-            String l_number = null;
-            Scanner l_input = new Scanner(System.in);       
+            String l_input = null;      
             boolean l_boolean = true;
             while (l_boolean) 
                 {
-                print("\n\t" + a_player.name + ", enter a single character that will be used to mark your squares in the game.");          
-                l_number = l_input.nextLine();
-                if (l_number == null  || l_number.length() < 1) 
+                print("\n\t" + a_player.name + ", please enter something or \"R\" to return.");          
+                l_input = new Scanner(System.in).nextLine();
+                if (l_input == null  || l_input.length() < 1) 
                     {
-                    continue;
+                    continue; // Resets the loop.
                     }
-                l_number = l_number.substring(0, 1).toUpperCase();
-                if (l_number.equals("Q")) 
+                l_input = l_input.substring(0, 1).toUpperCase();
+                if (l_input.equals("R")) 
                     {
                     return null;
                     }
-
-                // Check to see if the marker is already in use
-//                if (this.game.player.marker.equals(l_number)) 
-//                    {
-//                    new Error_Message().display("This marker is currently in use. Select a different character");
-//                    continue; 
-//                    }
-                l_boolean = false; // signal that a valid marker was entered
+                l_boolean = false;
                 }
-            return l_number;
+            return l_input;
         }
     
     private Game game;
