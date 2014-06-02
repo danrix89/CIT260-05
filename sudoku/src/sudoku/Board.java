@@ -11,13 +11,20 @@ Class Description: Representation of a sudoku game board with 9 columns, 9 rows,
 public class Board extends ArrayList <Block>
 {
 
+    
+// CONSTRUCTORS:   
     public Board()
-            //
+            // Default constructor of Current.
         {
             this.populate();
+            set_primitive_version(this);
+            // correct_duplications(this);
+            // create_playable_version(this);
             this.display();
         }
 
+    
+// IMPLEMENTATION:
     public Board populate()
                 /* Populates Current (which is a 9 element array representing a 
                     3x3 Cartesian board of blocks) with generated unique random 
@@ -30,13 +37,26 @@ public class Board extends ArrayList <Block>
                 this.add(i, block.populate());
                 }
             return this;
-        }    
+        }
     
-    public void display()
-            //
+    public int[][] cast_to_primitive_version(Board a_board)
+            // Casts Current into the primitive version int[][].
         {
-            Block l_block = new Block();
-            
+            int [][] l_primitive_board = new int[block.size()][this.size()];
+            for (int i=0; i<l_primitive_board.length; i++)
+                {
+                    int[] l_primitive_block = new int[block.size()];
+                    for (int j=0; j<l_primitive_block.length; j++)
+                        {
+                            l_primitive_block[j] = a_board.block.get(j).intValue();
+                        }
+                }
+            return l_primitive_board; 
+        }
+
+    public void display()
+            // Displays the 'playable_version' of Current.
+        {            
             for(int i=0; i<=8; i=i+3)
                 {
                     print("\nBlock # " + (i+1) + "\t\t     Block # " + (i+2) + "\t\t     Block # " + (i+3) + "\n\t\t");
@@ -66,14 +86,25 @@ public class Board extends ArrayList <Block>
                 }
         }
     
-    Block block;   
     
-    private void capacity()
-            // Capacity constant of Current.
+
+// ATTRIBUTES:   
+    int[][] primitive_version;
+    Block block;
+    
+
+    
+// SETTINGS:    
+    private void set_primitive_version(Board a_board)
+            // Sels 'primitive_version' with the post cast version of 'a_board'.
         {
-            this.ensureCapacity(9);
-        }
+            int[][] l_primitive_version = cast_to_primitive_version(a_board);
+            primitive_version = l_primitive_version;
+        }   
+
     
+    
+// CONSTANTS:    
     private static void print(String a_message)
         {
             System.out.println(a_message);
