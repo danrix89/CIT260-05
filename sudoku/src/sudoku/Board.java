@@ -24,7 +24,7 @@ public class Board extends ArrayList <Block>
         }
 
     
-// IMPLEMENTATION:
+// BASIC METHODS:
     public Board populate()
                 /* Populates Current (which is a 9 element array representing a 
                     3x3 Cartesian board of blocks) with generated unique random 
@@ -52,6 +52,33 @@ public class Board extends ArrayList <Block>
                         }
                 }
             return l_primitive_board; 
+        }
+    
+    public int[][] sort_solution(int[][] a_board)
+            // Sorts 'a_board' eliminating all duplicates from rows and columns.
+        {
+            int l_swap;
+            int l_cell;
+            boolean l_done = false;
+            for(int i=1; i<a_board.length; i++)
+                {
+                    for (int j=0; j<a_board[i].length; j++)
+                        {
+                            l_cell = a_board[i][j];
+                            while(!l_done) // Do this while you're not done.
+                                {
+                                    l_done = true; // assumes that your done
+//                                    if (l_cell == a_board[i][j-1]) 
+//                                        {
+//                                            l_swap = a_board[i][j];
+//                                            a_board[i] = a_board[i+1];
+//                                            a_board[i+1][j] = l_swap;
+//                                            l_done = false;
+//                                        }
+                                }
+                        }
+                }
+            return a_board;
         }
 
     public void display()
