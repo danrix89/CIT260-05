@@ -55,31 +55,65 @@ public class Board extends ArrayList <Block>
         }
     
     public int[][] sort_solution(int[][] a_board)
-            // Sorts 'a_board' eliminating all duplicates from rows and columns.
+            /* Sorts 'a_board' eliminating all duplicates from rows and columns.
+                While iterating over an integer, the row is first checked for
+                any duplicates to its left, and then the column is checked for
+                any duplicates above it.
+            */
         {
             int l_swap;
+            int [] l_checkable_row;
+            int [] l_checkable_column;
             int l_cell;
-            boolean l_done = false;
+            int l_candidate;
+            boolean l_contains_duplicates = true;
             for(int i=1; i<a_board.length; i++)
                 {
                     for (int j=0; j<a_board[i].length; j++)
                         {
                             l_cell = a_board[i][j];
-                            while(!l_done) // Do this while you're not done.
+                            while(l_contains_duplicates) // executes while not done.
                                 {
-                                    l_done = true; // assumes that your done
-//                                    if (l_cell == a_board[i][j-1]) 
+//                                    if (l_checker_row contains l_cell || l_checker_column contains l_cell)
 //                                        {
-//                                            l_swap = a_board[i][j];
-//                                            a_board[i] = a_board[i+1];
-//                                            a_board[i+1][j] = l_swap;
-//                                            l_done = false;
+//                                            l_swap = l_cell;
+//                                            l_cell = l_candidate;
+//                                            l_candidate = l_swap;
+//                                            l_contains_duplicates = false;
 //                                        }
                                 }
                         }
                 }
             return a_board;
         }
+    
+    private int[] checkable_row(int y)
+            // Row for checking duplicates to the left of a cell at 'y'.
+    {
+        int[] l_array = new int[y-1];
+        for(int i=0; i<y; i++)
+            {
+                for(int j=0; j<y; j++)
+                    {
+                        // Use for building l_row_comparisson in 'sort_soution'
+                    }
+            }
+       return l_array; 
+    }
+    
+    private int[] checkable_column(int x)
+            // Column for checking duplicates to the left of a cell at 'x'.
+    {
+        int[] l_array = new int[x-1];
+        for(int i=0; i<x; i++)
+            {
+                for(int j=0; j<x; j++)
+                    {
+                        // Use for building l_column_comparisson in 'sort_soution'
+                    }
+            }
+       return l_array; 
+    }
 
     public void display()
             // Displays the 'playable_version' of Current.
