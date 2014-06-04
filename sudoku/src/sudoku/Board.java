@@ -115,6 +115,36 @@ public class Board extends ArrayList <Block>
        return l_array; 
     }
 
+    public int[] cast_to_full_primitive_board(int[][] a_primative_board)
+            // Casts Current into the primitive version int[][].
+        {
+            int [] l_full_primitive_board = new int[81];
+            int [][] l_primitive_board = new int[9][9];
+            int[] l_primitive_block = new int[9];
+            int l_block_index = 0;
+            int l_block_counter =1;
+            int l_cell_index = 0;
+            int l_cell_counter = 1;
+            
+            for (int i=0; i<=l_full_primitive_board.length; i++)
+                {
+                    while (l_block_counter<4)
+                        {
+                            while (l_cell_counter<4)
+                                {
+                                    l_full_primitive_board[i] = l_primitive_block[l_cell_index];
+                                    l_cell_counter++;
+                                    l_cell_index++;
+                                }
+                            l_cell_counter = 0;
+                            l_block_counter++;
+                        }
+                    l_block_index++;
+                    l_block_counter = 0;
+                }
+            return l_full_primitive_board; 
+        }    
+    
     public void display()
             // Displays the 'playable_version' of Current.
         {            
@@ -151,6 +181,7 @@ public class Board extends ArrayList <Block>
 
 // ATTRIBUTES:   
     int[][] primitive_version;
+    int[] full_primitive_board;
     Block block;
     
 
