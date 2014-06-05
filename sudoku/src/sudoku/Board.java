@@ -92,7 +92,7 @@ public class Board extends ArrayList <Block>
                             l_cell = a_board[i][j];
                             while(l_contains_duplicates) // executes while not done.
                                 {
-//                                    if (l_checker_row contains l_cell || l_checker_column contains l_cell)
+//                                    if (l_checkable_row contains l_cell || l_checker_column contains l_cell)
 //                                        {
 //                                            l_swap = l_cell;
 //                                            l_cell = l_candidate;
@@ -161,17 +161,13 @@ public class Board extends ArrayList <Block>
                 { 
                     for (int j=0; j<=2; j++)
                         {
-                            if (i==0)
+                            switch (i)
                                 {
-                                    l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j]);
-                                }
-                            if (i==1)
-                                {
-                                    l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+3]);
-                                }
-                            if (i==2)
-                                {
-                                    l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+6]);
+                                    case 0: l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j]);
+
+                                    case 1: l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+3]);
+
+                                    case 2: l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+6]);
                                 }                            
                         }
                 }
@@ -184,41 +180,25 @@ public class Board extends ArrayList <Block>
             int[][] l_block = new int[3][3];
             for (int i=0; i<=8; i++)
                 {
-                    if(i==0)
+                    switch(i)
                         {
-                            l_block[0][0] = a_block[i];
-                        }
-                    if(i==1)
-                        {
-                            l_block[0][1] = a_block[i];
-                        }
-                    if(i==2)
-                        {
-                            l_block[0][2] = a_block[i];
-                        }
-                    if(i==3)
-                        {
-                            l_block[1][0] = a_block[i];
-                        }
-                    if(i==4)
-                        {
-                            l_block[1][1] = a_block[i];
-                        }
-                    if(i==5)
-                        {
-                            l_block[1][2] = a_block[i];
-                        }
-                    if(i==6)
-                        {
-                            l_block[2][0] = a_block[i];
-                        }
-                    if(i==7)
-                        {
-                            l_block[2][1] = a_block[i];
-                        }
-                    if(i==8)
-                        {
-                            l_block[2][2] = a_block[i];
+                            case 0: l_block[0][0] = a_block[i];
+                        
+                            case 1: l_block[0][1] = a_block[i];
+                        
+                            case 2: l_block[0][2] = a_block[i];
+                        
+                            case 3: l_block[1][0] = a_block[i];
+                        
+                            case 4: l_block[1][1] = a_block[i];
+                        
+                            case 5: l_block[1][2] = a_block[i];
+                        
+                            case 6: l_block[2][0] = a_block[i];
+                        
+                            case 7: l_block[2][1] = a_block[i];
+                       
+                            case 8: l_block[2][2] = a_block[i];
                         }
                 }
             return l_block;
