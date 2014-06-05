@@ -1,7 +1,6 @@
 package sudoku;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /*
 Class Description: Representation of a sudoku game board with 9 columns, 9 rows,
@@ -18,6 +17,7 @@ public class Board extends ArrayList <Block>
         {
             this.populate();
             set_primitive_version(this);
+            set_four_dimensional_primitive_board(primitive_version);
             // correct_duplications(this);
             // create_playable_version(this);
             this.display();
@@ -39,22 +39,40 @@ public class Board extends ArrayList <Block>
             return this;
         }
     
-    public int[][] cast_to_primitive_version(Board a_board)
-            // Casts Current into the primitive version int[][].
-        {
-            int [][] l_primitive_board = new int[block.size()][this.size()];
-            for (int i=0; i<l_primitive_board.length; i++)
+    public void display()
+            // Displays the 'playable_version' of Current.
+        {            
+            for(int i=0; i<=8; i=i+3)
                 {
-                    int[] l_primitive_block = new int[block.size()];
-                    for (int j=0; j<l_primitive_block.length; j++)
+                    print("\nBlock # " + (i+1) + "\t\t     Block # " + (i+2) + "\t\t     Block # " + (i+3) + "\n\t\t");
+                    Block l_block_1 = this.get(i);
+                    Block l_block_2 = this.get(i + 1);
+                    Block l_block_3 = this.get(i + 2);
+                    
+                    for (int j=0; j<=8; j=j+3)
                         {
-                            l_primitive_block[j] = a_board.block.get(j).intValue();
+                            Integer l_cell_1 = l_block_1.get(j);
+                            Integer l_cell_2 = l_block_1.get(j + 1);
+                            Integer l_cell_3 = l_block_1.get(j + 2);
+                            Integer l_cell_4 = l_block_2.get(j);
+                            Integer l_cell_5 = l_block_2.get(j + 1);
+                            Integer l_cell_6 = l_block_2.get(j + 2);
+                            Integer l_cell_7 = l_block_3.get(j);
+                            Integer l_cell_8 = l_block_3.get(j + 1);
+                            Integer l_cell_9 = l_block_3.get(j + 2);
+
+                            print(
+                                  l_cell_1.toString() + "\t" + l_cell_2.toString() + "\t" + l_cell_3.toString() + "\t" 
+                                + l_cell_4.toString() + "\t" + l_cell_5.toString() + "\t" + l_cell_6.toString() + "\t"
+                                + l_cell_7.toString() + "\t" + l_cell_8.toString() + "\t" + l_cell_9.toString() + "\t"
+                                 );
                         }
                 }
-            return l_primitive_board; 
         }
     
-    public int[][] sort_solution(int[][] a_board)
+    
+// IMPLEMENTION:
+    private int[][] sort_solution(int[][] a_board)
             /* Sorts 'a_board' eliminating all duplicates from rows and columns.
                 While iterating over an integer, the row is first checked for
                 any duplicates to its left, and then the column is checked for
@@ -115,83 +133,118 @@ public class Board extends ArrayList <Block>
        return l_array; 
     }
 
-    public int[] cast_to_full_primitive_board(int[][] a_primative_board)
+    private int[][] cast_to_primitive_version(Board a_board)
             // Casts Current into the primitive version int[][].
         {
-            int [] l_full_primitive_board = new int[81];
             int [][] l_primitive_board = new int[9][9];
             int[] l_primitive_block = new int[9];
-            int l_block_index = 0;
-            int l_block_counter =1;
-            int l_cell_index = 0;
-            int l_cell_counter = 1;
+            ArrayList <Integer> l_block = new ArrayList <Integer>();
             
-            for (int i=0; i<=l_full_primitive_board.length; i++)
+            for (int i=0; i<9; i++)//blocks
                 {
-                    while (l_block_counter<4)
+                    l_block = a_board.get(i);
+                    for (int j=0; j<9; j++)//cells
                         {
-                            while (l_cell_counter<4)
-                                {
-                                    l_full_primitive_board[i] = l_primitive_block[l_cell_index];
-                                    l_cell_counter++;
-                                    l_cell_index++;
-                                }
-                            l_cell_counter = 0;
-                            l_block_counter++;
+                            l_primitive_block[j] = l_block.get(j);
                         }
-                    l_block_index++;
-                    l_block_counter = 0;
+                    l_primitive_board[i] = l_primitive_block;
                 }
-            return l_full_primitive_board; 
-        }    
+            return l_primitive_board;
+        }
     
-    public void display()
-            // Displays the 'playable_version' of Current.
-        {            
-            for(int i=0; i<=8; i=i+3)
-                {
-                    print("\nBlock # " + (i+1) + "\t\t     Block # " + (i+2) + "\t\t     Block # " + (i+3) + "\n\t\t");
-                    Block l_block_1 = this.get(i);
-                    Block l_block_2 = this.get(i + 1);
-                    Block l_block_3 = this.get(i + 2);
-                    
-                    for (int j=0; j<=8; j=j+3)
+    private int[][][][] cast_to_four_dimensional_board(int[][] a_primative_board)
+            // Casts Current into a for dimensional board (3x3x3x3).
+        {
+            int[][][][] l_full_primitive_board = new int[3][3][3][3];
+            
+            for (int i=0; i<=2; i++)
+                { 
+                    for (int j=0; j<=2; j++)
                         {
-                            Integer l_cell_1 = l_block_1.get(j);
-                            Integer l_cell_2 = l_block_1.get(j + 1);
-                            Integer l_cell_3 = l_block_1.get(j + 2);
-                            Integer l_cell_4 = l_block_2.get(j);
-                            Integer l_cell_5 = l_block_2.get(j + 1);
-                            Integer l_cell_6 = l_block_2.get(j + 2);
-                            Integer l_cell_7 = l_block_3.get(j);
-                            Integer l_cell_8 = l_block_3.get(j + 1);
-                            Integer l_cell_9 = l_block_3.get(j + 2);
-
-                            print(
-                                  l_cell_1.toString() + "\t" + l_cell_2.toString() + "\t" + l_cell_3.toString() + "\t" 
-                                + l_cell_4.toString() + "\t" + l_cell_5.toString() + "\t" + l_cell_6.toString() + "\t"
-                                + l_cell_7.toString() + "\t" + l_cell_8.toString() + "\t" + l_cell_9.toString() + "\t"
-                                 );
-                            
+                            if (i==0)
+                                {
+                                    l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j]);
+                                }
+                            if (i==1)
+                                {
+                                    l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+3]);
+                                }
+                            if (i==2)
+                                {
+                                    l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+6]);
+                                }                            
                         }
                 }
+            return l_full_primitive_board;
+        }    
+
+    private int[][] cast_to_two_dimensional_block (int[] a_block)
+            //
+        {
+            int[][] l_block = new int[3][3];
+            for (int i=0; i<=8; i++)
+                {
+                    if(i==0)
+                        {
+                            l_block[0][0] = a_block[i];
+                        }
+                    if(i==1)
+                        {
+                            l_block[0][1] = a_block[i];
+                        }
+                    if(i==2)
+                        {
+                            l_block[0][2] = a_block[i];
+                        }
+                    if(i==3)
+                        {
+                            l_block[1][0] = a_block[i];
+                        }
+                    if(i==4)
+                        {
+                            l_block[1][1] = a_block[i];
+                        }
+                    if(i==5)
+                        {
+                            l_block[1][2] = a_block[i];
+                        }
+                    if(i==6)
+                        {
+                            l_block[2][0] = a_block[i];
+                        }
+                    if(i==7)
+                        {
+                            l_block[2][1] = a_block[i];
+                        }
+                    if(i==8)
+                        {
+                            l_block[2][2] = a_block[i];
+                        }
+                }
+            return l_block;
         }
     
     
-
-// ATTRIBUTES:   
+// PROPERTIES:   
     int[][] primitive_version;
-    int[] full_primitive_board;
+    int[][][][] four_dimensional_board;
     Block block;
     
 
     
 // SETTINGS:    
     private void set_primitive_version(Board a_board)
-            // Sels 'primitive_version' with the post cast version of 'a_board'.
+            // Sets 'primitive_version' with the post cast version of 'a_board'.
         {
-            int[][] l_primitive_version = cast_to_primitive_version(a_board);
-            primitive_version = l_primitive_version;
+            int[][] l_board = cast_to_primitive_version(a_board);
+            primitive_version = l_board;
+        }   
+
+        private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
+            // Sets 'primitive_version' with the post cast version of 'a_board'.
+        {
+            int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
+            four_dimensional_board = l_board;
         }   
 
     
