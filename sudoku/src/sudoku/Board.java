@@ -20,6 +20,7 @@ public class Board extends ArrayList <Block>
             set_four_dimensional_primitive_board(primitive_version);
             // correct_duplications(this);
             // create_playable_version(this);
+            cast_to_full_board(four_dimensional_board);
             this.display();
         }
 
@@ -133,17 +134,40 @@ public class Board extends ArrayList <Block>
        return l_array; 
     }
 
+    private int[] cast_to_full_board (int[][][][] a_board)
+            //
+        {
+            int l_index = -1;
+            int[] l_board = new int[81];
+
+            for (int Y=0; Y<3; Y++)
+                    {
+                            for (int y=0; y<3; y++)
+                                    {
+                                            for (int X=0; X<3; X++)
+                                                    {
+                                                            for (int x=0; x<3; x++)
+                                                                    {
+                                                                            l_index ++;
+                                                                            l_board[l_index] = a_board[Y][X][y][x];
+                                                                    }
+                                                    }
+                                    }
+                    }
+            return l_board;        
+        }
+    
     private int[][] cast_to_primitive_version(Board a_board)
-            // Casts Current into the primitive version int[][].
+            // Casts 'a_board' into int[][].
         {
             int [][] l_primitive_board = new int[9][9];
             int[] l_primitive_block = new int[9];
-            ArrayList <Integer> l_block = new ArrayList <Integer>();
+            ArrayList <Integer> l_block = new ArrayList <>();
             
-            for (int i=0; i<9; i++)//blocks
+            for (int i=0; i<9; i++)
                 {
                     l_block = a_board.get(i);
-                    for (int j=0; j<9; j++)//cells
+                    for (int j=0; j<9; j++)
                         {
                             l_primitive_block[j] = l_block.get(j);
                         }
@@ -206,9 +230,10 @@ public class Board extends ArrayList <Block>
     
     
 // PROPERTIES:   
-    int[][] primitive_version;
+    int[] one_dimensional_board;
+    int[][]primitive_version;
     int[][][][] four_dimensional_board;
-    Block block;
+    Block block; 
     
 
     
@@ -227,6 +252,22 @@ public class Board extends ArrayList <Block>
             four_dimensional_board = l_board;
         }   
 
+    private void set_full_primitive_version(Board a_board)
+            // Sets 'primitive_version' with the post cast version of 'a_board'.
+        {
+            int[] l_one_dimensional_board = new int[81];
+            int[][] l_two_dimensional_board = new int[9][9];
+            int[][][][] l_four_dimensional_board = new int[3][3][3][3]; 
+        
+            //
+            l_two_dimensional_board = cast_to_primitive_version(a_board);
+            //
+            l_four_dimensional_board = cast_to_four_dimensional_board(l_two_dimensional_board);
+            //
+            l_one_dimensional_board = cast_to_full_board(l_four_dimensional_board);
+            //
+            one_dimensional_board = l_one_dimensional_board;
+        }           
     
     
 // CONSTANTS:    
