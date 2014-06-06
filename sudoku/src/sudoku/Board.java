@@ -128,16 +128,10 @@ public class Board extends ArrayList <Block>
         
         for(int Y=0; Y<=Y_index; Y++)
             {
-                for(int X=X_index; X==X_index; X=X_index)
-                    {
-                        for(int y=0; y<y_index; y++)
-                            {
-                                for(int x=x_index; x==x_index; x=x_index)
-                                    {
-                                        // Use for building l_column_comparisson in 'sort_soution'
-                                    }
-                            }
-                    }
+                for(int y=0; !(y==y_index && Y==Y_index) || y<=2; y++)
+                        {
+                            // Use for building l_column_comparisson in 'sort_soution'
+                        }
             }
        return new int[1];
     }
