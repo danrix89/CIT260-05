@@ -120,18 +120,26 @@ public class Board extends ArrayList <Block>
        return l_array; 
     }
     
-    private int[] checkable_column(int x)
+    private int[] checkable_column(int[][][][] a_board, int Y_index, int y_index, int X_index, int x_index)
             // Column for checking duplicates to the left of a cell at 'x'.
     {
-        int[] l_array = new int[x-1];
-        for(int i=0; i<x; i++)
+        boolean l_done = false;
+        int[] l_column;
+        
+        for(int Y=0; Y<=Y_index; Y++)
             {
-                for(int j=0; j<x; j++)
+                for(int X=X_index; X==X_index; X=X_index)
                     {
-                        // Use for building l_column_comparisson in 'sort_soution'
+                        for(int y=0; y<y_index; y++)
+                            {
+                                for(int x=x_index; x==x_index; x=x_index)
+                                    {
+                                        // Use for building l_column_comparisson in 'sort_soution'
+                                    }
+                            }
                     }
             }
-       return l_array; 
+       return new int[1];
     }
 
     private int[] cast_to_full_board (int[][][][] a_board)
