@@ -18,9 +18,8 @@ public class Board extends ArrayList <Block>
             this.populate();
             set_primitive_version(this);
             set_four_dimensional_primitive_board(primitive_version);
-            // correct_duplications(this);
-            // create_playable_version(this);
-            cast_to_full_board(four_dimensional_board);
+            //set_one_dimensional_version(this);
+            sort_solution(four_dimensional_board);
             this.display();
         }
 
@@ -73,68 +72,254 @@ public class Board extends ArrayList <Block>
     
     
 // IMPLEMENTION:
-    private int[][] sort_solution(int[][] a_board)
+    private void sort_solution(int[][][][] a_board)
             /* Sorts 'a_board' eliminating all duplicates from rows and columns.
                 While iterating over an integer, the row is first checked for
                 any duplicates to its left, and then the column is checked for
                 any duplicates above it.
             */
         {
-            int l_swap;
-            int [] l_checkable_row;
-            int [] l_checkable_column;
-            int l_cell;
-            int l_candidate;
-            boolean l_contains_duplicates = true;
-            for(int i=1; i<a_board.length; i++)
+            for(int Y=0; Y<=2; Y++)
                 {
-                    for (int j=0; j<a_board[i].length; j++)
+                    for(int X=0; X<=2; X++)
                         {
-                            l_cell = a_board[i][j];
-                            while(l_contains_duplicates) // executes while not done.
+                            for(int y=0; y<=2; y++)
                                 {
-//                                    if (l_checkable_row contains l_cell || l_checker_column contains l_cell)
-//                                        {
-//                                            l_swap = l_cell;
-//                                            l_cell = l_candidate;
-//                                            l_candidate = l_swap;
-//                                            l_contains_duplicates = false;
-//                                        }
+                                    for(int x=0; x<=2; x++)
+                                        {
+                                            if(Y==0 && X==0)
+                                                {
+                                                    // Skip over the first block (it does not need to be checked).
+                                                }
+                                            else
+                                                {
+                                                    int[] l_row;
+                                                    int[] l_column;
+                                                    int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
+                                                    boolean l_has_duplicates = true;
+                                                    boolean l_has_row_duplicates = false;
+                                                    boolean l_has_column_duplicates = false;
+                                                    
+                                                    int i = -1;
+                                                    int j = -1;
+                                                    while(l_has_duplicates)
+                                                        {
+                                                            //ROW CHECKING
+                                                            if (X==0 && x==0)
+                                                                {
+                                                                    // Cells with nothing to their left should not be checked for duplicates.
+                                                                }
+                                                            else
+                                                                {
+                                                                    l_row = row_for_checking(a_board, Y, X, y, x);
+                                                                    l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                                    while(l_has_row_duplicates)
+                                                                        {
+                                                                            i++;
+                                                                            int l_swap = a_board[Y][X][y][x];
+                                                                            a_board[Y][X][y][x] = l_candidates[i];
+                                                                            l_candidates[i] = l_swap;
+                                                                            l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                                            if (l_has_row_duplicates)
+                                                                                {
+                                                                                    l_swap = a_board[Y][X][y][x];
+                                                                                    a_board[Y][X][y][x] = l_candidates[i];
+                                                                                    l_candidates[i] = l_swap;
+                                                                                }
+                                                                        }
+                                                                }
+                                                            //COLUMN CHECKING
+                                                            if (Y==0 && y==0)
+                                                                {
+                                                                    // Cells with nothing above them should not be checked for duplicates.
+                                                                }
+                                                            else
+                                                                {
+                                                                    l_column = column_for_checking(a_board, Y, X, y, x);
+                                                                    l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                                    while(l_has_column_duplicates)
+                                                                        {
+                                                                            j++;
+                                                                            int l_swap = a_board[Y][X][y][x];
+                                                                            a_board[Y][X][y][x] = l_candidates[j];
+                                                                            l_candidates[j] = l_swap;
+                                                                            l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                                            if (l_has_column_duplicates)
+                                                                                {
+                                                                                    l_swap = a_board[Y][X][y][x];
+                                                                                    a_board[Y][X][y][x] = l_candidates[j];
+                                                                                    l_candidates[j] = l_swap;
+                                                                                }
+                                                                        }
+                                                                }
+                                                            l_has_duplicates = (l_has_row_duplicates && l_has_column_duplicates);
+                                                        }
+                                                }
+                                        }
                                 }
                         }
                 }
-            return a_board;
         }
     
-    private int[] checkable_row(int y)
-            // Row for checking duplicates to the left of a cell at 'y'.
+    private boolean has_row_duplicates (int[][][][] a_board, int[] a_row, int Y, int X, int y, int x)
+            //
     {
-        int[] l_array = new int[y-1];
-        for(int i=0; i<y; i++)
+        for (int ic_int : a_row)
             {
-                for(int j=0; j<y; j++)
-                    {
-                        // Use for building l_row_comparisson in 'sort_soution'
-                    }
+                if (ic_int == a_board[Y][X][y][x])
+                {
+                    return true;
+                }
             }
-       return l_array; 
+        return false;
+    }
+
+    private boolean has_column_duplicates (int[][][][] a_board, int[] a_column, int Y, int X, int y, int x)
+            //
+    {
+        for (int ic_int : a_column)
+            {
+                if (ic_int == a_board[Y][X][y][x])
+                {
+                    return true;
+                }
+            }
+        return false;
     }
     
-    private int[] checkable_column(int[][][][] a_board, int Y_index, int y_index, int X_index, int x_index)
-            // Column for checking duplicates to the left of a cell at 'x'.
-    {
-        boolean l_done = false;
-        int[] l_column;
-        
-        for(int Y=0; Y<=Y_index; Y++)
+    private int[] candidates_for_swapping (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
+            // Array of candidates for swapping within the same block as the cell at (x_index, y_index).
+        {
+            int[] l_candidates = new int [8];
+            if(y_index==0)
             {
-                for(int y=0; !(y==y_index && Y==Y_index) || y<=2; y++)
-                        {
-                            // Use for building l_column_comparisson in 'sort_soution'
-                        }
+                l_candidates = new int[9-(x_index+1)];
             }
-       return new int[1];
-    }
+            if(y_index==1)
+            {
+                l_candidates = new int[6-(x_index+1)];
+            }
+            if(y_index==2)
+            {
+                l_candidates = new int[3-(x_index+1)];
+            }
+        
+            int i = -1;
+            boolean l_first_loop_through = true;
+            for(int y=y_index; y>=y_index && y<3; y++)
+                {
+                    for(int x=0; x<=2; x++)
+                            {
+                                if(y_index==2 && x_index==2)
+                                    {
+                                        // do nothing (there are no cells for candidacy)
+                                    }
+                                else if(x_index==0 && l_first_loop_through)
+                                    {
+                                        x=x+1;
+                                        i++;
+                                        l_candidates[i] = a_board[Y_index][X_index][y][x];
+                                        l_first_loop_through = false;
+                                    }                                
+                                else if(x_index==1 && l_first_loop_through)
+                                    {
+                                        x=x+2;
+                                        i++;
+                                        l_candidates[i] = a_board[Y_index][X_index][y][x];
+                                        l_first_loop_through = false;
+                                    }                                
+                                else if (x_index==2 && l_first_loop_through)
+                                    {
+                                        // do nothing (there are no cells to the right)
+                                        l_first_loop_through = false;
+                                    }
+                                else 
+                                    {
+                                        i++;
+                                        l_candidates[i] = a_board[Y_index][X_index][y][x];
+                                    }
+                            }
+                }
+           return l_candidates;
+        }
+    
+    private int[] row_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
+            // Row for checking duplicates to the left of a cell at (X,Y)(x,y).
+        {
+            int[] l_row = new int [(X_index+1*3)];
+            if(x_index==1)
+                {
+                    if(X_index==0)
+                        {
+                            l_row = new int [1];
+                        }
+                    else
+                        {
+                            l_row = new int [((X_index+1)*3)+1];
+                        }
+                }
+            if(x_index==2)
+                {
+                    if(X_index==0)
+                        {
+                            l_row = new int [2];
+                        }
+                    else
+                        {
+                            l_row = new int [((X_index+1)*3)-1];
+                        }
+                }
+            int i = -1;
+
+            for(int X=0; X<=X_index; X++)
+                {
+                    for(int x=0; !(x==x_index && X==X_index) || x<=2; x++)
+                            {
+                                i++;
+                                l_row[i] = a_board[Y_index][X][y_index][x];
+                            }
+                }
+           return l_row;
+        }
+    
+    private int[] column_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
+            // Column for checking duplicates above a cell at (X,Y)(x,y).
+        {
+            int[] l_column = new int [(Y_index+1*3)];
+            if(y_index==1)
+                {
+                    if(Y_index==0)
+                        {
+                            l_column = new int [1];
+                        }
+                    else
+                        {
+                            l_column = new int [((Y_index+1)*3)+1];
+                        }
+                }
+            if(y_index==2)
+                {
+                    if(Y_index==0)
+                        {
+                            l_column = new int [2];
+                        }
+                    else
+                        {
+                            l_column = new int [((Y_index+1)*3)-1];
+                        }
+                }
+            int i = -1;
+
+            for(int Y=0; Y<=Y_index; Y++)
+                {
+                    for(int y=0; !(y==y_index && Y==Y_index) || y<=2; y++)
+                            {
+                                i++;
+                                l_column[i] = a_board[Y][X_index][y][x_index];
+                            }
+                }
+           return l_column;
+        }
 
     private int[] cast_to_full_board (int[][][][] a_board)
             //
@@ -163,11 +348,11 @@ public class Board extends ArrayList <Block>
             // Casts 'a_board' into int[][].
         {
             int [][] l_primitive_board = new int[9][9];
-            int[] l_primitive_block = new int[9];
             ArrayList <Integer> l_block = new ArrayList <>();
             
             for (int i=0; i<9; i++)
                 {
+                    int[] l_primitive_block = new int[9];
                     l_block = a_board.get(i);
                     for (int j=0; j<9; j++)
                         {
@@ -181,7 +366,7 @@ public class Board extends ArrayList <Block>
     private int[][][][] cast_to_four_dimensional_board(int[][] a_primative_board)
             // Casts Current into a for dimensional board (3x3x3x3).
         {
-            int[][][][] l_full_primitive_board = new int[3][3][3][3];
+            int[][][][] l_four_dimensional_board = new int[3][3][3][3];
             
             for (int i=0; i<=2; i++)
                 { 
@@ -189,15 +374,15 @@ public class Board extends ArrayList <Block>
                         {
                             switch (i)
                                 {
-                                    case 0: l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j]);
+                                    case 0: l_four_dimensional_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j]);
 
-                                    case 1: l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+3]);
+                                    case 1: l_four_dimensional_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+3]);
 
-                                    case 2: l_full_primitive_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+6]);
+                                    case 2: l_four_dimensional_board[i][j] = cast_to_two_dimensional_block(a_primative_board[j+6]);
                                 }                            
                         }
                 }
-            return l_full_primitive_board;
+            return l_four_dimensional_board;
         }    
 
     private int[][] cast_to_two_dimensional_block (int[] a_block)
@@ -248,26 +433,23 @@ public class Board extends ArrayList <Block>
         }   
 
         private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
-            // Sets 'primitive_version' with the post cast version of 'a_board'.
+            // Sets 'four_dimensional_primitive_board' with the post cast version of 'a_primitive_board'.
         {
             int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
             four_dimensional_board = l_board;
         }   
 
-    private void set_full_primitive_version(Board a_board)
+    private void set_one_dimensional_version(Board a_board)
             // Sets 'primitive_version' with the post cast version of 'a_board'.
         {
-            int[] l_one_dimensional_board = new int[81];
-            int[][] l_two_dimensional_board = new int[9][9];
-            int[][][][] l_four_dimensional_board = new int[3][3][3][3]; 
+            int[] l_one_dimensional_board;
+            int[][] l_two_dimensional_board;
+            int[][][][] l_four_dimensional_board; 
         
-            //
             l_two_dimensional_board = cast_to_primitive_version(a_board);
-            //
             l_four_dimensional_board = cast_to_four_dimensional_board(l_two_dimensional_board);
-            //
             l_one_dimensional_board = cast_to_full_board(l_four_dimensional_board);
-            //
+            
             one_dimensional_board = l_one_dimensional_board;
         }           
     
