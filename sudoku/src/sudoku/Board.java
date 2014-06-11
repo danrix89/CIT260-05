@@ -97,8 +97,8 @@ public class Board extends ArrayList <Block>
                                                     int[] l_column;
                                                     int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
                                                     boolean l_has_duplicates = true;
-                                                    boolean l_has_row_duplicates = false;
-                                                    boolean l_has_column_duplicates = false;
+                                                    boolean l_has_row_duplicates = true;
+                                                    boolean l_has_column_duplicates = true;
                                                     
                                                     int i = -1;
                                                     int j = -1;
@@ -107,7 +107,7 @@ public class Board extends ArrayList <Block>
                                                             //ROW CHECKING
                                                             if (X==0 && x==0)
                                                                 {
-                                                                    // Cells with nothing to their left should not be checked for duplicates.
+                                                                    l_has_row_duplicates = false; // There are no cells to the left.
                                                                 }
                                                             else
                                                                 {
@@ -131,7 +131,7 @@ public class Board extends ArrayList <Block>
                                                             //COLUMN CHECKING
                                                             if (Y==0 && y==0)
                                                                 {
-                                                                    // Cells with nothing above them should not be checked for duplicates.
+                                                                    l_has_column_duplicates = false; // There are no cells above.
                                                                 }
                                                             else
                                                                 {
@@ -152,7 +152,10 @@ public class Board extends ArrayList <Block>
                                                                                 }
                                                                         }
                                                                 }
-                                                            l_has_duplicates = (l_has_row_duplicates && l_has_column_duplicates);
+                                                            if (l_has_row_duplicates==false && l_has_column_duplicates==false)
+                                                                {
+                                                                    l_has_duplicates = false;
+                                                                }
                                                         }
                                                 }
                                         }
@@ -164,27 +167,31 @@ public class Board extends ArrayList <Block>
     private boolean has_row_duplicates (int[][][][] a_board, int[] a_row, int Y, int X, int y, int x)
             //
     {
+        boolean l_result = false;
+        
         for (int ic_int : a_row)
             {
                 if (ic_int == a_board[Y][X][y][x])
                 {
-                    return true;
+                    l_result = true;
                 }
             }
-        return false;
+        return l_result;
     }
 
     private boolean has_column_duplicates (int[][][][] a_board, int[] a_column, int Y, int X, int y, int x)
             //
     {
+        boolean l_result = false;
+        
         for (int ic_int : a_column)
             {
                 if (ic_int == a_board[Y][X][y][x])
                 {
-                    return true;
+                    l_result = true;
                 }
             }
-        return false;
+        return l_result;
     }
     
     private int[] candidates_for_swapping (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
@@ -246,7 +253,7 @@ public class Board extends ArrayList <Block>
     private int[] row_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
             // Row for checking duplicates to the left of a cell at (X,Y)(x,y).
         {
-            int[] l_row = new int [(X_index+1*3)];
+            int[] l_row = new int [(X_index*3)];
             if(x_index==1)
                 {
                     if(X_index==0)
@@ -273,7 +280,7 @@ public class Board extends ArrayList <Block>
 
             for(int X=0; X<=X_index; X++)
                 {
-                    for(int x=0; !(x==x_index && X==X_index) || x<=2; x++)
+                    for(int x=0; x<=2 && !(x==x_index && X==X_index); x++)
                             {
                                 i++;
                                 l_row[i] = a_board[Y_index][X][y_index][x];
