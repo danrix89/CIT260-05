@@ -91,6 +91,17 @@ public class Board extends ArrayList <Block>
                                                 {
                                                     // Skip over the first block (it does not need to be checked).
                                                 }
+                                            if (y==2 && x==2)
+                                                {
+                                                    int[] l_row = row_for_checking(a_board, Y, X, y, x);
+                                                    boolean l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                    int[] l_column = column_for_checking(a_board, Y, X, y, x);
+                                                    boolean l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                    if (l_has_row_duplicates==true || l_has_column_duplicates==true)
+                                                        {
+                                                            print("Please create a function to fix the last cell of a block having duplicates.");
+                                                        }
+                                                }
                                             else
                                                 {
                                                     int[] l_row;
@@ -238,6 +249,7 @@ public class Board extends ArrayList <Block>
                                 else if (x_index==2 && l_first_loop_through)
                                     {
                                         // do nothing (there are no cells to the right)
+                                        x = 3; // Needs to break the loop and increment y.
                                         l_first_loop_through = false;
                                     }
                                 else 
@@ -319,7 +331,7 @@ public class Board extends ArrayList <Block>
 
             for(int Y=0; Y<=Y_index; Y++)
                 {
-                    for(int y=0; !(y==y_index && Y==Y_index) || y<=2; y++)
+                    for(int y=0; y<=2 && !(y==y_index && Y==Y_index); y++)
                             {
                                 i++;
                                 l_column[i] = a_board[Y][X_index][y][x_index];
