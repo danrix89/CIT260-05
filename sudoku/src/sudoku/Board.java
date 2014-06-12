@@ -17,8 +17,7 @@ public class Board extends ArrayList <Block>
         {
             this.populate();
             set_primitive_version(this);
-            set_four_dimensional_primitive_board(primitive_version);
-            //set_one_dimensional_version(this);
+            //set_four_dimensional_primitive_board(primitive_version);
             sort_solution(four_dimensional_board);
             this.display();
         }
