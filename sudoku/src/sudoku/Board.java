@@ -17,7 +17,7 @@ public class Board extends ArrayList <Block>
         {
             this.populate();
             set_primitive_version(this);
-            //set_four_dimensional_primitive_board(primitive_version);
+            set_four_dimensional_primitive_board(primitive_version);
             sort_solution(four_dimensional_board);
             this.display();
         }
@@ -90,7 +90,7 @@ public class Board extends ArrayList <Block>
                                                 {
                                                     // Skip over the first block (it does not need to be checked).
                                                 }
-                                            if (y==2 && x==2)
+                                            else if (y==2 && x==2)
                                                 {
                                                     int[] l_row = row_for_checking(a_board, Y, X, y, x);
                                                     boolean l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
@@ -98,7 +98,7 @@ public class Board extends ArrayList <Block>
                                                     boolean l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
                                                     if (l_has_row_duplicates==true || l_has_column_duplicates==true)
                                                         {
-                                                            print("Please create a function to fix the last cell of a block having duplicates.");
+                                                            print("\n***Line 101: Please create a function to fix the last cell of a block having duplicates.***\n");
                                                         }
                                                 }
                                             else
@@ -126,6 +126,10 @@ public class Board extends ArrayList <Block>
                                                                     while(l_has_row_duplicates)
                                                                         {
                                                                             i++;
+                                                                            if (i > l_candidates.length - 1)
+                                                                                {
+                                                                                    print("\n***Line 131: i is greater than l_candidates.length - 1 ***\n");
+                                                                                }
                                                                             int l_swap = a_board[Y][X][y][x];
                                                                             a_board[Y][X][y][x] = l_candidates[i];
                                                                             l_candidates[i] = l_swap;
@@ -175,7 +179,7 @@ public class Board extends ArrayList <Block>
         }
     
     private boolean has_row_duplicates (int[][][][] a_board, int[] a_row, int Y, int X, int y, int x)
-            //
+            // Checks for duplicates in the row to the left of the cell at [Y][X][y][x].
     {
         boolean l_result = false;
         
@@ -190,7 +194,7 @@ public class Board extends ArrayList <Block>
     }
 
     private boolean has_column_duplicates (int[][][][] a_board, int[] a_column, int Y, int X, int y, int x)
-            //
+            // Checks for duplicates in the column above the cell at [Y][X][y][x].
     {
         boolean l_result = false;
         
