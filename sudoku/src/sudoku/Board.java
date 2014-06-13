@@ -5,6 +5,63 @@ import java.util.ArrayList;
 /*
 Class Description: Representation of a sudoku game board with 9 columns, 9 rows,
                     and 9 3x3 blocks.
+
+Terminology Explaination:
+                
+            * The upper-case  Y  or  Y_index  is to represent the Y axis on the entire board. 
+            * The upper-case  X  or  X_index  is to represent the X axis on the entire board.
+            * The lower-case  y  or  y_index  is to represent the y axis on a block.
+            * The lower-case  x  or  x_index  is to represent the x axis on a block.
+            
+            The first two set of coordinates give the coordinates of the block. The last two
+                            coordinates give the coordinates of the cell.
+
+                            The entire board coordinates look like this:       
+                      [Y][X][y][x]   OR   [Y_index][X_index][y_index][x_index]
+
+
+
+                                                     X axis
+                                      0                 1                 2 
+                             _______________________________________________________
+                             |                 |                 |                 |
+                                      x
+                             ___0_____1_____2___
+                    _      _ |_____|_____|_____|______________________________________
+                   |      |  |     |     |     |     |     |     |     |     |     |
+                   |     0|  |     |     |     |     |     |     |     |     |     |
+                   |      |_ |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |      |  |     |     |     |     |     |     |     |     |     |
+                0  |  y  1|  |     |     |  A  |     |     |     |     |     |     |
+                   |      |_ |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |      |  |     |     |     |     |     |     |     |     |     |
+                   |     2|  |     |     |     |     |     |     |     |     |     |
+                   |_     |_ |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |         |     |     |     |     |     |     |     |     |     |
+                   |         |     |     |     |     |     |     |  $  |  $  |  $  |
+                   |         |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |         |     |     |     |     |     |     |     |     |     |
+    Y axis     1   |         |     |     |     |     |     |     |  $  |  $  |  $  |
+                   |         |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |         |     |     |     |     |     |     |     |     |     |
+                   |         |     |     |     |     |     |     |  $  |  $  |  $  |
+                   |_        |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |         |     |     |     |     |     |     |     |     |     |
+                   |         |     |     |     |     |     |     |     |     |     |
+                   |         |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |         |     |     |     |     |     |     |     |     |     |
+                2  |         |     |     |     |     |     |     |     |     |     |
+                   |         |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+                   |         |     |     |     |     |     |     |     |     |     |
+                   |         |     |     |     |  Z  |     |     |     |     |     |
+                   |_        |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+
+
+            The A symbol represents the cell at [0][0][1][2]
+            The Z symbol represents the cell at [2][1][2][0]
+
+            The $ symbol represents the block at [2][1]
+
 */
 
 public class Board extends ArrayList <Block>
@@ -14,6 +71,7 @@ public class Board extends ArrayList <Block>
 // CONSTRUCTORS:   
     public Board()
             // Default constructor of Current.
+            // This method is called whenever a new Board instance is created.
         {
             this.populate();
             set_primitive_version(this);
@@ -24,22 +82,19 @@ public class Board extends ArrayList <Block>
 
     
 // BASIC METHODS:
-    public Board populate()
-                /* Populates Current (which is a 9 element array representing a 
-                    3x3 Cartesian board of blocks) with generated unique random 
-                    blocks.
-                */
+    public void populate()
+            // Populates the board with generated unique random blocks.
         {          
-            for (int i=0; i<=8; i++)
+            for (int i=0; i<=8; i++) // Loops across each block in the board.
                 {
                 block = new Block();
-                this.add(i, block.populate());
+                this.add(i, block.populate()); // Each time it creates a new block to place inside the board.
                 }
-            return this;
         }
     
     public void display()
-            // Displays the 'playable_version' of Current.
+            // Displays the board.
+            // This method will be re-written later when the sorting method is working.
         {            
             for(int i=0; i<=8; i=i+3)
                 {
@@ -78,26 +133,28 @@ public class Board extends ArrayList <Block>
                 any duplicates above it.
             */
         {
-            for(int Y=0; Y<=2; Y++)
+            for(int Y=0; Y<=2; Y++) // Going across the 'Y' coordinate of the Board
                 {
-                    for(int X=0; X<=2; X++)
+                    for(int X=0; X<=2; X++) // Going across the 'X' coordinate of the Board
                         {
-                            for(int y=0; y<=2; y++)
+                            for(int y=0; y<=2; y++) // Going across the 'y' coordinate of the Board
                                 {
-                                    for(int x=0; x<=2; x++)
+                                    for(int x=0; x<=2; x++) // Going across the 'x' coordinate of the Board
                                         {
-                                            if(Y==0 && X==0)
+                                            if(Y==0 && X==0) // This is the first block, which can be skipped
                                                 {
-                                                    // Skip over the first block (it does not need to be checked).
+                                                    // Skip over the first block (it does not need to be checked)
                                                 }
-                                            else if (y==2 && x==2)
+                                            else if (y==2 && x==2) // If the iterator is on the last cell of a block...
                                                 {
+                                                    // ...check if that cell has any duplicates...
                                                     int[] l_row = row_for_checking(a_board, Y, X, y, x);
                                                     boolean l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
                                                     int[] l_column = column_for_checking(a_board, Y, X, y, x);
                                                     boolean l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
                                                     if (l_has_row_duplicates==true || l_has_column_duplicates==true)
                                                         {
+                                                            // ...if there are any duplicates, the block needs to be shuffled around or regenerated
                                                             print("\n***Line 101: Please create a function to fix the last cell of a block having duplicates.***\n");
                                                         }
                                                 }
@@ -115,9 +172,9 @@ public class Board extends ArrayList <Block>
                                                     while(l_has_duplicates)
                                                         {
                                                             //ROW CHECKING
-                                                            if (X==0 && x==0)
+                                                            if (X==0 && x==0) // This means there are no cells to the left of the current cell...
                                                                 {
-                                                                    l_has_row_duplicates = false; // There are no cells to the left.
+                                                                    l_has_row_duplicates = false; // ...since there is nothing to the left, there are no duplicates
                                                                 }
                                                             else
                                                                 {
@@ -126,8 +183,9 @@ public class Board extends ArrayList <Block>
                                                                     while(l_has_row_duplicates)
                                                                         {
                                                                             i++;
-                                                                            if (i > l_candidates.length - 1)
+                                                                            if (i > l_candidates.length - 1) // This needs to be fixed, so that it never happens
                                                                                 {
+                                                                                    // If the iterator is now bigger than the size of 'candidates' array, display the below message
                                                                                     print("\n***Line 131: i is greater than l_candidates.length - 1 ***\n");
                                                                                 }
                                                                             int l_swap = a_board[Y][X][y][x];
@@ -136,6 +194,7 @@ public class Board extends ArrayList <Block>
                                                                             l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
                                                                             if (l_has_row_duplicates)
                                                                                 {
+                                                                                    // If there are still duplicates after swapping, swap the numbers back and re-do the loop
                                                                                     l_swap = a_board[Y][X][y][x];
                                                                                     a_board[Y][X][y][x] = l_candidates[i];
                                                                                     l_candidates[i] = l_swap;
@@ -143,9 +202,9 @@ public class Board extends ArrayList <Block>
                                                                         }
                                                                 }
                                                             //COLUMN CHECKING
-                                                            if (Y==0 && y==0)
+                                                            if (Y==0 && y==0) // This means there are no cells above the current cell...
                                                                 {
-                                                                    l_has_column_duplicates = false; // There are no cells above.
+                                                                    l_has_column_duplicates = false; // ...since there is nothing above, there are no duplicates
                                                                 }
                                                             else
                                                                 {
@@ -160,6 +219,7 @@ public class Board extends ArrayList <Block>
                                                                             l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
                                                                             if (l_has_column_duplicates)
                                                                                 {
+                                                                                    // If there are still duplicates after swapping, swap the numbers back and re-do the loop
                                                                                     l_swap = a_board[Y][X][y][x];
                                                                                     a_board[Y][X][y][x] = l_candidates[j];
                                                                                     l_candidates[j] = l_swap;
@@ -168,6 +228,7 @@ public class Board extends ArrayList <Block>
                                                                 }
                                                             if (l_has_row_duplicates==false && l_has_column_duplicates==false)
                                                                 {
+                                                                    // If there are no row or column duplicates then then has_duplicates = false
                                                                     l_has_duplicates = false;
                                                                 }
                                                         }
@@ -183,9 +244,9 @@ public class Board extends ArrayList <Block>
     {
         boolean l_result = false;
         
-        for (int ic_int : a_row)
+        for (int ic_int : a_row) // Loops across the row to the left of the current cell...
             {
-                if (ic_int == a_board[Y][X][y][x])
+                if (ic_int == a_board[Y][X][y][x]) // ...checks for duplicates
                 {
                     l_result = true;
                 }
@@ -198,9 +259,9 @@ public class Board extends ArrayList <Block>
     {
         boolean l_result = false;
         
-        for (int ic_int : a_column)
+        for (int ic_int : a_column) // Loops across the column above the current cell...
             {
-                if (ic_int == a_board[Y][X][y][x])
+                if (ic_int == a_board[Y][X][y][x]) // ...checks for duplicates
                 {
                     l_result = true;
                 }
@@ -209,7 +270,7 @@ public class Board extends ArrayList <Block>
     }
     
     private int[] candidates_for_swapping (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
-            // Array of candidates for swapping within the same block as the cell at (x_index, y_index).
+            // Creates an array of candidates for swapping within the same block as the cell at [Y][X][y][x].
         {
             int[] l_candidates = new int [8];
             if(y_index==0)
@@ -233,7 +294,8 @@ public class Board extends ArrayList <Block>
                             {
                                 if(y_index==2 && x_index==2)
                                     {
-                                        // do nothing (there are no cells for candidacy)
+                                        // do nothing (there are no cells below and no cells to the right of the current cell)
+                                        l_candidates = new int[0];
                                     }
                                 else if(x_index==0 && l_first_loop_through)
                                     {
@@ -266,7 +328,7 @@ public class Board extends ArrayList <Block>
         }
     
     private int[] row_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
-            // Row for checking duplicates to the left of a cell at (X,Y)(x,y).
+            // Creates an array for checking duplicates in the row to the left of a cell at [Y][X][y][x].
         {
             int[] l_row = new int [(X_index*3)];
             if(x_index==1)
@@ -305,7 +367,7 @@ public class Board extends ArrayList <Block>
         }
     
     private int[] column_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
-            // Column for checking duplicates above a cell at (X,Y)(x,y).
+            // Creates an array for checking duplicates in the column above a cell at [Y][X][y][x].
         {
             int[] l_column = new int [(Y_index+1*3)];
             if(y_index==1)
@@ -344,7 +406,8 @@ public class Board extends ArrayList <Block>
         }
 
     private int[] cast_to_full_board (int[][][][] a_board)
-            //
+            // Casts the four dimensional board to a two dimensional board.
+            // This method is not used and probably won't ever be, but don't get rid of it just yet.
         {
             int l_index = -1;
             int[] l_board = new int[81];
@@ -367,7 +430,7 @@ public class Board extends ArrayList <Block>
         }
     
     private int[][] cast_to_primitive_version(Board a_board)
-            // Casts 'a_board' into int[][].
+            // Casts the 'Board' into int[][].
         {
             int [][] l_primitive_board = new int[9][9];
             ArrayList <Integer> l_block = new ArrayList <>();
@@ -386,7 +449,7 @@ public class Board extends ArrayList <Block>
         }
     
     private int[][][][] cast_to_four_dimensional_board(int[][] a_primative_board)
-            // Casts Current into a for dimensional board (3x3x3x3).
+            // Casts int[][] into a for dimensional board int[][][][] (3x3x3x3).
         {
             int[][][][] l_four_dimensional_board = new int[3][3][3][3];
             
@@ -454,7 +517,7 @@ public class Board extends ArrayList <Block>
             primitive_version = l_board;
         }   
 
-        private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
+    private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
             // Sets 'four_dimensional_primitive_board' with the post cast version of 'a_primitive_board'.
         {
             int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
