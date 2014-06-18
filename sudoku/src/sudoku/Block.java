@@ -11,25 +11,23 @@ public class Block extends ArrayList <Integer>
 {
     
     public Block populate()
-                /* Populates Current (which is a 9 element array representing a 
-                    3x3 Cartesian block of cells) with generated unique random integers
-                    in the range 1-9.
-                */
-        {          
-            Random l_random = new Random();
-
-            this.add(0, generate_random_integer(l_random));
+            /* 
+            Populates an entire block with generated unique random integers
+            in the range 1-9 (no duplicates).
+            */
+        {
+            this.add(0, generate_random_integer());
             for (int i = 1; i <= 8; i++)
                 {
-                this.add(i, generate_random_integer(l_random));
+                this.add(i, generate_random_integer());
                 for (int j = 0; j < i; j++)
                     {
-                    if (this.get(i).intValue() == this.get(j).intValue())
+                    if (this.get(i) == this.get(j))
                         {
-                        this.set(i, generate_random_integer(l_random));
-                        while (this.get(i).intValue() == this.get(j).intValue())
+                        this.set(i, generate_random_integer());
+                        while (this.get(i) == this.get(j))
                             {
-                            this.set(i, generate_random_integer(l_random));
+                            this.set(i, generate_random_integer());
                             }
                         j = -1;
                         }
@@ -38,17 +36,34 @@ public class Block extends ArrayList <Integer>
             return this;
         }
     
-    private static Integer generate_random_integer(Random a_random)
+    public Block populate_with_prefilled_cells(int a_prefilled_amount)
+            /* 
+            Populates a block with unique random numbers between 1 - 9
+            based on a_prefilled_amount (no duplicates).
+            */
         {
+            Integer l_index = generate_random_integer();
+            
+            for(int i=1; i<=a_prefilled_amount; i++)
+                {
+                    this.set(l_index, generate_random_integer());
+                }
+
+            return this;
+        }
+    
+    private static Integer generate_random_integer()
+        {
+          Random l_random = new Random();
           // calculate the range, casting int --> long
           int l_start = 1;
           int l_end = 9;
           long l_range = (long)l_end - (long)l_start + 1;
           // calculate a percentage of the range, where 0 <= frac < range
-          long l_fraction = (long)(l_range * a_random.nextDouble());
-          int l_random_number =  (int)(l_fraction + l_start);
+          long l_fraction = (long)(l_range * l_random.nextDouble());
+          int l_result =  (int)(l_fraction + l_start);
           // return generated random number in a range of l_start to l_end
-          return l_random_number;
+          return l_result;
         }
     
     private void capacity()
