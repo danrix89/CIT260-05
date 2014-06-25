@@ -10,6 +10,12 @@ Class Description: Representation of a 3x3 block of cells on a sudoku game board
 public class Block extends ArrayList <Integer>
 {
     
+    Block()
+            // Default constructor.
+        {
+            //populate_with_prefilled_cells(3);
+        }
+    
     public Block populate()
             /* 
             Populates an entire block with generated unique random integers
@@ -43,10 +49,23 @@ public class Block extends ArrayList <Integer>
             */
         {
             Integer l_index = generate_random_integer();
+            Integer l_previous_index = l_index;
             
             for(int i=1; i<=a_prefilled_amount; i++)
                 {
-                    this.set(l_index, generate_random_integer());
+                    if (l_index == l_previous_index && i != 1)
+                        {
+                            while (l_index == l_previous_index)
+                                {
+                                    l_index = generate_random_integer();
+                                }
+                        }
+                    else
+                        {
+                            this.set(l_index, generate_random_integer());
+                        }
+                    l_previous_index = l_index;
+                    l_index = generate_random_integer();
                 }
 
             return this;

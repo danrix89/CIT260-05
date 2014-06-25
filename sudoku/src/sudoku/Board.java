@@ -1,6 +1,8 @@
 package sudoku;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /*
 Class Description: Representation of a sudoku game board with 9 columns, 9 rows,
@@ -147,15 +149,19 @@ public class Board extends ArrayList <Block>
                                                 }
                                             else if (y==2 && x==2) // If the iterator is on the last cell of a block...
                                                 {
-                                                    // ...check if that cell has any duplicates...
+                                                    // ...check if there are any row duplicates...
                                                     int[] l_row = row_for_checking(a_board, Y, X, y, x);
                                                     boolean l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                    // ...check if there are any column duplicates...
                                                     int[] l_column = column_for_checking(a_board, Y, X, y, x);
                                                     boolean l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                    
                                                     if (l_has_row_duplicates==true || l_has_column_duplicates==true)
                                                         {
-                                                            // ...if there are any duplicates, the block needs to be shuffled around or regenerated
-                                                            print("\n***Line 101: Please create a function to fix the last cell of a block having duplicates.***\n");
+                                                            a_board = reshuffle_one_block_on_the_board(a_board, Y, X);
+                                                            x=3;
+                                                            y=3;
+                                                            X--;
                                                         }
                                                 }
                                             else
@@ -166,9 +172,8 @@ public class Board extends ArrayList <Block>
                                                     boolean l_has_duplicates = true;
                                                     boolean l_has_row_duplicates = true;
                                                     boolean l_has_column_duplicates = true;
+                                                    boolean l_recheck_current_block = false;
                                                     
-                                                    int i = -1;
-                                                    int j = -1;
                                                     while(l_has_duplicates)
                                                         {
                                                             //ROW CHECKING
@@ -180,29 +185,47 @@ public class Board extends ArrayList <Block>
                                                                 {
                                                                     l_row = row_for_checking(a_board, Y, X, y, x);
                                                                     l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                                    int i = -1;
                                                                     while(l_has_row_duplicates)
                                                                         {
                                                                             i++;
-                                                                            if (i > l_candidates.length - 1) // This needs to be fixed, so that it never happens
+                                                                            if (i > l_candidates.length -1) 
                                                                                 {
+                                                                                    // This needs to be fixed, so that it never happens
                                                                                     // If the iterator is now bigger than the size of 'candidates' array, display the below message
-                                                                                    print("\n***Line 131: i is greater than l_candidates.length - 1 ***\n");
+                                                                                    a_board = reshuffle_one_block_on_the_board(a_board, Y, X);
+                                                                                    l_recheck_current_block = true;
+                                                                                    //print("\n***Line 214: i is greater than l_candidates.length - 1 ***\n");
                                                                                 }
-                                                                            int l_swap = a_board[Y][X][y][x];
-                                                                            a_board[Y][X][y][x] = l_candidates[i];
-                                                                            l_candidates[i] = l_swap;
-                                                                            l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
-                                                                            if (l_has_row_duplicates)
+                                                                            else
                                                                                 {
-                                                                                    // If there are still duplicates after swapping, swap the numbers back and re-do the loop
-                                                                                    l_swap = a_board[Y][X][y][x];
+                                                                                    int l_swap = a_board[Y][X][y][x];
                                                                                     a_board[Y][X][y][x] = l_candidates[i];
                                                                                     l_candidates[i] = l_swap;
+                                                                                    l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                                                    if (l_has_row_duplicates)
+                                                                                        {
+                                                                                            // If there are still duplicates after swapping, swap the numbers back and re-do the loop
+                                                                                            l_swap = a_board[Y][X][y][x];
+                                                                                            a_board[Y][X][y][x] = l_candidates[i];
+                                                                                            l_candidates[i] = l_swap;
+                                                                                        }
                                                                                 }
                                                                         }
                                                                 }
                                                             //COLUMN CHECKING
-                                                            if (Y==0 && y==0) // This means there are no cells above the current cell...
+                                                            if (l_recheck_current_block)
+                                                                {
+                                                                    // Mark all of these false, so that the current block can be rechecked... 
+                                                                    l_has_column_duplicates = false;
+                                                                    l_has_row_duplicates = false;
+                                                                    l_has_duplicates = false;
+                                                                    // ...reset the iterators so the current block will be rechecked.
+                                                                    x=3;
+                                                                    y=3;
+                                                                    X--;
+                                                                }
+                                                            else if (Y==0 && y==0) // This means there are no cells above the current cell...
                                                                 {
                                                                     l_has_column_duplicates = false; // ...since there is nothing above, there are no duplicates
                                                                 }
@@ -210,19 +233,31 @@ public class Board extends ArrayList <Block>
                                                                 {
                                                                     l_column = column_for_checking(a_board, Y, X, y, x);
                                                                     l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                                    int j = -1;
                                                                     while(l_has_column_duplicates)
                                                                         {
                                                                             j++;
-                                                                            int l_swap = a_board[Y][X][y][x];
-                                                                            a_board[Y][X][y][x] = l_candidates[j];
-                                                                            l_candidates[j] = l_swap;
-                                                                            l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
-                                                                            if (l_has_column_duplicates)
+                                                                            if (j > l_candidates.length -1) 
                                                                                 {
-                                                                                    // If there are still duplicates after swapping, swap the numbers back and re-do the loop
-                                                                                    l_swap = a_board[Y][X][y][x];
+                                                                                    // This needs to be fixed, so that it never happens
+                                                                                    // If the iterator is now bigger than the size of 'candidates' array, display the below message
+                                                                                    a_board = reshuffle_one_block_on_the_board(a_board, Y, X);
+                                                                                    l_recheck_current_block = true;
+                                                                                    //print("\n***Line 214: i is greater than l_candidates.length - 1 ***\n");
+                                                                                }
+                                                                            else
+                                                                                {
+                                                                                    int l_swap = a_board[Y][X][y][x];
                                                                                     a_board[Y][X][y][x] = l_candidates[j];
                                                                                     l_candidates[j] = l_swap;
+                                                                                    l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                                                    if (l_has_column_duplicates)
+                                                                                        {
+                                                                                            // If there are still duplicates after swapping, swap the numbers back and re-do the loop
+                                                                                            l_swap = a_board[Y][X][y][x];
+                                                                                            a_board[Y][X][y][x] = l_candidates[j];
+                                                                                            l_candidates[j] = l_swap;
+                                                                                        }
                                                                                 }
                                                                         }
                                                                 }
@@ -238,6 +273,32 @@ public class Board extends ArrayList <Block>
                         }
                 }
         }
+    
+    private int[][][][] reshuffle_one_block_on_the_board(int[][][][] a_board, int Y, int X)
+            //
+    {
+        // Create a list of numbers 1-9 to repopulate the block with...
+        List<Integer> l_list = new ArrayList<Integer>(9);
+        int l_number=1;
+        for(int i=0; i<=8; i++)
+            {
+                l_list.add(i, l_number);
+                l_number++;
+            }
+        //... shuffle the list of numbers...
+        Collections.shuffle(l_list);
+        //... place the numbers into the block
+        int k = -1;
+        for (int i=0; i<=2; i++)
+            {
+                for (int j=0; j<=2; j++)
+                {
+                    k++;
+                    a_board[Y][X][i][j] = l_list.get(k);
+                }
+            }
+        return a_board;
+    }
     
     private boolean has_row_duplicates (int[][][][] a_board, int[] a_row, int Y, int X, int y, int x)
             // Checks for duplicates in the row to the left of the cell at [Y][X][y][x].
