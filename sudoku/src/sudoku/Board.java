@@ -93,13 +93,13 @@ public class Board extends ArrayList <Block>
                 {
                     for(int X=0; X<=2; X++)
                         {
-                            l_board[Y][X] = generate_block();
+                            l_board[Y][X] = new_generated_block();
                         }
                 }
             return l_board;
         }
     
-    private int[][] generate_block()
+    private int[][] new_generated_block()
             // Genarates the current block selected from 'a_board' using Y and X.
         {
             // Create a local l_block...
@@ -193,7 +193,7 @@ public class Board extends ArrayList <Block>
                                                     
                                                     if (l_has_row_duplicates==true || l_has_column_duplicates==true)
                                                         {
-                                                            a_board[Y][X] = generate_block();
+                                                            a_board[Y][X] = new_generated_block();
                                                             x=3;
                                                             y=3;
                                                             X--;
@@ -210,95 +210,98 @@ public class Board extends ArrayList <Block>
                                                     
                                                     while(l_has_duplicates)
                                                         {
-                                                            //ROW CHECKING
-                                                            if (X==0 && x==0) // This means there are no cells to the left of the current cell...
-                                                                {
-                                                                    l_has_row_duplicates = false; // ...since there is nothing to the left, there are no duplicates
-                                                                }
-                                                            else
-                                                                {
-                                                                    
-                                                                    l_row = row_for_checking(a_board, Y, X, y, x);
-                                                                    l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
-                                                                    int i = 0;
-                                                                    while(l_has_row_duplicates)
-                                                                        {
-                                                                            int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
-                                                                            int l_swap;
-                                                                            // Swap the current cell with the candidate value...
-                                                                            l_swap = a_board[Y][X][y][x];
-                                                                            a_board[Y][X][y][x] = l_candidates[i];
-                                                                            l_candidates[i] = l_swap;
-                                                                            // ...after swapping check for row duplicates
-                                                                            l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
-                                                                            // If there are still duplicates after swapping...
-                                                                            if (l_has_row_duplicates)
-                                                                                {
-                                                                                    //...swap the numbers back and re-do the loop
-                                                                                    l_swap = a_board[Y][X][y][x];
-                                                                                    a_board[Y][X][y][x] = l_candidates[i];
-                                                                                    l_candidates[i] = l_swap;
-                                                                                    // ...increment 'i' to try the next candidate number
-                                                                                    i++;
-                                                                                    if (i > l_candidates.length - 1)
-                                                                                        {
-                                                                                            a_board[Y][X] = generate_block();
-                                                                                            l_recheck_current_block = true;
-                                                                                            l_has_row_duplicates = false;
-                                                                                        }
-                                                                                }
-                                                                        }
-                                                                }
-                                                            //COLUMN CHECKING
-                                                            if (l_recheck_current_block)
-                                                                {
-                                                                    // Mark all of these false, so all the 'while' loops will break... 
-                                                                    l_has_column_duplicates = false;
-                                                                    l_has_row_duplicates = false;
-                                                                    l_has_duplicates = false;
-                                                                    // ...reset the iterators so the current block will be rechecked.
-                                                                    x=3;
-                                                                    y=3;
-                                                                    X--;
-                                                                }
-                                                            else if (Y==0 && y==0) // This means there are no cells above the current cell...
-                                                                {
-                                                                    l_has_column_duplicates = false; // ...since there is nothing above, there are no duplicates
-                                                                }
-                                                            else
-                                                                {
-                                                                    
-                                                                    l_column = column_for_checking(a_board, Y, X, y, x);
-                                                                    l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
-                                                                    int i = 0;
-                                                                    while(l_has_column_duplicates)
-                                                                        {
-                                                                            int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
-                                                                            int l_swap;
-                                                                            // Swap the current cell with the candidate value...
-                                                                            l_swap = a_board[Y][X][y][x];
-                                                                            a_board[Y][X][y][x] = l_candidates[i];
-                                                                            l_candidates[i] = l_swap;
-                                                                            // ...after swapping check for column duplicates
-                                                                            l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
-                                                                            // If there are still duplicates after swapping...
-                                                                            if (l_has_column_duplicates)
-                                                                                {
-                                                                                    //...swap the numbers back and re-do the loop
-                                                                                    l_swap = a_board[Y][X][y][x];
-                                                                                    a_board[Y][X][y][x] = l_candidates[i];
-                                                                                    l_candidates[i] = l_swap;
-                                                                                    // ...increment 'i' to try the next candidate number
-                                                                                    i++;
-                                                                                    if (i > l_candidates.length - 1)
-                                                                                        {
-                                                                                            a_board[Y][X] = generate_block();
-                                                                                            l_recheck_current_block = true;
-                                                                                            l_has_column_duplicates = false;
-                                                                                        }                                                             
-                                                                                }
-                                                                        }
-                                                                }
+                                                            /*********************************
+                                                               CHECKING ROWS FOR DUPLICATES
+                                                            **********************************/
+                                                                if (X==0 && x==0) // This means there are no cells to the left of the current cell...
+                                                                    {
+                                                                        l_has_row_duplicates = false; //...since there is nothing to the left, there can't be duplicates
+                                                                    }
+                                                                else
+                                                                    {
+                                                                        l_row = row_for_checking(a_board, Y, X, y, x);
+                                                                        l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                                        int i = 0;
+                                                                        while(l_has_row_duplicates)
+                                                                            {
+                                                                                int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
+                                                                                int l_swap;
+                                                                                // Swap the current cell with the candidate value...
+                                                                                l_swap = a_board[Y][X][y][x];
+                                                                                a_board[Y][X][y][x] = l_candidates[i];
+                                                                                l_candidates[i] = l_swap;
+                                                                                // ...after swapping check for row duplicates
+                                                                                l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
+                                                                                // If there are still duplicates after swapping...
+                                                                                if (l_has_row_duplicates)
+                                                                                    {
+                                                                                        //...swap the numbers back and re-do the loop
+                                                                                        l_swap = a_board[Y][X][y][x];
+                                                                                        a_board[Y][X][y][x] = l_candidates[i];
+                                                                                        l_candidates[i] = l_swap;
+                                                                                        // ...increment 'i' to try the next candidate number
+                                                                                        i++;
+                                                                                        if (i > l_candidates.length - 1)
+                                                                                            {
+                                                                                                a_board[Y][X] = new_generated_block();
+                                                                                                l_recheck_current_block = true;
+                                                                                                l_has_row_duplicates = false;
+                                                                                            }
+                                                                                    }
+                                                                            }
+                                                                    }
+                                                            /***********************************
+                                                               CHECKING COLUMNS FOR DUPLICATES
+                                                            ************************************/
+                                                                if (l_recheck_current_block)
+                                                                    {
+                                                                        // Mark all of these false, so all the 'while' loops will break... 
+                                                                        l_has_column_duplicates = false;
+                                                                        l_has_row_duplicates = false;
+                                                                        l_has_duplicates = false;
+                                                                        // ...reset the iterators so the current block will be rechecked.
+                                                                        x=3;
+                                                                        y=3;
+                                                                        X--;
+                                                                    }
+                                                                else if (Y==0 && y==0) // This means there are no cells above the current cell...
+                                                                    {
+                                                                        l_has_column_duplicates = false; // ...since there is nothing above, there are no duplicates
+                                                                    }
+                                                                else
+                                                                    {
+
+                                                                        l_column = column_for_checking(a_board, Y, X, y, x);
+                                                                        l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                                        int i = 0;
+                                                                        while(l_has_column_duplicates)
+                                                                            {
+                                                                                int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
+                                                                                int l_swap;
+                                                                                // Swap the current cell with the candidate value...
+                                                                                l_swap = a_board[Y][X][y][x];
+                                                                                a_board[Y][X][y][x] = l_candidates[i];
+                                                                                l_candidates[i] = l_swap;
+                                                                                // ...after swapping check for column duplicates
+                                                                                l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
+                                                                                // If there are still duplicates after swapping...
+                                                                                if (l_has_column_duplicates)
+                                                                                    {
+                                                                                        //...swap the numbers back and re-do the loop
+                                                                                        l_swap = a_board[Y][X][y][x];
+                                                                                        a_board[Y][X][y][x] = l_candidates[i];
+                                                                                        l_candidates[i] = l_swap;
+                                                                                        // ...increment 'i' to try the next candidate number
+                                                                                        i++;
+                                                                                        if (i > l_candidates.length - 1)
+                                                                                            {
+                                                                                                a_board[Y][X] = new_generated_block();
+                                                                                                l_recheck_current_block = true;
+                                                                                                l_has_column_duplicates = false;
+                                                                                            }                                                             
+                                                                                    }
+                                                                            }
+                                                                    }
                                                             // If there are no row or column duplicates then then has_duplicates = false
                                                             if (l_has_row_duplicates==false && l_has_column_duplicates==false)
                                                                 {

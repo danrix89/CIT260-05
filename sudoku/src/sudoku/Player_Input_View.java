@@ -22,7 +22,7 @@ public class Player_Input_View {
             boolean l_boolean = true;
             while (l_boolean) 
                 {
-                print("\n\t" + a_player.name + ", please enter something or \"R\" to return.");          
+                print("\n\n\t" + a_player.name + ", please enter something or \"R\" to return.");          
                 l_input = new Scanner(System.in).nextLine();
                 if (l_input == null  || l_input.length() < 1) 
                     {
