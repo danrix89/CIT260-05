@@ -20,7 +20,7 @@ public class Custom_Game_Menu_View extends Menu_View
             print("\n\t===============================================================");
             print("\tEnter the letter associated with one of the following commands:");
 
-            for (int i = 0; i < Custom_Game_Menu_View.menu_items.length; i++) 
+            for (int i = 0; i < menu_items.length; i++) 
                 {
                 print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
                 }
@@ -76,10 +76,10 @@ public class Custom_Game_Menu_View extends Menu_View
     private Custom_Game_Menu_Control internal_custom_game_menu_control = new Custom_Game_Menu_Control();
             // Internal instance of Main_Menu_Control
     
-    private final static String[][] menu_items = {
-                                                    {"P", "Set number of Prefilled cells"},
-                                                    {"H", "Set number of Hints"},        
-                                                    {"X", "Exit game"}        
-                                                 };
+    public String[][] menu_items = {
+                                    {"P", "Set number of Prefilled cells"},
+                                    {"H", "Set number of Hints"},        
+                                    {"X", "Exit game"}        
+                                   };
     
 }

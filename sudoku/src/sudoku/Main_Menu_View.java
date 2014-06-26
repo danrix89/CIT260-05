@@ -20,7 +20,7 @@ public class Main_Menu_View extends Menu_View
             print("\n\t===============================================================");
             print("\tEnter the letter associated with one of the following commands:");
 
-            for (int i = 0; i < Main_Menu_View.menu_items.length; i++) 
+            for (int i = 0; i < menu_items.length; i++) 
                 {
                 print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
                 }
@@ -73,11 +73,11 @@ public class Main_Menu_View extends Menu_View
     private Main_Menu_Control internal_main_menu = new Main_Menu_Control();
             // Internal instance of Main_Menu_Control
     
-    private final static String[][] menu_items = {
-                                                    {"N", "New game"},
-                                                    {"H", "Help menu"}, 
-                                                    {"D", "Set difficulty"},        
-                                                    {"X", "Exit game"}        
-                                                 };
+    public String[][] menu_items = {
+                                    {"N", "New game"},
+                                    {"H", "Help menu"}, 
+                                    {"D", "Set difficulty"},        
+                                    {"X", "Exit game"}        
+                                   };
 
 }

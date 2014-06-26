@@ -19,7 +19,7 @@ public final class Difficulty_Menu_View extends Menu_View
             print("\n\t===============================================================");
             print("\tEnter the letter associated with one of the following commands:");
 
-            for (int i = 0; i < Difficulty_Menu_View.menu_items.length; i++) 
+            for (int i = 0; i < menu_items.length; i++) 
                 {
                 print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
                 }
@@ -58,12 +58,12 @@ public final class Difficulty_Menu_View extends Menu_View
             return;
         }    
     
-    private final static String[][] menu_items = {
-                                                    {"A", "25 cells are prefilled with 3 hints"},
-                                                    {"B", "20 cells are prefilled with 2 hints"}, 
-                                                    {"C", "10 cells are prefilled with 1 hints"},
-                                                    {"X", "Exit Menu"}        
-                                                 };
+    public String[][] menu_items = {
+                                    {"A", "25 cells are prefilled with 3 hints"},
+                                    {"B", "20 cells are prefilled with 2 hints"}, 
+                                    {"C", "10 cells are prefilled with 1 hints"},
+                                    {"X", "Exit Menu"}        
+                                   };
 
 }
 

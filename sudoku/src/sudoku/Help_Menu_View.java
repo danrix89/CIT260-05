@@ -20,7 +20,7 @@ public class Help_Menu_View extends Menu_View
             print("\n\t===============================================================");
             print("\tEnter the letter associated with one of the following commands:");
 
-            for (int i = 0; i < Help_Menu_View.menu_items.length; i++) 
+            for (int i = 0; i < menu_items.length; i++) 
                 {
                 print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
                 }
@@ -65,12 +65,12 @@ public class Help_Menu_View extends Menu_View
     private Help_Menu_Control internal_help_menu = new Help_Menu_Control();
             // Internal instance of Help_Menu_Control
     
-    private final static String[][] menu_items = {
-                                                    {"R", "Rules of Sudoku"},
-                                                    {"B", "Board layout"}, 
-                                                    {"D", "Difficulty definitions"},
-                                                    {"S", "Scoring in Sudoku"},        
-                                                    {"X", "Exit Menu"}        
-                                                 };
+    public String[][] menu_items = {
+                                    {"R", "Rules of Sudoku"},
+                                    {"B", "Board layout"}, 
+                                    {"D", "Difficulty definitions"},
+                                    {"S", "Scoring in Sudoku"},        
+                                    {"X", "Exit Menu"}        
+                                   };
 
 }
