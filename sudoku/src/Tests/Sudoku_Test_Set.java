@@ -142,40 +142,40 @@ public class Sudoku_Test_Set {
     
     // Test code provided by Devin Bost...
     
-    public void board_is_cast_to_primitive_version_working_returns_true() 
-        {
-            Board l_board = new Board();
-            print("board_is_cast_to_primitive_version_working_returns_true() starting.");
-            l_board.populate();
-            for (int i = 0; i < 9; i++) 
-                {
-                    for (int j = 0; j < 9; j++) 
-                        {
-                        print("l_board[" + i + "][" + j + "] = " + l_board.get(i).get(j) + ";");
-                        }
-                }
-            // I was planning to create a test object from the string contents printed in the above text, but I figured out how to solve the problem first.
-            // A proper unit test will still contain this test object because it is not good for a unit test to depend on your code's data.
-            print("Done printing board contents.");
-            int [][] l_primitive_board = new int[9][9];
-
-            ArrayList <Integer> l_block = new ArrayList <Integer>();
-
-            for (int i=0; i<9; i++)//iterating over blocks
-                {
-                    l_block = l_board.get(i);
-                    int[] l_primitive_block = new int[9];
-                    for (int j=0; j<9; j++)//iterating over the cells (or integers)
-                        {
-                            l_primitive_block[j] = l_block.get(j);
-                        }
-                    l_primitive_board[i] = l_primitive_block;
-
-                }       
-            print("board_is_cast_to_primitive_version_working_returns_true() done.");
-            // This is where we should perform an assertion to check if the test data matches what the loop produces.
-            //assertTrue(question instanceof Question);
-        }    
+//    public void board_is_cast_to_primitive_version_working_returns_true() 
+//        {
+//            Board l_board = new Board();
+//            print("board_is_cast_to_primitive_version_working_returns_true() starting.");
+//            l_board.populate();
+//            for (int i = 0; i < 9; i++) 
+//                {
+//                    for (int j = 0; j < 9; j++) 
+//                        {
+//                        print("l_board[" + i + "][" + j + "] = " + l_board.get(i).get(j) + ";");
+//                        }
+//                }
+//            // I was planning to create a test object from the string contents printed in the above text, but I figured out how to solve the problem first.
+//            // A proper unit test will still contain this test object because it is not good for a unit test to depend on your code's data.
+//            print("Done printing board contents.");
+//            int [][] l_primitive_board = new int[9][9];
+//
+//            ArrayList <Integer> l_block = new ArrayList <Integer>();
+//
+//            for (int i=0; i<9; i++)//iterating over blocks
+//                {
+//                    l_block = l_board.get(i);
+//                    int[] l_primitive_block = new int[9];
+//                    for (int j=0; j<9; j++)//iterating over the cells (or integers)
+//                        {
+//                            l_primitive_block[j] = l_block.get(j);
+//                        }
+//                    l_primitive_board[i] = l_primitive_block;
+//
+//                }       
+//            print("board_is_cast_to_primitive_version_working_returns_true() done.");
+//            // This is where we should perform an assertion to check if the test data matches what the loop produces.
+//            //assertTrue(question instanceof Question);
+//        }    
     
     
 }

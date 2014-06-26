@@ -7,21 +7,16 @@ import java.util.List;
 /*
 Class Description: Representation of a sudoku game board with 9 columns, 9 rows,
                     and 9 3x3 blocks.
-
-Terminology Explaination:
                 
-            * The upper-case  Y  or  Y_index  is to represent the Y axis on the entire board. 
-            * The upper-case  X  or  X_index  is to represent the X axis on the entire board.
-            * The lower-case  y  or  y_index  is to represent the y axis on a block.
-            * The lower-case  x  or  x_index  is to represent the x axis on a block.
+    * The upper-case  Y  or  Y_index  is to represent the Y axis on the entire board. 
+    * The upper-case  X  or  X_index  is to represent the X axis on the entire board.
+    * The lower-case  y  or  y_index  is to represent the y axis on a block.
+    * The lower-case  x  or  x_index  is to represent the x axis on a block.
             
-            The first two set of coordinates give the coordinates of the block. The last two
-                            coordinates give the coordinates of the cell.
+The first two set of coordinates give the coordinates of the block. The last two coordinates 
+give the coordinates of the cell. The entire board coordinates look like this: 
 
-                            The entire board coordinates look like this:       
-                      [Y][X][y][x]   OR   [Y_index][X_index][y_index][x_index]
-
-
+    [Y][X][y][x]   OR   [Y_index][X_index][y_index][x_index]
 
                                                 X axis
                                  0                 1                 2 
@@ -59,70 +54,37 @@ Y axis    1   |         |     |     |     |     |     |     |  $  |  $  |  $  |
               |_        |_____|_____|_____|_____|_____|_____|_____|_____|_____|
 
 
-       The A symbol represents the cell at [0][0][1][2]
-       The Z symbol represents the cell at [2][1][2][0]
-
-            The $ symbol represents the block at [2][1]
-
+        The A symbol represents the cell at [0][0][1][2]
+        The Z symbol represents the cell at [2][1][2][0]
+        The $ symbol represents the block at [2][1]
 */
 
 public class Board extends ArrayList <Block>
 {
-
     
 // CONSTRUCTORS:   
     public Board()
             // Default constructor of Current.
             // This method is called whenever a new Board instance is created.
         {
-            this.populate();
-            set_primitive_version(this);
-            set_four_dimensional_primitive_board(primitive_version);
+            set_four_dimensional_board();
             sort_solution(four_dimensional_board);
             this.display();
         }
 
 // VARIABLES:   
-    private int[][]primitive_version;
-        // Primitive version of the Board.
-
     private int[][][][] four_dimensional_board;
         // Four dimensional version of the Board.
 
-    private Block block;
-
-    private int[][] p_block;
-
-    // Representation of a block on the Board.
-
 
 // SETTERS (PRIVATE):    
-    private void set_primitive_version(Board a_board)
-            // Sets 'primitive_version' with the post cast version of 'a_board'.
+    public void set_four_dimensional_board()
         {
-            int[][] l_board = cast_to_primitive_version(a_board);
-            primitive_version = l_board;
-        }   
-
-    private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
-            // Sets 'four_dimensional_primitive_board' with the post cast version of 'a_primitive_board'.
-        {
-            int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
-            four_dimensional_board = l_board;
-        }         
-
-
-// BASIC METHODS:
-    public void populate()
-            // Populates the board with generated unique random blocks.
-        {          
-            for (int i=0; i<=8; i++) // Loops across each block in the board.
-                {
-                block = new Block();
-                this.add(i, block.populate()); // Each time it creates a new block to place inside the board.
-                }
-        }
+            this.four_dimensional_board = populate_four_dimensional();
+        }    
     
+
+// BASIC METHODS:    
     public int[][][][] populate_four_dimensional()
             //
         {
@@ -137,36 +99,66 @@ public class Board extends ArrayList <Block>
             return l_board;
         }
     
+    private int[][] generate_block()
+            // Genarates the current block selected from 'a_board' using Y and X.
+        {
+            // Create a local l_block...
+            int[][] l_block = new int[3][3];
+            // ...create a list of numbers 1-9 to repopulate the block with...
+            List<Integer> l_list = new ArrayList<>(9);
+            int l_number=1;
+            for(int i=0; i<=8; i++)
+                {
+                    l_list.add(i, l_number);
+                    l_number++;
+                }
+            // ...shuffle the list of numbers...
+            Collections.shuffle(l_list);
+            // ...place the numbers into the block...
+            int k = -1;
+            for (int i=0; i<=2; i++)
+                {
+                    for (int j=0; j<=2; j++)
+                    {
+                        k++;
+                        l_block[i][j] = l_list.get(k);
+                    }
+                }
+            // ...returns the entire board with the newly generated block.
+            return l_block;
+        }
+    
     public void display()
             // Displays the board.
-            // This method will be re-written later when the sorting method is working.
         {            
-            for(int i=0; i<=8; i=i+3)
+            for(int Y=0; Y<=2; Y++)
                 {
-                    print("\nBlock # " + (i+1) + "\t\t     Block # " + (i+2) + "\t\t     Block # " + (i+3) + "\n\t\t");
-                    Block l_block_1 = this.get(i);
-                    Block l_block_2 = this.get(i + 1);
-                    Block l_block_3 = this.get(i + 2);
-                    
-                    for (int j=0; j<=8; j=j+3)
+                    print ("\n_____________________________________");
+                    for(int y=0; y<=2; y++)
                         {
-                            Integer l_cell_1 = l_block_1.get(j);
-                            Integer l_cell_2 = l_block_1.get(j + 1);
-                            Integer l_cell_3 = l_block_1.get(j + 2);
-                            Integer l_cell_4 = l_block_2.get(j);
-                            Integer l_cell_5 = l_block_2.get(j + 1);
-                            Integer l_cell_6 = l_block_2.get(j + 2);
-                            Integer l_cell_7 = l_block_3.get(j);
-                            Integer l_cell_8 = l_block_3.get(j + 1);
-                            Integer l_cell_9 = l_block_3.get(j + 2);
-
-                            print(
-                                  l_cell_1.toString() + "\t" + l_cell_2.toString() + "\t" + l_cell_3.toString() + "\t" 
-                                + l_cell_4.toString() + "\t" + l_cell_5.toString() + "\t" + l_cell_6.toString() + "\t"
-                                + l_cell_7.toString() + "\t" + l_cell_8.toString() + "\t" + l_cell_9.toString() + "\t"
-                                 );
+                            print ("\n|           |           |           |\n");
+                            for(int X=0; X<=2; X++)
+                                {
+                                    for(int x=0; x<=2; x++)
+                                        {
+                                            if (x==0)
+                                                {
+                                                    print("|");
+                                                }
+                                            else
+                                                {
+                                                    print(" "); 
+                                                }
+                                            print (" " + four_dimensional_board[Y][X][y][x] + " ");
+                                            if (X==2 && x==2)
+                                                {
+                                                    print("|");
+                                                }
+                                        }
+                                }
                         }
                 }
+            print ("\n_____________________________________");
         }
     
     
@@ -211,7 +203,6 @@ public class Board extends ArrayList <Block>
                                                 {
                                                     int[] l_row;
                                                     int[] l_column;
-                                                    int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
                                                     boolean l_has_duplicates = true;
                                                     boolean l_has_row_duplicates = true;
                                                     boolean l_has_column_duplicates = true;
@@ -226,11 +217,13 @@ public class Board extends ArrayList <Block>
                                                                 }
                                                             else
                                                                 {
+                                                                    
                                                                     l_row = row_for_checking(a_board, Y, X, y, x);
                                                                     l_has_row_duplicates = has_row_duplicates (a_board, l_row, Y, X, y, x);
                                                                     int i = 0;
                                                                     while(l_has_row_duplicates)
                                                                         {
+                                                                            int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
                                                                             int l_swap;
                                                                             // Swap the current cell with the candidate value...
                                                                             l_swap = a_board[Y][X][y][x];
@@ -274,11 +267,13 @@ public class Board extends ArrayList <Block>
                                                                 }
                                                             else
                                                                 {
+                                                                    
                                                                     l_column = column_for_checking(a_board, Y, X, y, x);
                                                                     l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
                                                                     int i = 0;
                                                                     while(l_has_column_duplicates)
                                                                         {
+                                                                            int[] l_candidates = candidates_for_swapping(a_board, Y, X, y, x);
                                                                             int l_swap;
                                                                             // Swap the current cell with the candidate value...
                                                                             l_swap = a_board[Y][X][y][x];
@@ -295,6 +290,12 @@ public class Board extends ArrayList <Block>
                                                                                     l_candidates[i] = l_swap;
                                                                                     // ...increment 'i' to try the next candidate number
                                                                                     i++;
+                                                                                    if (i > l_candidates.length - 1)
+                                                                                        {
+                                                                                            a_board[Y][X] = generate_block();
+                                                                                            l_recheck_current_block = true;
+                                                                                            l_has_column_duplicates = false;
+                                                                                        }                                                             
                                                                                 }
                                                                         }
                                                                 }
@@ -310,34 +311,73 @@ public class Board extends ArrayList <Block>
                         }
                 }
         }
-    
-    private int[][] generate_block()
-            // Genarates the current block selected from 'a_board' using Y and X.
+            
+    private int[] candidates_for_swapping (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
+            // Creates an array of candidates for swapping within the same block as the cell at [Y][X][y][x
+            // FYI THIS FUNCTION WORKS!!! :)
         {
-            // Create a local l_block...
-            int[][] l_block = new int[3][3];
-            // ...create a list of numbers 1-9 to repopulate the block with...
-            List<Integer> l_list = new ArrayList<>(9);
-            int l_number=1;
-            for(int i=0; i<=8; i++)
+            ArrayList<Integer> l_list = new ArrayList<>();
+            boolean l_first_loop_through = true;
+            for(int y=y_index; y>=y_index && y<3; y++)
                 {
-                    l_list.add(i, l_number);
-                    l_number++;
+                    for(int x=0; x<=2; x++)
+                            {
+                                if(y_index==2 && x_index==2)
+                                    {
+                                        // do nothing (there are no cells below and no cells to the right of the current cell)
+                                    }
+                                else if(x_index==0 && l_first_loop_through)
+                                    {
+                                        x=x+1;
+                                        l_list.add(a_board[Y_index][X_index][y][x]);
+                                        l_first_loop_through = false;
+                                    }                                
+                                else if(x_index==1 && l_first_loop_through)
+                                    {
+                                        x=x+2;
+                                        l_list.add(a_board[Y_index][X_index][y][x]);
+                                        l_first_loop_through = false;
+                                    }                                
+                                else if (x_index==2 && l_first_loop_through)
+                                    {
+                                        // There are no cells to the right...
+                                        x = 3; // ...needs to break the loop and increment y
+                                        l_first_loop_through = false;
+                                    }
+                                else 
+                                    {
+                                        l_list.add(a_board[Y_index][X_index][y][x]);
+                                    }
+                            }
                 }
-            // ...shuffle the list of numbers...
-            Collections.shuffle(l_list);
-            // ...place the numbers into the block...
-            int k = -1;
-            for (int i=0; i<=2; i++)
+            int[] l_candidates = new int[l_list.size()];
+            for(int i=0; i<l_candidates.length; i++)
                 {
-                    for (int j=0; j<=2; j++)
-                    {
-                        k++;
-                        l_block[i][j] = l_list.get(k);
-                    }
+                    l_candidates[i] = l_list.get(i);
                 }
-            // ...returns the entire board with the newly generated block.
-            return l_block;
+            return l_candidates;
+        }
+
+    
+//ROW METHODS:    
+    private int[] row_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
+            // Creates an array for checking duplicates in the row to the left of a cell at [Y][X][y][x].
+            // FYI THIS FUNCTION WORKS!!! :)
+        {
+            ArrayList<Integer> l_list = new ArrayList<>();
+            for(int X=0; X<=X_index; X++)
+                {
+                    for(int x=0; x<=2 && !(x==x_index && X==X_index); x++)
+                            {
+                                l_list.add(a_board[Y_index][X][y_index][x]);
+                            }
+                }
+            int[] l_row = new int[l_list.size()];
+            for(int i=0; i<l_row.length; i++)
+                {
+                    l_row[i] = l_list.get(i);
+                }
+            return l_row;
         }
     
     private boolean has_row_duplicates (int[][][][] a_board, int[] a_row, int Y, int X, int y, int x)
@@ -354,7 +394,29 @@ public class Board extends ArrayList <Block>
                 }
             return l_result;
         }
-
+ 
+    
+//COLUMN METHODS:     
+    private int[] column_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
+            // Creates an array for checking duplicates in the column above a cell at [Y][X][y][x].
+            // FYI THIS FUNCTION WORKS!!! :)
+        {
+            ArrayList<Integer> l_list = new ArrayList<>();
+            for(int Y=0; Y<=Y_index; Y++)
+                {
+                    for(int y=0; y<=2 && !(y==y_index && Y==Y_index); y++)
+                        {
+                            l_list.add(a_board[Y][X_index][y][x_index]);
+                        }
+                }
+            int[] l_column = new int[l_list.size()];
+            for(int i=0; i<l_column.length; i++)
+                {
+                    l_column[i] = l_list.get(i);
+                }
+            return l_column;
+        }
+    
     private boolean has_column_duplicates (int[][][][] a_board, int[] a_column, int Y, int X, int y, int x)
             // Checks for duplicates in the column above the cell at [Y][X][y][x].
         {
@@ -369,142 +431,70 @@ public class Board extends ArrayList <Block>
                 }
             return l_result;
         }
+     
     
-    private int[] candidates_for_swapping (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
-            // Creates an array of candidates for swapping within the same block as the cell at [Y][X][y][x].
+// CONSTANTS:    
+    private static void print(String a_message)
         {
-            int[] l_candidates = new int [8];
-            if(y_index==0)
-            {
-                l_candidates = new int[9-(x_index+1)];
-            }
-            if(y_index==1)
-            {
-                l_candidates = new int[6-(x_index+1)];
-            }
-            if(y_index==2)
-            {
-                l_candidates = new int[3-(x_index+1)];
-            }
-        
-            int i = -1;
-            boolean l_first_loop_through = true;
-            for(int y=y_index; y>=y_index && y<3; y++)
-                {
-                    for(int x=0; x<=2; x++)
-                            {
-                                if(y_index==2 && x_index==2)
-                                    {
-                                        // do nothing (there are no cells below and no cells to the right of the current cell)
-                                        l_candidates = new int[0];
-                                    }
-                                else if(x_index==0 && l_first_loop_through)
-                                    {
-                                        x=x+1;
-                                        i++;
-                                        l_candidates[i] = a_board[Y_index][X_index][y][x];
-                                        l_first_loop_through = false;
-                                    }                                
-                                else if(x_index==1 && l_first_loop_through)
-                                    {
-                                        x=x+2;
-                                        i++;
-                                        l_candidates[i] = a_board[Y_index][X_index][y][x];
-                                        l_first_loop_through = false;
-                                    }                                
-                                else if (x_index==2 && l_first_loop_through)
-                                    {
-                                        // do nothing (there are no cells to the right)
-                                        x = 3; // Needs to break the loop and increment y.
-                                        l_first_loop_through = false;
-                                    }
-                                else 
-                                    {
-                                        i++;
-                                        l_candidates[i] = a_board[Y_index][X_index][y][x];
-                                    }
-                            }
-                }
-           return l_candidates;
+            System.out.print(a_message);
         }
-    
-    private int[] row_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
-            // Creates an array for checking duplicates in the row to the left of a cell at [Y][X][y][x].
-        {
-            int[] l_row = new int [(X_index*3)];
-            if(x_index==1)
-                {
-                    if(X_index==0)
-                        {
-                            l_row = new int [1];
-                        }
-                    else
-                        {
-                            l_row = new int [((X_index+1)*3)+1];
-                        }
-                }
-            if(x_index==2)
-                {
-                    if(X_index==0)
-                        {
-                            l_row = new int [2];
-                        }
-                    else
-                        {
-                            l_row = new int [((X_index+1)*3)-1];
-                        }
-                }
-            int i = -1;
 
-            for(int X=0; X<=X_index; X++)
-                {
-                    for(int x=0; x<=2 && !(x==x_index && X==X_index); x++)
-                            {
-                                i++;
-                                l_row[i] = a_board[Y_index][X][y_index][x];
-                            }
-                }
-           return l_row;
-        }
     
-    private int[] column_for_checking (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
-            // Creates an array for checking duplicates in the column above a cell at [Y][X][y][x].
-        {
-            int[] l_column = new int [(Y_index+1*3)];
-            if(y_index==1)
-                {
-                    if(Y_index==0)
-                        {
-                            l_column = new int [1];
-                        }
-                    else
-                        {
-                            l_column = new int [((Y_index+1)*3)+1];
-                        }
-                }
-            if(y_index==2)
-                {
-                    if(Y_index==0)
-                        {
-                            l_column = new int [2];
-                        }
-                    else
-                        {
-                            l_column = new int [((Y_index+1)*3)-1];
-                        }
-                }
-            int i = -1;
+    
+    
+    
+    
+    
+    
+    
 
-            for(int Y=0; Y<=Y_index; Y++)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+// JUNK FUNCTIONS & METHODS:
+
+    public void display_board()
+            // Displays the board.
+            // This method will be re-written later when the sorting method is working.
+        {            
+            for(int i=0; i<=8; i=i+3)
                 {
-                    for(int y=0; y<=2 && !(y==y_index && Y==Y_index); y++)
-                            {
-                                i++;
-                                l_column[i] = a_board[Y][X_index][y][x_index];
-                            }
+                    print("\nBlock # " + (i+1) + "\t\t     Block # " + (i+2) + "\t\t     Block # " + (i+3) + "\n\t\t");
+                    Block l_block_1 = this.get(i);
+                    Block l_block_2 = this.get(i + 1);
+                    Block l_block_3 = this.get(i + 2);
+                    
+                    for (int j=0; j<=8; j=j+3)
+                        {
+                            Integer l_cell_1 = l_block_1.get(j);
+                            Integer l_cell_2 = l_block_1.get(j + 1);
+                            Integer l_cell_3 = l_block_1.get(j + 2);
+                            Integer l_cell_4 = l_block_2.get(j);
+                            Integer l_cell_5 = l_block_2.get(j + 1);
+                            Integer l_cell_6 = l_block_2.get(j + 2);
+                            Integer l_cell_7 = l_block_3.get(j);
+                            Integer l_cell_8 = l_block_3.get(j + 1);
+                            Integer l_cell_9 = l_block_3.get(j + 2);
+
+                            print(
+                                  l_cell_1.toString() + "\t" + l_cell_2.toString() + "\t" + l_cell_3.toString() + "\t" 
+                                + l_cell_4.toString() + "\t" + l_cell_5.toString() + "\t" + l_cell_6.toString() + "\t"
+                                + l_cell_7.toString() + "\t" + l_cell_8.toString() + "\t" + l_cell_9.toString() + "\t"
+                                 );
+                        }
                 }
-           return l_column;
         }
+
     
     private int[][] cast_to_primitive_version(Board a_board)
             // Casts the 'Board' into int[][].
@@ -575,13 +565,37 @@ public class Board extends ArrayList <Block>
                         }
                 }
             return l_block;
-        }
-    
-    
-// CONSTANTS:    
-    private static void print(String a_message)
+        }    
+
+    private void set_primitive_version(Board a_board)
+            // Sets 'primitive_version' with the post cast version of 'a_board'.
         {
-            System.out.println(a_message);
+            int[][] l_board = cast_to_primitive_version(a_board);
+            primitive_version = l_board;
+        }   
+
+    private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
+            // Sets 'four_dimensional_primitive_board' with the post cast version of 'a_primitive_board'.
+        {
+            int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
+            four_dimensional_board = l_board;
+        } 
+    
+    private int[][]primitive_version;
+        // Primitive version of the Board.
+
+
+    private Block block;
+    
+    public void populate_board()
+            // Populates the board with generated unique random blocks.
+        {          
+            for (int i=0; i<=8; i++) // Loops across each block in the board.
+                {
+                block = new Block();
+                this.add(i, block.populate()); // Each time it creates a new block to place inside the board.
+                }
         }
+
 
 }
