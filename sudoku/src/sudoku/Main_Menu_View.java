@@ -11,23 +11,12 @@ public class Main_Menu_View extends Menu_View
     public Main_Menu_View() 
             // default constructor
         {
+            super(Main_Menu_View.menu_items);
             get_player_input();
         } 
-    
-    public final void display()
-            // Displays Current.
-                {
-            print("\n\t===============================================================");
-            print("\tEnter the letter associated with one of the following commands:");
 
-            for (int i = 0; i < menu_items.length; i++) 
-                {
-                print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
-                }
-            print("\t===============================================================\n");
-        }
-
-    public final void get_player_input()
+    @Override
+    public void get_player_input()
             //Display the main menu and get the player's input
         {                    
             String l_command;
@@ -73,11 +62,11 @@ public class Main_Menu_View extends Menu_View
     private Main_Menu_Control internal_main_menu = new Main_Menu_Control();
             // Internal instance of Main_Menu_Control
     
-    public String[][] menu_items = {
-                                    {"N", "New game"},
-                                    {"H", "Help menu"}, 
-                                    {"D", "Set difficulty"},        
-                                    {"X", "Exit game"}        
-                                   };
+    public final static String[][] menu_items = {
+                                                    {"N", "New game"},
+                                                    {"H", "Help menu"}, 
+                                                    {"D", "Set difficulty"},        
+                                                    {"X", "Exit game"}        
+                                                };
 
 }

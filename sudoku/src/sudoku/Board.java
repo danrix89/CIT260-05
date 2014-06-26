@@ -85,17 +85,17 @@ public class Board extends ArrayList <Block>
 // VARIABLES:   
     private int[][]primitive_version;
         // Primitive version of the Board.
-    
+
     private int[][][][] four_dimensional_board;
         // Four dimensional version of the Board.
-    
+
     private Block block;
-    
+
     private int[][] p_block;
 
     // Representation of a block on the Board.
-    
-    
+
+
 // SETTERS (PRIVATE):    
     private void set_primitive_version(Board a_board)
             // Sets 'primitive_version' with the post cast version of 'a_board'.
@@ -110,8 +110,8 @@ public class Board extends ArrayList <Block>
             int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
             four_dimensional_board = l_board;
         }         
-    
-    
+
+
 // BASIC METHODS:
     public void populate()
             // Populates the board with generated unique random blocks.

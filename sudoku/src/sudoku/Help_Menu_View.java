@@ -11,22 +11,11 @@ public class Help_Menu_View extends Menu_View
     public Help_Menu_View() 
             // default constructor
         {
+            super(Help_Menu_View.menu_items);
             get_player_input();
         } 
     
-    public final void display()
-            // Displays Current.
-                {
-            print("\n\t===============================================================");
-            print("\tEnter the letter associated with one of the following commands:");
-
-            for (int i = 0; i < menu_items.length; i++) 
-                {
-                print("\t   " + menu_items[i][0] + "\t" + menu_items[i][1]);
-                }
-            print("\t===============================================================\n");
-        }
-
+    @Override
     public void get_player_input()
             // Display the help menu and get the player's input
         {                    
@@ -65,12 +54,12 @@ public class Help_Menu_View extends Menu_View
     private Help_Menu_Control internal_help_menu = new Help_Menu_Control();
             // Internal instance of Help_Menu_Control
     
-    public String[][] menu_items = {
-                                    {"R", "Rules of Sudoku"},
-                                    {"B", "Board layout"}, 
-                                    {"D", "Difficulty definitions"},
-                                    {"S", "Scoring in Sudoku"},        
-                                    {"X", "Exit Menu"}        
-                                   };
+    public final static String[][] menu_items = {
+                                                    {"R", "Rules of Sudoku"},
+                                                    {"B", "Board layout"}, 
+                                                    {"D", "Difficulty definitions"},
+                                                    {"S", "Scoring in Sudoku"},        
+                                                    {"X", "Exit Menu"}        
+                                                 };
 
 }
