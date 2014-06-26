@@ -5,7 +5,7 @@ import java.util.Scanner;
  Class Description: Representation of the sudoku difficulty menu.
 */
 
-public final class Difficulty_Menu_View
+public final class Difficulty_Menu_View extends Menu_View
 {
             public Difficulty_Menu_View() 
             // default constructor
@@ -64,11 +64,6 @@ public final class Difficulty_Menu_View
                                                     {"C", "10 cells are prefilled with 1 hints"},
                                                     {"X", "Exit Menu"}        
                                                  };
-    
-    private static void print(String a_message)
-        {
-            System.out.println(a_message);
-        }
 
 }
 

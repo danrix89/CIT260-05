@@ -1,4 +1,3 @@
-
 package sudoku;
 import java.util.Scanner;
 
@@ -6,7 +5,7 @@ import java.util.Scanner;
 Class Description: Representation of the sudoku Main Menu.
 */
 
-public class Custom_Game_Menu_View 
+public class Custom_Game_Menu_View extends Menu_View 
 {
 
     public Custom_Game_Menu_View() 
@@ -82,10 +81,5 @@ public class Custom_Game_Menu_View
                                                     {"H", "Set number of Hints"},        
                                                     {"X", "Exit game"}        
                                                  };
-    
-    private static void print(String a_message)
-        {
-            System.out.println(a_message);
-        }
     
 }

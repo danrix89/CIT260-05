@@ -82,6 +82,35 @@ public class Board extends ArrayList <Block>
             this.display();
         }
 
+// VARIABLES:   
+    private int[][]primitive_version;
+        // Primitive version of the Board.
+    
+    private int[][][][] four_dimensional_board;
+        // Four dimensional version of the Board.
+    
+    private Block block;
+    
+    private int[][] p_block;
+
+    // Representation of a block on the Board.
+    
+    
+// SETTERS (PRIVATE):    
+    private void set_primitive_version(Board a_board)
+            // Sets 'primitive_version' with the post cast version of 'a_board'.
+        {
+            int[][] l_board = cast_to_primitive_version(a_board);
+            primitive_version = l_board;
+        }   
+
+    private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
+            // Sets 'four_dimensional_primitive_board' with the post cast version of 'a_primitive_board'.
+        {
+            int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
+            four_dimensional_board = l_board;
+        }         
+    
     
 // BASIC METHODS:
     public void populate()
@@ -92,6 +121,20 @@ public class Board extends ArrayList <Block>
                 block = new Block();
                 this.add(i, block.populate()); // Each time it creates a new block to place inside the board.
                 }
+        }
+    
+    public int[][][][] populate_four_dimensional()
+            //
+        {
+            int[][][][] l_board = new int[3][3][3][3];
+            for(int Y=0; Y<=2; Y++)
+                {
+                    for(int X=0; X<=2; X++)
+                        {
+                            l_board[Y][X] = generate_block();
+                        }
+                }
+            return l_board;
         }
     
     public void display()
@@ -158,7 +201,7 @@ public class Board extends ArrayList <Block>
                                                     
                                                     if (l_has_row_duplicates==true || l_has_column_duplicates==true)
                                                         {
-                                                            a_board = generate_current_block_on_the_board(a_board, Y, X);
+                                                            a_board[Y][X] = generate_block();
                                                             x=3;
                                                             y=3;
                                                             X--;
@@ -204,6 +247,12 @@ public class Board extends ArrayList <Block>
                                                                                     l_candidates[i] = l_swap;
                                                                                     // ...increment 'i' to try the next candidate number
                                                                                     i++;
+                                                                                    if (i > l_candidates.length - 1)
+                                                                                        {
+                                                                                            a_board[Y][X] = generate_block();
+                                                                                            l_recheck_current_block = true;
+                                                                                            l_has_row_duplicates = false;
+                                                                                        }
                                                                                 }
                                                                         }
                                                                 }
@@ -262,62 +311,64 @@ public class Board extends ArrayList <Block>
                 }
         }
     
-    private int[][][][] generate_current_block_on_the_board(int[][][][] a_board, int Y, int X)
+    private int[][] generate_block()
             // Genarates the current block selected from 'a_board' using Y and X.
-    {
-        // Create a list of numbers 1-9 to repopulate the block with...
-        List<Integer> l_list = new ArrayList<Integer>(9);
-        int l_number=1;
-        for(int i=0; i<=8; i++)
-            {
-                l_list.add(i, l_number);
-                l_number++;
-            }
-        //... shuffle the list of numbers...
-        Collections.shuffle(l_list);
-        //... place the numbers into the block...
-        int k = -1;
-        for (int i=0; i<=2; i++)
-            {
-                for (int j=0; j<=2; j++)
+        {
+            // Create a local l_block...
+            int[][] l_block = new int[3][3];
+            // ...create a list of numbers 1-9 to repopulate the block with...
+            List<Integer> l_list = new ArrayList<>(9);
+            int l_number=1;
+            for(int i=0; i<=8; i++)
                 {
-                    k++;
-                    a_board[Y][X][i][j] = l_list.get(k);
+                    l_list.add(i, l_number);
+                    l_number++;
                 }
-            }
-        // ...returns the entire board with the newly generated block.
-        return a_board;
-    }
+            // ...shuffle the list of numbers...
+            Collections.shuffle(l_list);
+            // ...place the numbers into the block...
+            int k = -1;
+            for (int i=0; i<=2; i++)
+                {
+                    for (int j=0; j<=2; j++)
+                    {
+                        k++;
+                        l_block[i][j] = l_list.get(k);
+                    }
+                }
+            // ...returns the entire board with the newly generated block.
+            return l_block;
+        }
     
     private boolean has_row_duplicates (int[][][][] a_board, int[] a_row, int Y, int X, int y, int x)
             // Checks for duplicates in the row to the left of the cell at [Y][X][y][x].
-    {
-        boolean l_result = false;
-        
-        for (int ic_int : a_row) // Loops across the row to the left of the current cell...
-            {
-                if (ic_int == a_board[Y][X][y][x]) // ...checks for duplicates
+        {
+            boolean l_result = false;
+
+            for (int ic_int : a_row) // Loops across the row to the left of the current cell...
                 {
-                    l_result = true;
+                    if (ic_int == a_board[Y][X][y][x]) // ...checks for duplicates
+                    {
+                        l_result = true;
+                    }
                 }
-            }
-        return l_result;
-    }
+            return l_result;
+        }
 
     private boolean has_column_duplicates (int[][][][] a_board, int[] a_column, int Y, int X, int y, int x)
             // Checks for duplicates in the column above the cell at [Y][X][y][x].
-    {
-        boolean l_result = false;
-        
-        for (int ic_int : a_column) // Loops across the column above the current cell...
-            {
-                if (ic_int == a_board[Y][X][y][x]) // ...checks for duplicates
+        {
+            boolean l_result = false;
+
+            for (int ic_int : a_column) // Loops across the column above the current cell...
                 {
-                    l_result = true;
+                    if (ic_int == a_board[Y][X][y][x]) // ...checks for duplicates
+                    {
+                        l_result = true;
+                    }
                 }
-            }
-        return l_result;
-    }
+            return l_result;
+        }
     
     private int[] candidates_for_swapping (int[][][][] a_board, int Y_index, int X_index, int y_index, int x_index)
             // Creates an array of candidates for swapping within the same block as the cell at [Y][X][y][x].
@@ -454,30 +505,6 @@ public class Board extends ArrayList <Block>
                 }
            return l_column;
         }
-
-    private int[] cast_to_full_board (int[][][][] a_board)
-            // Casts the four dimensional board to a two dimensional board.
-            // This method is not used and probably won't ever be, but don't get rid of it just yet.
-        {
-            int l_index = -1;
-            int[] l_board = new int[81];
-
-            for (int Y=0; Y<3; Y++)
-                    {
-                            for (int y=0; y<3; y++)
-                                    {
-                                            for (int X=0; X<3; X++)
-                                                    {
-                                                            for (int x=0; x<3; x++)
-                                                                    {
-                                                                            l_index ++;
-                                                                            l_board[l_index] = a_board[Y][X][y][x];
-                                                                    }
-                                                    }
-                                    }
-                    }
-            return l_board;        
-        }
     
     private int[][] cast_to_primitive_version(Board a_board)
             // Casts the 'Board' into int[][].
@@ -549,44 +576,6 @@ public class Board extends ArrayList <Block>
                 }
             return l_block;
         }
-    
-    
-// PROPERTIES:   
-    int[] one_dimensional_board;
-    int[][]primitive_version;
-    int[][][][] four_dimensional_board;
-    Block block; 
-    
-
-    
-// SETTINGS:    
-    private void set_primitive_version(Board a_board)
-            // Sets 'primitive_version' with the post cast version of 'a_board'.
-        {
-            int[][] l_board = cast_to_primitive_version(a_board);
-            primitive_version = l_board;
-        }   
-
-    private void set_four_dimensional_primitive_board(int[][] a_primitive_board)
-            // Sets 'four_dimensional_primitive_board' with the post cast version of 'a_primitive_board'.
-        {
-            int[][][][] l_board = cast_to_four_dimensional_board(a_primitive_board);
-            four_dimensional_board = l_board;
-        }   
-
-    private void set_one_dimensional_version(Board a_board)
-            // Sets 'primitive_version' with the post cast version of 'a_board'.
-        {
-            int[] l_one_dimensional_board;
-            int[][] l_two_dimensional_board;
-            int[][][][] l_four_dimensional_board; 
-        
-            l_two_dimensional_board = cast_to_primitive_version(a_board);
-            l_four_dimensional_board = cast_to_four_dimensional_board(l_two_dimensional_board);
-            l_one_dimensional_board = cast_to_full_board(l_four_dimensional_board);
-            
-            one_dimensional_board = l_one_dimensional_board;
-        }           
     
     
 // CONSTANTS:    

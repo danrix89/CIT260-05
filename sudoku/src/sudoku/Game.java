@@ -21,6 +21,7 @@ public class Game
     
     Player player;
     Board board;
+    int[][][][] p_board;
     Timer timer;
 
     private void print(String a_message)

@@ -1,12 +1,11 @@
 package sudoku;
-
 import java.util.Scanner;
 
 /*
 Class Description: Representation of the Help Menu interface.
 */
 
-public class Help_Menu_View 
+public class Help_Menu_View extends Menu_View
 {
 
     public Help_Menu_View() 
@@ -73,10 +72,5 @@ public class Help_Menu_View
                                                     {"S", "Scoring in Sudoku"},        
                                                     {"X", "Exit Menu"}        
                                                  };
-    
-    private static void print(String a_message)
-        {
-            System.out.println(a_message);
-        }
 
 }

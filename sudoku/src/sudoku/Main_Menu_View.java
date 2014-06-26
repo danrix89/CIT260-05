@@ -1,12 +1,11 @@
 package sudoku;
-
 import java.util.Scanner;
 
 /*
 Class Description: Representation of the sudoku Main Menu.
 */
 
-public class Main_Menu_View
+public class Main_Menu_View extends Menu_View
 {    
 
     public Main_Menu_View() 
@@ -80,10 +79,5 @@ public class Main_Menu_View
                                                     {"D", "Set difficulty"},        
                                                     {"X", "Exit game"}        
                                                  };
-    
-    private static void print(String a_message)
-        {
-            System.out.println(a_message);
-        }
 
 }
