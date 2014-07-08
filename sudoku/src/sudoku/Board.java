@@ -3,10 +3,12 @@ package sudoku;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /*
 Class Description: Representation of a sudoku game board with 9 columns, 9 rows,
-                    and 9 3x3 blocks.
+                    and 9 3x3 blocks. The board is laid out as a 4 dimensional
+                    board (see below explantation).
                 
     * The upper-case  Y  or  Y_index  is to represent the Y axis on the entire board. 
     * The upper-case  X  or  X_index  is to represent the X axis on the entire board.
@@ -67,20 +69,22 @@ public class Board extends ArrayList <Block>
             // Default constructor of Current.
             // This method is called whenever a new Board instance is created.
         {
-            set_four_dimensional_board();
-            sort_solution(four_dimensional_board);
+            set_four_dimensional_board(new int[3][3][3][3]);
+            //sort_solution(four_dimensional_board);
+            build_board();
             this.display();
         }
 
 // VARIABLES:   
     private int[][][][] four_dimensional_board;
-        // Four dimensional version of the Board.
+            // Four dimensional version of the Board.
 
 
 // SETTERS (PRIVATE):    
-    public void set_four_dimensional_board()
+    public void set_four_dimensional_board(int[][][][] a_board)
         {
-            this.four_dimensional_board = populate_four_dimensional();
+            assert a_board.length==3 : "require_3_element_four_dimensional_board";
+            four_dimensional_board = a_board;
         }    
     
 
@@ -190,10 +194,12 @@ public class Board extends ArrayList <Block>
                                                     // ...check if there are any column duplicates...
                                                     int[] l_column = column_for_checking(a_board, Y, X, y, x);
                                                     boolean l_has_column_duplicates = has_column_duplicates (a_board, l_column, Y, X, y, x);
-                                                    
+                                                    // ...If there are any duplicates...
                                                     if (l_has_row_duplicates==true || l_has_column_duplicates==true)
                                                         {
+                                                            // ...re-generate the current block...
                                                             a_board[Y][X] = new_generated_block();
+                                                            // ...reset the the iterators for the cells and block so it will re-check that block
                                                             x=3;
                                                             y=3;
                                                             X--;
@@ -443,20 +449,236 @@ public class Board extends ArrayList <Block>
         }
 
     
-    
-    
-    
-    
-    
-    
-    
+// SWEEPING APPROACH:     
+    private void build_board()
+            // Builds board...
+        {
+            for(int yb=0; yb<=8; yb++)
+                {
+                    for(int xb=0; xb<=8; xb++)
+                        {
+                            int yi = yb;
+                            for(int xi=0; xi<=xb; xi++)
+                                {
+                                    int i = 1;
+                                    int l_random = generate_random_integer();
+                                    int[] l_full_coordinates = full_coordinates(xi, yi);
+                                    do 
+                                        {
+                                            print("" + i + "/r=" + l_random + "\n");
+                                            l_random = generate_random_integer();
+                                            i++;
+                                            assert i<=25 : "check_i_lte_25";
+                                        } 
+                                    while (constraints_array(yi, yb, xi).contains(l_random));
+                                    four_dimensional_board[l_full_coordinates[0]][l_full_coordinates[1]][l_full_coordinates[2]][l_full_coordinates[3]] = l_random;
+                                }
+                            for(yi=yb; yi>=0; yi--)
+                                {
+                                    int l_random = generate_random_integer();
+                                    int[] l_full_coordinates = full_coordinates(xb, yi);
+                                    do 
+                                        {
+                                            l_random = generate_random_integer();
+                                        } 
+                                    while (constraints_array(yi, yb, xb).contains(l_random));
+                                    four_dimensional_board[l_full_coordinates[0]][l_full_coordinates[1]][l_full_coordinates[2]][l_full_coordinates[3]] = l_random;
+                                }
+                        }
+                }
+        }
 
+    private int big_coordinate (int a_cartesian)
+            // Calculates big_coordinate from a_cartesian.
+        {
+            assert a_cartesian>=0 : "require_positive_cartesian: a_cartesian = " + a_cartesian;
+            assert a_cartesian<=8 : "require_<=_8: a_cartesian = " + a_cartesian;
+            
+            int l_result = a_cartesian / 3;
+            
+            assert l_result>=0 : "ensure_non_negative_result";
+            assert l_result<=2 : "ensure_result_<=_2: l_result = " + l_result + " a_cartesian = " + a_cartesian;
+            
+            return l_result;
+        }
     
+    private int little_coordinate (int a_cartesian)
+            // Calculates little_coordinate from a_cartesian.
+        {
+            assert a_cartesian>=0 : "require_non_negative_a_cartesian =" + a_cartesian;
+            assert a_cartesian<=8 : "require_<=_8: a_cartesian = " + a_cartesian;
+            
+            int l_one_based_cartesian = a_cartesian + 1;
+            int l_value_in_block = a_cartesian / 3;
+            int l_remainder = l_one_based_cartesian - (l_value_in_block * 3);
+            assert l_remainder>0 : "check_positive_remainder = " + l_remainder + " one_based = " + l_one_based_cartesian + " l_value_in_block = " + l_value_in_block;
+            int l_result = l_remainder - 1;
+            
+            assert l_result>=0 : "ensure_non_negative_result = " + l_result;
+            assert l_result<=2 : "ensure_result_<_2 = " + l_result + " l_remainder = " + l_remainder + " one_based = " + l_one_based_cartesian + " l_value_in_block = " + l_value_in_block;
+            
+            return l_result;
+        } 
     
+    private int[] full_coordinates (int xc, int yc)
+            //
+        {
+            assert xc>=0 : "require_non_negative_xc";
+            assert yc>=0 : "require_non_negative_yc";
+            int[] l_result = new int[4];
+            l_result[0] = big_coordinate(yc);
+            l_result[1] = big_coordinate(xc);
+            l_result[2] = little_coordinate(yc);
+            l_result[3] = little_coordinate(xc);
+            return l_result;
+        }
+  
+    private int[] block_coordinates (int xc, int yc)
+            //
+        {
+            assert xc>=0 : "require_non_negative_xc";
+            assert yc>=0 : "require_non_negative_yc";
+            int[] l_result = new int[2];
+            l_result[0] = big_coordinate(yc);
+            l_result[1] = big_coordinate(xc);
+            return l_result;
+        }
     
+    private int[] left_array(int a_x_boundary, int yc)
+            // Calculate array from 1 - a_x_boundary on yc.
+        {
+            assert a_x_boundary>=0 : "require_non_negative_a_x_boundary";
+            assert yc>=0 : "require_non_negative_yc";
+            int[] l_result = new int[a_x_boundary];
+            
+            for(int xc=0; xc<a_x_boundary; xc++)
+                {
+                    int[] l_coordinates = full_coordinates(xc, yc);
+                    l_result[xc] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
+                }
+            return l_result;
+        }
+            
+    private int[] down_array(int a_y_start, int a_y_boundary, int xc)
+            //
+        {
+            int[] l_result = new int[(a_y_boundary - a_y_start) + 1];
+            
+            for(int yc=a_y_start; yc<=a_y_boundary; yc++)
+                {
+                    int[] l_coordinates = full_coordinates(xc, yc);
+                    
+//                    print("0 = " + l_coordinates[0] + "\n");
+//                    print("1 = " + l_coordinates[1] + "\n");
+//                    print("2 = " + l_coordinates[2] + "\n");
+//                    print("3 = " + l_coordinates[3] + "\n");
+//                    print("yc = " + yc + "\n");
+//                    print("a_y_start = " + a_y_start + "\n");
+                    
+                    l_result[yc-a_y_start] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
+                }
+            return l_result;
+        }
+
+    private int[] up_array(int a_y_boundary, int xc)
+            //
+        {
+            int[] l_result = new int[0];
+            
+            for(int yc=0; yc<=(a_y_boundary - 1); yc++)
+                {
+                    int[] l_coordinates = full_coordinates(xc, yc);
+                    l_result[yc] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
+                }            
+            
+            return l_result;
+        }
     
+    private int[] block_array(int xc, int yc)
+            //
+        {
+            ArrayList<Integer> l_list = new ArrayList<>();
+            
+            int[] l_block_coordinates = block_coordinates(xc, yc);
+            int[][] l_block = four_dimensional_board[l_block_coordinates[0]][l_block_coordinates[1]];
+            
+            for(int y=0; y<=2; y++)
+                {
+                    for(int x=0; x<=2; x++)
+                        {
+                            if(!(l_block[y][x]==0))
+                                {
+                                    l_list.add(l_block[y][x]);
+                                }
+                        }
+                }
+            
+            int[] l_result = new int[l_list.size()];
+            for(int i=0; i<l_result.length; i++)
+                {
+                    l_result[i] = l_list.get(i);
+                }
+            return l_result;            
+        }
     
-    
+    private ArrayList<Integer> constraints_array(int yc, int a_y_boundary, int xc)
+            //
+        {
+            ArrayList<Integer> l_result = new ArrayList<>();    
+            int[] l_left = left_array(xc, yc);
+            int[] l_down = down_array(yc, a_y_boundary, xc);
+            int[] l_up = up_array(a_y_boundary, xc);
+            int[] l_block = block_array(xc, yc);
+            
+            if (!(l_left.length==0))
+                {
+                    for(int i=0; i<=l_left.length-1; i++)
+                        {
+                            l_result.add(l_left[i]);
+                        }
+                }
+            if (!(l_down.length==0))
+                {
+                    for(int i=0; i<=l_down.length-1; i++)
+                        {
+                            l_result.add(l_down[i]);
+                        }
+                }
+            if (!(l_up.length==0))
+                {
+                    for(int i=0; i<=l_up.length-1; i++)
+                        {
+                            l_result.add(l_up[i]);
+                        }
+                }
+            if (!(l_block.length==0))
+                {
+                    for(int i=0; i<=l_block.length-1; i++)
+                        {
+                            l_result.add(l_block[i]);
+                        }
+                }
+            
+            return l_result;
+        }
+
+    private static Integer generate_random_integer()
+        {
+          Random l_random = new Random();
+          // calculate the range, casting int --> long
+          int l_start = 1;
+          int l_end = 9;
+          long l_range = (long)l_end - (long)l_start + 1;
+          // calculate a percentage of the range, where 0 <= frac < range
+          long l_fraction = (long)(l_range * l_random.nextDouble());
+          int l_result =  (int)(l_fraction + l_start);
+          // return generated random number in a range of l_start to l_end
+          
+          assert l_result>=1 : "ensure_result_gte_1";
+          assert l_result<=9 : "ensure_result_lte_9";
+          
+          return l_result;
+        }    
     
     
     
