@@ -451,7 +451,7 @@ public class Board extends ArrayList <Block>
     
 // SWEEPING APPROACH:     
     private void build_board()
-            // Builds board...
+            // Builds board with a sweeping approach starting at the top left moving diagonally to the bottom right.
         {
             for(int yb=0; yb<=8; yb++)
                 {
@@ -488,6 +488,30 @@ public class Board extends ArrayList <Block>
                 }
         }
 
+    private int[] full_coordinates (int xc, int yc)
+            // Gives the full coordinates of a board (eg. board[Y][X][y][x])
+        {
+            assert xc>=0 : "require_non_negative_xc";
+            assert yc>=0 : "require_non_negative_yc";
+            int[] l_result = new int[4];
+            l_result[0] = big_coordinate(yc);
+            l_result[1] = big_coordinate(xc);
+            l_result[2] = little_coordinate(yc);
+            l_result[3] = little_coordinate(xc);
+            return l_result;
+        }
+  
+    private int[] block_coordinates (int xc, int yc)
+            // Gives the block coordinates of a board (eg. board[Y][X])
+        {
+            assert xc>=0 : "require_non_negative_xc";
+            assert yc>=0 : "require_non_negative_yc";
+            int[] l_result = new int[2];
+            l_result[0] = big_coordinate(yc);
+            l_result[1] = big_coordinate(xc);
+            return l_result;
+        }
+    
     private int big_coordinate (int a_cartesian)
             // Calculates big_coordinate from a_cartesian.
         {
@@ -520,30 +544,6 @@ public class Board extends ArrayList <Block>
             return l_result;
         } 
     
-    private int[] full_coordinates (int xc, int yc)
-            //
-        {
-            assert xc>=0 : "require_non_negative_xc";
-            assert yc>=0 : "require_non_negative_yc";
-            int[] l_result = new int[4];
-            l_result[0] = big_coordinate(yc);
-            l_result[1] = big_coordinate(xc);
-            l_result[2] = little_coordinate(yc);
-            l_result[3] = little_coordinate(xc);
-            return l_result;
-        }
-  
-    private int[] block_coordinates (int xc, int yc)
-            //
-        {
-            assert xc>=0 : "require_non_negative_xc";
-            assert yc>=0 : "require_non_negative_yc";
-            int[] l_result = new int[2];
-            l_result[0] = big_coordinate(yc);
-            l_result[1] = big_coordinate(xc);
-            return l_result;
-        }
-    
     private int[] left_array(int a_x_boundary, int yc)
             // Calculate array from 1 - a_x_boundary on yc.
         {
@@ -556,6 +556,9 @@ public class Board extends ArrayList <Block>
                     int[] l_coordinates = full_coordinates(xc, yc);
                     l_result[xc] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
                 }
+            
+            //ensure
+            
             return l_result;
         }
             
@@ -622,9 +625,16 @@ public class Board extends ArrayList <Block>
         }
     
     private ArrayList<Integer> constraints_array(int yc, int a_y_boundary, int xc)
-            //
+            /* 
+                Builds the ArrayList with all of the numbers that have already been set within the block, row, and column.
+                So in essence it builds an array of numbers that "contstrain" which number to generate. (e.g. If the block has 1,2,3 
+                and the row as 3,4 and the column 2,5 then the "constraints_array" will have in it, {1,2,3,3,4,2,5} which the buld_board
+                function will check to make sure the number place in a cell does not match any of the numbers in the constraints array)
+            */
         {
-            ArrayList<Integer> l_result = new ArrayList<>();    
+            //assert XXXXX : "require_XXXXX";
+        
+            ArrayList<Integer> l_result = new ArrayList<>();
             int[] l_left = left_array(xc, yc);
             int[] l_down = down_array(yc, a_y_boundary, xc);
             int[] l_up = up_array(a_y_boundary, xc);
