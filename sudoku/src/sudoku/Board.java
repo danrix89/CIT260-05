@@ -453,51 +453,54 @@ public class Board extends ArrayList <Block>
     private void build_board()
             // Builds board with a sweeping approach starting at the top left moving diagonally to the bottom right.
         {
-            for(int yb=0; yb<=8; yb++)
+            for(int l_boundary=1; l_boundary<=8; l_boundary++)
                 {
-                    for(int xb=0; xb<=8; xb++)
+                    int y = l_boundary;
+                    int x;
+                    
+                    four_dimensional_board[0][0][0][0] = generate_random_integer(); // Randomly generate the very first cell.
+                    for(x=0; x<l_boundary; x++)
                         {
-                            int yi = yb;
-                            for(int xi=0; xi<=xb; xi++)
+                            int i = 1;
+                            int l_random = generate_random_integer();
+                            int[] l_full_coordinates = full_coordinates(x, y);
+                            while (constraints_array(l_boundary, y, x).contains(l_random))
                                 {
-                                    int i = 1;
-                                    int l_random = generate_random_integer();
-                                    int[] l_full_coordinates = full_coordinates(xi, yi);
-                                    do 
-                                        {
-                                            print("" + i + "/r=" + l_random + "\n");
-                                            l_random = generate_random_integer();
-                                            i++;
-                                            assert i<=25 : "check_i_lte_25";
-                                        } 
-                                    while (constraints_array(yi, yb, xi).contains(l_random));
-                                    four_dimensional_board[l_full_coordinates[0]][l_full_coordinates[1]][l_full_coordinates[2]][l_full_coordinates[3]] = l_random;
+                                    l_random = generate_random_integer();
+                                    i++;
+                                    assert i<=100 : "check_i_lte_100_when_sweeping_to_the_right";
                                 }
-                            for(yi=yb; yi>=0; yi--)
+                            four_dimensional_board[l_full_coordinates[0]][l_full_coordinates[1]][l_full_coordinates[2]][l_full_coordinates[3]] = l_random;
+                        }
+                    x = l_boundary;
+                    for(y=l_boundary; y>=0; y--)
+                        {
+                            int i = 1;
+                            int l_random = generate_random_integer();
+                            int[] l_full_coordinates = full_coordinates(l_boundary, y);
+                            while (constraints_array(l_boundary, y, x).contains(l_random))
                                 {
-                                    int l_random = generate_random_integer();
-                                    int[] l_full_coordinates = full_coordinates(xb, yi);
-                                    do 
-                                        {
-                                            l_random = generate_random_integer();
-                                        } 
-                                    while (constraints_array(yi, yb, xb).contains(l_random));
-                                    four_dimensional_board[l_full_coordinates[0]][l_full_coordinates[1]][l_full_coordinates[2]][l_full_coordinates[3]] = l_random;
+                                    l_random = generate_random_integer();
+                                    i++;
+                                    assert i<=100 : "check_i_lte_100_when_sweeping_up";
                                 }
+                            four_dimensional_board[l_full_coordinates[0]][l_full_coordinates[1]][l_full_coordinates[2]][l_full_coordinates[3]] = l_random;
                         }
                 }
         }
 
-    private int[] full_coordinates (int xc, int yc)
+    private int[] full_coordinates (int x, int y)
             // Gives the full coordinates of a board (eg. board[Y][X][y][x])
         {
-            assert xc>=0 : "require_non_negative_xc";
-            assert yc>=0 : "require_non_negative_yc";
+            assert x>=0 : "require_non_negative_x";
+            assert y>=0 : "require_non_negative_y";
+            
             int[] l_result = new int[4];
-            l_result[0] = big_coordinate(yc);
-            l_result[1] = big_coordinate(xc);
-            l_result[2] = little_coordinate(yc);
-            l_result[3] = little_coordinate(xc);
+            l_result[0] = big_coordinate(y);
+            l_result[1] = big_coordinate(x);
+            l_result[2] = little_coordinate(y);
+            l_result[3] = little_coordinate(x);
+            
             return l_result;
         }
   
@@ -544,74 +547,69 @@ public class Board extends ArrayList <Block>
             return l_result;
         } 
     
-    private int[] left_array(int a_x_boundary, int yc)
-            // Calculate array from 1 - a_x_boundary on yc.
-        {
-            assert a_x_boundary>=0 : "require_non_negative_a_x_boundary";
-            assert yc>=0 : "require_non_negative_yc";
-            int[] l_result = new int[a_x_boundary];
-            
-            for(int xc=0; xc<a_x_boundary; xc++)
-                {
-                    int[] l_coordinates = full_coordinates(xc, yc);
-                    l_result[xc] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
-                }
-            
-            //ensure
-            
-            return l_result;
-        }
-            
-    private int[] down_array(int a_y_start, int a_y_boundary, int xc)
+    private int[] up_array(int a_boundary, int x)
             //
         {
-            int[] l_result = new int[(a_y_boundary - a_y_start) + 1];
+            assert x <= a_boundary : "require_x_lte_a_boundary";
             
-            for(int yc=a_y_start; yc<=a_y_boundary; yc++)
-                {
-                    int[] l_coordinates = full_coordinates(xc, yc);
-                    
-//                    print("0 = " + l_coordinates[0] + "\n");
-//                    print("1 = " + l_coordinates[1] + "\n");
-//                    print("2 = " + l_coordinates[2] + "\n");
-//                    print("3 = " + l_coordinates[3] + "\n");
-//                    print("yc = " + yc + "\n");
-//                    print("a_y_start = " + a_y_start + "\n");
-                    
-                    l_result[yc-a_y_start] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
-                }
-            return l_result;
-        }
-
-    private int[] up_array(int a_y_boundary, int xc)
-            //
-        {
-            int[] l_result = new int[0];
+            int[] l_result = new int[a_boundary];
             
-            for(int yc=0; yc<=(a_y_boundary - 1); yc++)
+            for(int y=0; y<a_boundary; y++)
                 {
-                    int[] l_coordinates = full_coordinates(xc, yc);
-                    l_result[yc] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
+                    assert y < a_boundary : "check_y_lt_a_boundary";
+                    int[] l_coordinates = full_coordinates(x, y);
+                    l_result[y] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
                 }            
             
             return l_result;
         }
     
-    private int[] block_array(int xc, int yc)
+    private int[] left_array(int y, int x)
+            // Calculate array of all values to the left of x.
+        {
+            assert y >= 0 : "require_non_negative_y";
+            
+            int[] l_result = new int[x];
+            
+            for(int xi=0; xi<x; xi++)
+                {
+                    int[] l_coordinates = full_coordinates(x, y);
+                    l_result[xi] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
+                }
+            
+            return l_result;
+        }
+            
+    private int[] down_array(int a_boundary, int y, int x)
+            //
+        {
+            assert y <= a_boundary : "require_y_lte_a_boundary";
+            
+            int[] l_result = new int[a_boundary - y];
+            
+            for(int yi=0; yi<l_result.length; yi++)
+                {
+                    int[] l_coordinates = full_coordinates(x, yi);
+                    l_result[yi] = four_dimensional_board[l_coordinates[0]][l_coordinates[1]][l_coordinates[2]][l_coordinates[3]];
+                }
+            return l_result;
+        }
+
+    private int[] block_array(int y, int x)
             //
         {
             ArrayList<Integer> l_list = new ArrayList<>();
             
-            int[] l_block_coordinates = block_coordinates(xc, yc);
+            int[] l_block_coordinates = block_coordinates(x, y);
             int[][] l_block = four_dimensional_board[l_block_coordinates[0]][l_block_coordinates[1]];
             
-            for(int y=0; y<=2; y++)
+            for(int yi=0; yi<=2; yi++)
                 {
-                    for(int x=0; x<=2; x++)
+                    for(int xi=0; xi<=2; xi++)
                         {
-                            if(!(l_block[y][x]==0))
+                            if(!(l_block[yi][xi]==0))
                                 {
-                                    l_list.add(l_block[y][x]);
+                                    l_list.add(l_block[yi][xi]);
                                 }
                         }
                 }
@@ -624,7 +622,7 @@ public class Board extends ArrayList <Block>
             return l_result;            
         }
     
-    private ArrayList<Integer> constraints_array(int yc, int a_y_boundary, int xc)
+    private ArrayList<Integer> constraints_array(int a_boundary, int y, int x)
             /* 
                 Builds the ArrayList with all of the numbers that have already been set within the block, row, and column.
                 So in essence it builds an array of numbers that "contstrain" which number to generate. (e.g. If the block has 1,2,3 
@@ -632,13 +630,27 @@ public class Board extends ArrayList <Block>
                 function will check to make sure the number place in a cell does not match any of the numbers in the constraints array)
             */
         {
-            //assert XXXXX : "require_XXXXX";
-        
             ArrayList<Integer> l_result = new ArrayList<>();
-            int[] l_left = left_array(xc, yc);
-            int[] l_down = down_array(yc, a_y_boundary, xc);
-            int[] l_up = up_array(a_y_boundary, xc);
-            int[] l_block = block_array(xc, yc);
+            
+            int[] l_up = new int[0];
+            if (!(x==a_boundary))
+                {
+                    l_up = up_array(a_boundary, x);
+                }
+            
+            int[] l_left = new int[0];
+            if (!(x==0))
+                {
+                    l_left = left_array(y, x);
+                }
+            
+            int[] l_down = new int[0];
+            if (!(y==a_boundary))
+                {
+                    l_down = down_array(a_boundary, y, x);
+                }
+            
+            int[] l_block = block_array(y, x);
             
             if (!(l_left.length==0))
                 {
