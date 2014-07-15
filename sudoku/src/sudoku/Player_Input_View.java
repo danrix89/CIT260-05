@@ -5,44 +5,89 @@ import java.util.Scanner;
 Class Description: View that gets and handles player input during the game.
 */
 
-public class Player_Input_View {
-
-    public Player_Input_View(Game a_game)
-            // Default constructor of Current.
-        {
-            this.game = a_game;
-            get_player_input(game.player);
-        } 
+public class Player_Input_View extends Menu_View
+{
     
-    public String get_player_input(Player a_player)
-            //
+    public Player_Input_View() 
+            // default constructor
         {
-
-            String l_input = null;      
-            boolean l_boolean = true;
-            while (l_boolean) 
-                {
-                print("\n\n\t" + a_player.name + ", please enter something or \"R\" to return.");          
-                l_input = new Scanner(System.in).nextLine();
-                if (l_input == null  || l_input.length() < 1) 
-                    {
-                    continue; // Resets the loop.
-                    }
-                l_input = l_input.substring(0, 1).toUpperCase();
-                if (l_input.equals("R")) 
-                    {
-                    return null;
-                    }
-                l_boolean = false;
-                }
-            return l_input;
+            super(Player_Input_View.menu_items);
+            get_player_input();
         }
     
     private Game game;
     
-    private void print(String a_message)
+    @Override
+    public void get_player_input()
+            //Display the main menu and get the player's input
+        {                    
+            String l_command;
+            Scanner l_input = new Scanner(System.in);        
+            do 
+                {
+                display();
+                l_command = l_input.nextLine();
+                l_command = l_command.trim().toUpperCase();
+                switch (l_command) 
+                    {
+                    case "S":
+                        set_coordinates_and_cell();
+                        break;
+                    case "X": 
+                        break;
+                    default: 
+                        new Error_Message().display("Invalid command. Please enter a valid command.");
+                        continue;
+                    }
+                } 
+            while (!l_command.equals("X"));
+            return;
+        }    
+
+    public final static String[][] menu_items = {
+                                                    {"S", "Set cell"},        
+                                                    {"B", "Back to Main Menu"}        
+                                                };
+
+    private void set_coordinates_and_cell()
+            //
         {
-            System.out.println(a_message);
+            String l_command;
+            Scanner l_input = new Scanner(System.in); 
+            int[]l_block = new int[2];
+            int[]l_cell = new int[2];
+            int l_number = 0;
+
+            do 
+                {
+                    print("Please enter a block # (0-8 starting and the top left and ending at the bottom right)");
+                    l_command = l_input.nextLine();
+                    l_command = l_command.trim().toUpperCase();
+
+                    l_block[0] = (Integer.parseInt(l_command)) / 3;
+                    l_block[1] = (Integer.parseInt(l_command)) % 3;
+                } 
+            while (l_command.equals(""));
+            do 
+                {
+                    print("Please enter a cell # (0-8 starting and the top left and ending at the bottom right)");
+                    l_command = l_input.nextLine();
+                    l_command = l_command.trim().toUpperCase();
+
+                    l_cell[0] = (Integer.parseInt(l_command)) / 3;
+                    l_cell[1] = (Integer.parseInt(l_command)) % 3;
+                } 
+            while (l_command.equals(""));
+            do 
+                {
+                    print("Please enter a number 1-9");
+                    l_command = l_input.nextLine();
+                    l_command = l_command.trim().toUpperCase();
+                    l_number = Integer.parseInt(l_command);
+                } 
+            while (l_command.equals("") || l_number<1 || l_number>9);
+            
+            game.board.set_cell(l_block[0], l_block[1], l_cell[0], l_cell[1], l_number);
+            return;            
         }
-     
 }

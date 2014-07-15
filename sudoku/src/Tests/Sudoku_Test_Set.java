@@ -19,17 +19,6 @@ public class Sudoku_Test_Set {
             // Default constructor.
         {
         }
-
-//TESTS:
-    public void test_row_for_checking()
-            //
-        {
-            Board l_class_board = new Board();
-            int[][][][] l_board = testable_board();
-            //int[] l_row_for_checking = l_class_board.getClass().getDeclaredMethod("row_for_checking", ???);
-            //int[] l_row_for_checking = l_class_board.row_for_checking;
-        
-        }
     
 //CONSTANTS (MOCKS):    
     private int[][][][] testable_board()
