@@ -25,7 +25,7 @@ public class Menu_View
             // Displays Current.
         {
             print("\n\t===============================================================");
-            print("\tEnter the letter associated with one of the following commands:");
+            print("\tPlease enter the letter associated with one of the following commands:");
 
             for (int i = 0; i < menu_items.length; i++) 
                 {

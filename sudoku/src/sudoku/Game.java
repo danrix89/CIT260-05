@@ -14,7 +14,7 @@ public class Game
             print("\n\tYour player name has been set to: " + a_name);
             
             board = new Board();
-            new Player_Input_View();
+            new Player_Input_View(this);
         }
     
     

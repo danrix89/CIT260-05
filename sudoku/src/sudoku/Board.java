@@ -89,7 +89,7 @@ public class Board
     public int difficulty = 5;
     
 /**************************
-         SETTERS:
+         SETTINGS:
 ***************************/
     public void set_four_dimensional_board(int[][][][] a_board)
         {
@@ -138,6 +138,7 @@ public class Board
                         }
                 }
             print ("\n_____________________________________");
+            print("\n");
         }
     
     public void set_cell(int Y, int X, int y, int x, int a_number)
@@ -195,6 +196,42 @@ public class Board
             return l_result;
         }
     
+
+/**************************
+       STATUS REPORT:
+***************************/  
+    public boolean is_winner()
+            // Is four_dimensional_playable a winning board?
+        {
+            boolean l_result = false;
+            
+            for (int Y=0; Y<=2; Y++)
+                {
+                    for (int X=0; X<=2; X++)
+                        {
+                            for (int y=0; y<=2; y++)
+                                {
+                                    for (int x=0; x<=2; x++)
+                                        {
+                                            if (four_dimensional_playable[Y][X][y][x] == four_dimensional_solution[Y][X][y][x])
+                                                {
+                                                    l_result = true;
+                                                }
+                                            else
+                                                {
+                                                    Y = 3;
+                                                    X = 3;
+                                                    y = 3;
+                                                    x = 3;
+                                                    l_result = false;
+                                                }
+                                        }
+                                }
+                        }
+                }
+            return l_result;
+        }   
+    
     
 /**************************
         CONSTANTS:
@@ -223,8 +260,7 @@ public class Board
         }    
 
     private int[][][][] pre_filled_solution()
-            // This is a lazy board that is pre-filled.
-            // It is only used if the build board fails.
+            // This is a statically set pre-filled solution board.
         {
             int[][][][] l_board = new int [3][3][3][3];
             //Block #1
@@ -322,8 +358,7 @@ public class Board
         }
 
     private int[][][][] pre_filled_playable()
-            // This is a lazy board that is pre-filled.
-            // It is only used if the build board fails.
+            // This is a statically set pre-filled playable board.
         {
             int[][][][] l_board = new int [3][3][3][3];
             //Block #1
