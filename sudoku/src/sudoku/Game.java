@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.DateFormat;
+import java.io.Serializable;
 
 /*
 Class Description: Representation of a sudoku game.
@@ -14,6 +15,9 @@ Class Description: Representation of a sudoku game.
 
 public class Game implements java.io.Serializable
 {
+/**************************
+        CONSTRUCTORS:
+***************************/
     public Game(String a_name)
             // Default constructor of Current.
         {
@@ -29,36 +33,92 @@ public class Game implements java.io.Serializable
                     l_player_view.get_player_input();
                     if (l_player_view.save_game)
                         {
-                            save_game_to_file();
+                            save_game_to_file(l_player_view.file_name);
                         }
+                }
+            if (board.is_winner())
+                {
+                    print("\n\n\n\n\n************** YOU ARE A WINNER! **************");
                 }
             
         }
     
+    
+/**************************
+    INSTANCE VARIABLES:
+***************************/    
     private String file_name;
     private Board board;
     private Player player;
 
-    public void save_game_to_file()
+    
+/**************************
+         SETTINGS:
+***************************/    
+    public void set_file_name(String a_file_name) 
+        {
+            this.file_name = a_file_name;
+        }
+
+    public void set_board(Board a_board) 
+        {
+            this.board = a_board;
+        }
+
+    public void set_player(Player a_player) 
+        {
+            this.player = a_player;
+        }
+
+    
+/**************************
+          BASIC:
+***************************/    
+    public void save_game_to_file(String a_file_name)
+            // Saves Current to file.
         {
             Game l_game = this;
-            file_name="game";
+            set_file_name(a_file_name);
             try
                 {
-                    FileOutputStream fileOut = new FileOutputStream("foo.file");
-                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                    out.writeObject(l_game);
+                    FileOutputStream l_file_to_save = new FileOutputStream("C:\\Users\\drix\\Documents\\NetBeansProjects\\CIT260-05\\saved_games\\" + a_file_name + ".sudoku_game");
+                    ObjectOutputStream l_output_stream = new ObjectOutputStream(l_file_to_save);
+                    l_output_stream.writeObject(l_game);
+                    l_output_stream.close();
                 }
             catch (FileNotFoundException l_error) 
                 {
-                    System.err.println("FileNotFoundException: " + l_error.getMessage());
+                    print("FileNotFoundException: " + l_error.getMessage());
                 } 
             catch (IOException l_error) 
                 {
-                    System.err.println("Caught IOException: " + l_error.getMessage());
+                    print("Caught IOException: " + l_error.getMessage());
                 }
         }
 
+//    public void save_game_to_file(String a_file_name)
+//            // Saves Current to file.
+//        {
+//            Game l_game = this;
+//            set_file_name(a_file_name);
+//            try
+//                {
+//                    FileOutputStream l_file_to_save = new FileOutputStream("C:\\Users\\drix\\Documents\\NetBeansProjects\\CIT260-05\\saved_games\\" + a_file_name + ".sudoku_game");
+//                    ObjectOutputStream l_output_stream = new ObjectOutputStream(l_file_to_save);
+//                    l_output_stream.writeObject(l_game);
+//                    l_output_stream.close();
+//                }
+//            catch (FileNotFoundException l_error) 
+//                {
+//                    print("FileNotFoundException: " + l_error.getMessage());
+//                } 
+//            catch (IOException l_error) 
+//                {
+//                    print("Caught IOException: " + l_error.getMessage());
+//                }
+//        }
+    
+    
     public void set_cell (int Y, int X, int y, int x, int a_number)
             // Makes a call to set_cell.
         {

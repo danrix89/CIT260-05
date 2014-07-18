@@ -25,6 +25,16 @@ public class Player_Input_View extends Menu_View
     private Game game;
     boolean return_to_menu;
     boolean save_game;
+    String file_name;
+    
+    
+/**************************
+        SETTINGS:
+***************************/ 
+    public void set_file_name(String a_file_name) 
+        {
+            this.file_name = a_file_name;
+        }    
     
 
 /**************************
@@ -51,6 +61,7 @@ public class Player_Input_View extends Menu_View
                         break;
                     case "S":
                         save_game = true;
+                        set_user_specified_file_name();
                         break;
                     default: 
                         new Error_Message().display("Invalid command. Please enter a valid command.");
@@ -60,11 +71,8 @@ public class Player_Input_View extends Menu_View
             while (!l_command.equals("B"));
             return;
         }    
-
-
-/**************************
-        SETTINGS:
-***************************/
+    
+    
     private void set_cell_with_coordinates()
             //
         {
@@ -85,7 +93,8 @@ public class Player_Input_View extends Menu_View
                         }
                     catch (NumberFormatException l_error) 
                         {
-                            print("\nPlease enter enter an integer only.");
+                            print("\nInvalid input.");
+                            set_cell_with_coordinates(); // Restart the function
                         }
                 } 
             while (l_command.equals(""));
@@ -101,7 +110,8 @@ public class Player_Input_View extends Menu_View
                         }
                     catch (NumberFormatException l_error) 
                         {
-                            print("\nPlease enter enter an integer only.");
+                            print("\nInvalid input.");
+                            set_cell_with_coordinates(); // Restart the function
                         }
                 } 
             while (l_command.equals(""));
@@ -116,7 +126,8 @@ public class Player_Input_View extends Menu_View
                         }
                     catch (NumberFormatException l_error) 
                         {
-                            print("\nPlease enter enter an integer only.");
+                            print("\nInvalid input.");
+                            set_cell_with_coordinates(); // Restart the function
                         }
                 } 
             while (l_command.equals("") || l_number<1 || l_number>9);
@@ -125,7 +136,24 @@ public class Player_Input_View extends Menu_View
             game.display_board();
         }
     
- 
+    private void set_user_specified_file_name()
+            //
+        {
+            String l_command;
+            Scanner l_input = new Scanner(System.in);
+            
+            do 
+                {
+                    print("\n\tPlease enter a the name you wish to save your game as:");
+                    l_command = l_input.nextLine();
+                    l_command = l_command.trim().toUpperCase();
+                } 
+            while (l_command.equals(""));
+            set_file_name(l_command);
+        }
+    
+    
+    
 /**************************
         CONSTANTS:
 ***************************/
