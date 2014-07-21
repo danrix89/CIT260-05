@@ -15,7 +15,6 @@
                   <KeyStroke key="Shift+Ctrl+N"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="New Game"/>
-                <Property name="actionCommand" type="java.lang.String" value="New Game"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="save_game_menu_item">

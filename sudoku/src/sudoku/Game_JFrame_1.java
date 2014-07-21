@@ -1328,8 +1328,8 @@ public class Game_JFrame_1 extends javax.swing.JFrame {
 
                 l_block_y = block_field.getText();
                 l_block_x = block_field.getText();
-                l_cell_y = block_field.getText();
-                l_cell_x = block_field.getText();
+                l_cell_y = cell_field.getText();
+                l_cell_x = cell_field.getText();
 
                 Y = (Integer.parseInt(l_block_y) - 1) / 3;
                 X = (Integer.parseInt(l_block_x) - 1) % 3;
@@ -1339,6 +1339,17 @@ public class Game_JFrame_1 extends javax.swing.JFrame {
                 game.set_cell(Y, X, y, x, (value_field.getText()));
                 
                 set_board_values(); // Repaints the labels for the board
+                
+                clear_values();
+                
+                if(game.board.is_winner())
+                    {
+                        /*
+                            Pop up a dialog that does the following:
+                                - Displays "YOU'VE A WON!"
+                                - Has a close button that returns the user back to the main menu jframe
+                        */
+                    }
             }
         else
             {
@@ -1347,10 +1358,7 @@ public class Game_JFrame_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_set_value_buttonActionPerformed
 
     private void set_value_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_set_value_button1ActionPerformed
-        value_field.setText("");
-        block_field.setText("");
-        cell_field.setText("");
-        message_label.setText("");
+        clear_values();
     }//GEN-LAST:event_set_value_button1ActionPerformed
 
     /**
@@ -1402,6 +1410,14 @@ public class Game_JFrame_1 extends javax.swing.JFrame {
             
             return l_result;
         }
+    
+    private void clear_values()
+            // Clears the values of the user input fields.
+    {
+        value_field.setText("");
+        block_field.setText("");
+        cell_field.setText("");        
+    }
     
     private void set_board_values()
             // Sets the text for all of the labels that represent the board.
