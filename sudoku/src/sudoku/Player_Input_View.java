@@ -86,7 +86,7 @@ public class Player_Input_View extends Menu_View
             Scanner l_input = new Scanner(System.in); 
             int[]l_block = new int[2];
             int[]l_cell = new int[2];
-            int l_number = 0;
+            String l_number = "";
             do 
                 {
                     print("\n\tPlease enter a block # (1-9 starting and the top left and ending at the bottom right)");
@@ -128,7 +128,7 @@ public class Player_Input_View extends Menu_View
                     l_command = l_command.trim().toUpperCase();
                     try
                         {
-                            l_number = Integer.parseInt(l_command);
+                            l_number = l_command;
                         }
                     catch (NumberFormatException l_error) 
                         {
@@ -136,7 +136,7 @@ public class Player_Input_View extends Menu_View
                             set_cell_with_coordinates(); // Restart the function
                         }
                 } 
-            while (l_command.equals("") || l_number<1 || l_number>9);
+            while (l_command.equals("") || Integer.parseInt(l_number)<1 || Integer.parseInt(l_number)>9);
                        
             game.set_cell(l_block[0], l_block[1], l_cell[0], l_cell[1], l_number);
             game.display_board();

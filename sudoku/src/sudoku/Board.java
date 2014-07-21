@@ -142,59 +142,13 @@ public class Board implements java.io.Serializable
             print("\n");
         }
     
-    public void set_cell(int Y, int X, int y, int x, int a_number)
+    public void set_cell(int Y, int X, int y, int x, String a_number)
             //
         {
             String[][][][] l_board = four_dimensional_playable;
-            int l_number = a_number;
-            l_board[Y][X][y][x] = ("" + l_number);
+            String l_number = a_number;
+            l_board[Y][X][y][x] = (l_number);
             four_dimensional_playable = l_board;
-        }
-
-    private String[][][][] make_four_dimensional_playable()
-            // Makes four dimensional version of the playable Board.
-        {
-            String [][][][] l_result = four_dimensional_solution;
-            
-            for(int Y=0; Y<=2; Y++) // Going across the 'Y' coordinate of the Board
-                {
-                    for(int X=0; X<=2; X++) // Going across the 'X' coordinate of the Board
-                        {
-                            ArrayList<ArrayList> l_already_used_coordinates = new ArrayList<>();
-                            for (int i=1; i<=difficulty; i++)
-                                {
-                                    int x = (random_integer() - 1) / 3;
-                                    int y = (random_integer() - 1) / 3;
-                                    ArrayList<Integer> l_coordinates = new ArrayList<>(2);
-                                    l_coordinates.add(0);
-                                    l_coordinates.add(0);
-                                    
-                                    l_already_used_coordinates.add(l_coordinates);
-                                    
-                                    for (ArrayList ic_coordinates : l_already_used_coordinates)
-                                        {
-                                            if (ic_coordinates.contains(x) && ic_coordinates.contains(y))
-                                                {
-                                                    while (ic_coordinates.contains(x) && ic_coordinates.contains(y))
-                                                        {
-                                                            x = (random_integer() - 1) / 3;
-                                                            y = (random_integer() - 1) / 3;
-                                                            ic_coordinates.set(0, x);
-                                                            ic_coordinates.set(1, y);
-                                                        }
-                                                    l_result[Y][X][x][y] = "";
-                                                }
-                                            else
-                                                {
-                                                    ic_coordinates.set(0, x);
-                                                    ic_coordinates.set(1, y);
-                                                    l_result[Y][X][x][y] = "";
-                                                }
-                                        }
-                                }
-                        }
-                }
-            return l_result;
         }
     
 
@@ -1258,6 +1212,52 @@ public class Board implements java.io.Serializable
 //                        }
 //                }
 //            
+//            return l_result;
+//        }
+//
+//    private String[][][][] make_four_dimensional_playable()
+//            // Makes four dimensional version of the playable Board.
+//        {
+//            String [][][][] l_result = four_dimensional_solution;
+//            
+//            for(int Y=0; Y<=2; Y++) // Going across the 'Y' coordinate of the Board
+//                {
+//                    for(int X=0; X<=2; X++) // Going across the 'X' coordinate of the Board
+//                        {
+//                            ArrayList<ArrayList> l_already_used_coordinates = new ArrayList<>();
+//                            for (int i=1; i<=difficulty; i++)
+//                                {
+//                                    int x = (random_integer() - 1) / 3;
+//                                    int y = (random_integer() - 1) / 3;
+//                                    ArrayList<Integer> l_coordinates = new ArrayList<>(2);
+//                                    l_coordinates.add(0);
+//                                    l_coordinates.add(0);
+//                                    
+//                                    l_already_used_coordinates.add(l_coordinates);
+//                                    
+//                                    for (ArrayList ic_coordinates : l_already_used_coordinates)
+//                                        {
+//                                            if (ic_coordinates.contains(x) && ic_coordinates.contains(y))
+//                                                {
+//                                                    while (ic_coordinates.contains(x) && ic_coordinates.contains(y))
+//                                                        {
+//                                                            x = (random_integer() - 1) / 3;
+//                                                            y = (random_integer() - 1) / 3;
+//                                                            ic_coordinates.set(0, x);
+//                                                            ic_coordinates.set(1, y);
+//                                                        }
+//                                                    l_result[Y][X][x][y] = "";
+//                                                }
+//                                            else
+//                                                {
+//                                                    ic_coordinates.set(0, x);
+//                                                    ic_coordinates.set(1, y);
+//                                                    l_result[Y][X][x][y] = "";
+//                                                }
+//                                        }
+//                                }
+//                        }
+//                }
 //            return l_result;
 //        }
 

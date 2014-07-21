@@ -86,7 +86,7 @@ public class Game implements java.io.Serializable
 /**************************
       BASIC METHODS:
 ***************************/    
-    public void set_cell (int Y, int X, int y, int x, int a_number)
+    public void set_cell (int Y, int X, int y, int x, String a_number)
             // Makes a call to set_cell.
         {
             board.set_cell(Y, X, y, x, a_number);
