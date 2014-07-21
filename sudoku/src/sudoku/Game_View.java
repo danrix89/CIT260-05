@@ -14,13 +14,26 @@ import java.util.Scanner;
  */
 public class Game_View 
 {
+/**************************
+        CONSTRUCTORS:
+***************************/
     public Game_View()
-            //
+            // Creates current with a new game using player_name.
         {
             String l_name = get_player_name();
-            Game l_game = new Game(l_name);            
+            new Game(l_name);            
         }
-
+    
+    public Game_View(Game a_loaded_game)
+            // Creates Current with a_loaded_game.
+        {
+            new Game(a_loaded_game);
+        }
+    
+    
+/**************************
+      BASIC METHODS:
+***************************/
     public String get_player_name()
             //
         {
@@ -47,6 +60,10 @@ public class Game_View
             return l_name;
         }
 
+
+/**************************
+          CONSTANTS:
+***************************/    
     private void print(String a_message)
         {
             System.out.println(a_message);

@@ -8,6 +8,9 @@ Class Description: Representation of the sudoku difficulty menu.
 public final class Difficulty_Menu_View extends Menu_View
 {
     
+/**************************
+        CONSTRUCTORS:
+***************************/    
     public Difficulty_Menu_View() 
             // default constructor
         {   
@@ -15,6 +18,10 @@ public final class Difficulty_Menu_View extends Menu_View
             get_player_input();  
         } 
 
+    
+/**************************
+        BASIC METHODS:
+***************************/    
     @Override
     public void get_player_input()
             // Display the help menu and get the player's input
@@ -47,7 +54,11 @@ public final class Difficulty_Menu_View extends Menu_View
             while (!l_command.equals("X"));
             return;
         }    
+ 
     
+/**************************
+        CONSTANTS:
+***************************/    
     public final static String[][] menu_items = {
                                                     {"A", "25 cells are prefilled with 3 hints"},
                                                     {"B", "20 cells are prefilled with 2 hints"}, 

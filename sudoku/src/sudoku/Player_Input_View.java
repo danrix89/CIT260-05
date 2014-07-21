@@ -1,4 +1,12 @@
 package sudoku;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 /*
@@ -23,7 +31,6 @@ public class Player_Input_View extends Menu_View
     INSTANCE VARIABLES:
 ***************************/    
     private Game game;
-    boolean return_to_menu;
     boolean save_game;
     String file_name;
     
@@ -57,19 +64,18 @@ public class Player_Input_View extends Menu_View
                         set_cell_with_coordinates();
                         break;
                     case "B":
-                        return_to_menu = true;
-                        break;
+                        return;
                     case "S":
                         save_game = true;
                         set_user_specified_file_name();
+                        save_game_to_file(file_name);
                         break;
                     default: 
                         new Error_Message().display("Invalid command. Please enter a valid command.");
                         continue;
                     }
                 } 
-            while (!l_command.equals("B"));
-            return;
+            while (!game.board.is_winner());
         }    
     
     
@@ -131,7 +137,7 @@ public class Player_Input_View extends Menu_View
                         }
                 } 
             while (l_command.equals("") || l_number<1 || l_number>9);
-
+                       
             game.set_cell(l_block[0], l_block[1], l_cell[0], l_cell[1], l_number);
             game.display_board();
         }
@@ -150,6 +156,49 @@ public class Player_Input_View extends Menu_View
                 } 
             while (l_command.equals(""));
             set_file_name(l_command);
+        }
+
+    public void save_game_to_file(String a_file_name)
+            // Saves Current to file.
+        {
+            Game l_game = game;
+                    
+            try
+                {
+                    FileOutputStream l_file_to_save = new FileOutputStream(a_file_name + ".sudoku_game");
+                    ObjectOutputStream l_output_stream = new ObjectOutputStream(l_file_to_save);
+                    l_output_stream.writeObject(l_game);
+                    l_output_stream.close();
+                }
+            catch (FileNotFoundException l_exception) 
+                {
+                    print("FileNotFoundException: " + l_exception.getMessage());
+                } 
+            catch (IOException l_io_exception) 
+                {
+                    print("Caught IOException: " + l_io_exception.getMessage());
+                }
+            print("Your file " + a_file_name + ".sudoku_game was saved to file"); 
+        }
+
+    public void load_game_from_file(String a_file_name) throws ClassNotFoundException
+            // Load a game from file using a_file_name.
+        {
+            try
+                {
+                    FileInputStream l_file_to_load = new FileInputStream(a_file_name + ".sudoku_game");
+                    ObjectInputStream l_input_stream = new ObjectInputStream(l_file_to_load);
+                    
+                    Game l_loaded_game = (Game)l_input_stream.readObject();
+                }
+            catch (FileNotFoundException l_error) 
+                {
+                    print("FileNotFoundException: " + l_error.getMessage());
+                } 
+            catch (IOException l_error) 
+                {
+                    print("Caught IOException: " + l_error.getMessage());
+                }
         }
     
     

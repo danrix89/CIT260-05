@@ -8,6 +8,9 @@ Class Description: Representation of the Help Menu interface.
 public class Help_Menu_View extends Menu_View
 {
 
+/**************************
+        CONSTRUCTORS:
+***************************/    
     public Help_Menu_View() 
             // default constructor
         {
@@ -15,6 +18,10 @@ public class Help_Menu_View extends Menu_View
             get_player_input();
         } 
     
+    
+/**************************
+        BASIC METHODS:
+***************************/    
     @Override
     public void get_player_input()
             // Display the help menu and get the player's input
@@ -51,6 +58,10 @@ public class Help_Menu_View extends Menu_View
             return;
         }    
     
+    
+/**************************
+        CONSTANTS:
+***************************/    
     private Help_Menu_Control internal_help_menu = new Help_Menu_Control();
             // Internal instance of Help_Menu_Control
     

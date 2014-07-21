@@ -22,6 +22,7 @@ give the coordinates of the cell. The entire board coordinates look like this:
     [Y][X][y][x]   OR   [Y_index][X_index][y_index][x_index]
 
                                                 X axis
+
                                  0                 1                 2 
                         _______________________________________________________
                         |                 |                 |                 |
@@ -62,7 +63,7 @@ Y axis    1   |         |     |     |     |     |     |     |  $  |  $  |  $  |
         The $ symbol represents the block at [2][1]
 */
 
-public class Board
+public class Board implements java.io.Serializable
 {   
 /**************************
         CONSTRUCTORS:
@@ -73,31 +74,31 @@ public class Board
         {
             set_four_dimensional_board(pre_filled_solution());
             set_four_dimensional_playable(pre_filled_playable());
-            this.display();
+            //this.display();
         }
     
 
 /**************************
     INSTANCE VARIABLES:
 ***************************/
-    private int[][][][] four_dimensional_solution;
+    String [][][][] four_dimensional_solution;
             // Four dimensional version of the solution Board.
     
-    private int[][][][] four_dimensional_playable;
+    String [][][][] four_dimensional_playable;
             // Four dimensional version of the playable Board.
     
-    public int difficulty = 5;
+    int difficulty = 5;
     
 /**************************
          SETTINGS:
 ***************************/
-    public void set_four_dimensional_board(int[][][][] a_board)
+    public void set_four_dimensional_board(String[][][][] a_board)
         {
             assert a_board.length==3 : "require_3_element_four_dimensional_board";
             four_dimensional_solution = a_board;
         }    
 
-    public void set_four_dimensional_playable(int[][][][] a_board)
+    public void set_four_dimensional_playable(String[][][][] a_board)
         {
             assert a_board.length==3 : "require_3_element_four_dimensional_board";
             four_dimensional_playable = a_board;
@@ -144,16 +145,16 @@ public class Board
     public void set_cell(int Y, int X, int y, int x, int a_number)
             //
         {
-            int[][][][] l_board = four_dimensional_playable;
+            String[][][][] l_board = four_dimensional_playable;
             int l_number = a_number;
-            l_board[Y][X][y][x] = l_number;
+            l_board[Y][X][y][x] = ("" + l_number);
             four_dimensional_playable = l_board;
         }
 
-    private int[][][][] make_four_dimensional_playable()
+    private String[][][][] make_four_dimensional_playable()
             // Makes four dimensional version of the playable Board.
         {
-            int[][][][] l_result = four_dimensional_solution;
+            String [][][][] l_result = four_dimensional_solution;
             
             for(int Y=0; Y<=2; Y++) // Going across the 'Y' coordinate of the Board
                 {
@@ -181,13 +182,13 @@ public class Board
                                                             ic_coordinates.set(0, x);
                                                             ic_coordinates.set(1, y);
                                                         }
-                                                    l_result[Y][X][x][y] = 0;
+                                                    l_result[Y][X][x][y] = "";
                                                 }
                                             else
                                                 {
                                                     ic_coordinates.set(0, x);
                                                     ic_coordinates.set(1, y);
-                                                    l_result[Y][X][x][y] = 0;
+                                                    l_result[Y][X][x][y] = "";
                                                 }
                                         }
                                 }
@@ -259,295 +260,296 @@ public class Board
           return l_result;
         }    
 
-    private int[][][][] pre_filled_solution()
+    private String[][][][] pre_filled_solution()
             // This is a statically set pre-filled solution board.
         {
-            int[][][][] l_board = new int [3][3][3][3];
+            String[][][][] l_board = new String [3][3][3][3];
             //Block #1
-            l_board [0][0][0][0] = 2;
-            l_board [0][0][0][1] = 9;
-            l_board [0][0][0][2] = 6;
-            l_board [0][0][1][0] = 5;
-            l_board [0][0][1][1] = 8;
-            l_board [0][0][1][2] = 4;
-            l_board [0][0][2][0] = 7;
-            l_board [0][0][2][1] = 1;
-            l_board [0][0][2][2] = 3;
+            l_board [0][0][0][0] = "2";
+            l_board [0][0][0][1] = "9";
+            l_board [0][0][0][2] = "6";
+            l_board [0][0][1][0] = "5";
+            l_board [0][0][1][1] = "8";
+            l_board [0][0][1][2] = "4";
+            l_board [0][0][2][0] = "7";
+            l_board [0][0][2][1] = "1";
+            l_board [0][0][2][2] = "3";
             //Block #2
-            l_board [0][1][0][0] = 3;
-            l_board [0][1][0][1] = 1;
-            l_board [0][1][0][2] = 8;
-            l_board [0][1][1][0] = 9;
-            l_board [0][1][1][1] = 7;
-            l_board [0][1][1][2] = 2;
-            l_board [0][1][2][0] = 6;
-            l_board [0][1][2][1] = 4;
-            l_board [0][1][2][2] = 5;
+            l_board [0][1][0][0] = "3";
+            l_board [0][1][0][1] = "1";
+            l_board [0][1][0][2] = "8";
+            l_board [0][1][1][0] = "9";
+            l_board [0][1][1][1] = "7";
+            l_board [0][1][1][2] = "2";
+            l_board [0][1][2][0] = "6";
+            l_board [0][1][2][1] = "4";
+            l_board [0][1][2][2] = "5";
             //Block #3
-            l_board [0][2][0][0] = 5;
-            l_board [0][2][0][1] = 7;
-            l_board [0][2][0][2] = 4;
-            l_board [0][2][1][0] = 6;
-            l_board [0][2][1][1] = 1;
-            l_board [0][2][1][2] = 3;
-            l_board [0][2][2][0] = 2;
-            l_board [0][2][2][1] = 8;
-            l_board [0][2][2][2] = 9;
+            l_board [0][2][0][0] = "5";
+            l_board [0][2][0][1] = "7";
+            l_board [0][2][0][2] = "4";
+            l_board [0][2][1][0] = "6";
+            l_board [0][2][1][1] = "1";
+            l_board [0][2][1][2] = "3";
+            l_board [0][2][2][0] = "2";
+            l_board [0][2][2][1] = "8";
+            l_board [0][2][2][2] = "9";
             //Block #4
-            l_board [1][0][0][0] = 6;
-            l_board [1][0][0][1] = 2;
-            l_board [1][0][0][2] = 5;
-            l_board [1][0][1][0] = 9;
-            l_board [1][0][1][1] = 3;
-            l_board [1][0][1][2] = 1;
-            l_board [1][0][2][0] = 4;
-            l_board [1][0][2][1] = 7;
-            l_board [1][0][2][2] = 8;
+            l_board [1][0][0][0] = "6";
+            l_board [1][0][0][1] = "2";
+            l_board [1][0][0][2] = "5";
+            l_board [1][0][1][0] = "9";
+            l_board [1][0][1][1] = "3";
+            l_board [1][0][1][2] = "1";
+            l_board [1][0][2][0] = "4";
+            l_board [1][0][2][1] = "7";
+            l_board [1][0][2][2] = "8";
             //Block #5
-            l_board [1][1][0][0] = 8;
-            l_board [1][1][0][1] = 9;
-            l_board [1][1][0][2] = 7;
-            l_board [1][1][1][0] = 4;
-            l_board [1][1][1][1] = 2;
-            l_board [1][1][1][2] = 6;
-            l_board [1][1][2][0] = 5;
-            l_board [1][1][2][1] = 3;
-            l_board [1][1][2][2] = 1;
+            l_board [1][1][0][0] = "8";
+            l_board [1][1][0][1] = "9";
+            l_board [1][1][0][2] = "7";
+            l_board [1][1][1][0] = "4";
+            l_board [1][1][1][1] = "2";
+            l_board [1][1][1][2] = "6";
+            l_board [1][1][2][0] = "5";
+            l_board [1][1][2][1] = "3";
+            l_board [1][1][2][2] = "1";
             //Block #6
-            l_board [1][2][0][0] = 3;
-            l_board [1][2][0][1] = 4;
-            l_board [1][2][0][2] = 1;
-            l_board [1][2][1][0] = 8;
-            l_board [1][2][1][1] = 5;
-            l_board [1][2][1][2] = 7;
-            l_board [1][2][2][0] = 9;
-            l_board [1][2][2][1] = 2;
-            l_board [1][2][2][2] = 6;
+            l_board [1][2][0][0] = "3";
+            l_board [1][2][0][1] = "4";
+            l_board [1][2][0][2] = "1";
+            l_board [1][2][1][0] = "8";
+            l_board [1][2][1][1] = "5";
+            l_board [1][2][1][2] = "7";
+            l_board [1][2][2][0] = "9";
+            l_board [1][2][2][1] = "2";
+            l_board [1][2][2][2] = "6";
             //Block #7
-            l_board [2][0][0][0] = 1;
-            l_board [2][0][0][1] = 6;
-            l_board [2][0][0][2] = 7;
-            l_board [2][0][1][0] = 8;
-            l_board [2][0][1][1] = 5;
-            l_board [2][0][1][2] = 9;
-            l_board [2][0][2][0] = 3;
-            l_board [2][0][2][1] = 4;
-            l_board [2][0][2][2] = 2;
+            l_board [2][0][0][0] = "1";
+            l_board [2][0][0][1] = "6";
+            l_board [2][0][0][2] = "7";
+            l_board [2][0][1][0] = "8";
+            l_board [2][0][1][1] = "5";
+            l_board [2][0][1][2] = "9";
+            l_board [2][0][2][0] = "3";
+            l_board [2][0][2][1] = "4";
+            l_board [2][0][2][2] = "2";
             //Block #8
-            l_board [2][1][0][0] = 2;
-            l_board [2][1][0][1] = 5;
-            l_board [2][1][0][2] = 3;
-            l_board [2][1][1][0] = 7;
-            l_board [2][1][1][1] = 6;
-            l_board [2][1][1][2] = 4;
-            l_board [2][1][2][0] = 1;
-            l_board [2][1][2][1] = 8;
-            l_board [2][1][2][2] = 9;
+            l_board [2][1][0][0] = "2";
+            l_board [2][1][0][1] = "5";
+            l_board [2][1][0][2] = "3";
+            l_board [2][1][1][0] = "7";
+            l_board [2][1][1][1] = "6";
+            l_board [2][1][1][2] = "4";
+            l_board [2][1][2][0] = "1";
+            l_board [2][1][2][1] = "8";
+            l_board [2][1][2][2] = "9";
             //Block #9
-            l_board [2][2][0][0] = 4;
-            l_board [2][2][0][1] = 9;
-            l_board [2][2][0][2] = 8;
-            l_board [2][2][1][0] = 1;
-            l_board [2][2][1][1] = 3;
-            l_board [2][2][1][2] = 2;
-            l_board [2][2][2][0] = 7;
-            l_board [2][2][2][1] = 6;
-            l_board [2][2][2][2] = 5;
+            l_board [2][2][0][0] = "4";
+            l_board [2][2][0][1] = "9";
+            l_board [2][2][0][2] = "8";
+            l_board [2][2][1][0] = "1";
+            l_board [2][2][1][1] = "3";
+            l_board [2][2][1][2] = "2";
+            l_board [2][2][2][0] = "7";
+            l_board [2][2][2][1] = "6";
+            l_board [2][2][2][2] = "5";
 
             return l_board;
         }
 
-    private int[][][][] pre_filled_playable()
+    private String[][][][] pre_filled_playable()
             // This is a statically set pre-filled playable board.
         {
-            int[][][][] l_board = new int [3][3][3][3];
+            String[][][][] l_board = new String [3][3][3][3];
             //Block #1
-            l_board [0][0][0][0] = 0;
-            l_board [0][0][0][1] = 9;
-            l_board [0][0][0][2] = 6;
-            l_board [0][0][1][0] = 5;
-            l_board [0][0][1][1] = 8;
-            l_board [0][0][1][2] = 4;
-            l_board [0][0][2][0] = 7;
-            l_board [0][0][2][1] = 1;
-            l_board [0][0][2][2] = 3;
+            l_board [0][0][0][0] = "2";
+            l_board [0][0][0][1] = "";
+            l_board [0][0][0][2] = "6";
+            l_board [0][0][1][0] = "";
+            l_board [0][0][1][1] = "";
+            l_board [0][0][1][2] = "";
+            l_board [0][0][2][0] = "7";
+            l_board [0][0][2][1] = "1";
+            l_board [0][0][2][2] = "";
             //Block #2
-            l_board [0][1][0][0] = 3;
-            l_board [0][1][0][1] = 1;
-            l_board [0][1][0][2] = 8;
-            l_board [0][1][1][0] = 9;
-            l_board [0][1][1][1] = 7;
-            l_board [0][1][1][2] = 2;
-            l_board [0][1][2][0] = 6;
-            l_board [0][1][2][1] = 4;
-            l_board [0][1][2][2] = 5;
+            l_board [0][1][0][0] = "";
+            l_board [0][1][0][1] = "1";
+            l_board [0][1][0][2] = "8";
+            l_board [0][1][1][0] = "";
+            l_board [0][1][1][1] = "";
+            l_board [0][1][1][2] = "";
+            l_board [0][1][2][0] = "6";
+            l_board [0][1][2][1] = "";
+            l_board [0][1][2][2] = "5";
             //Block #3
-            l_board [0][2][0][0] = 5;
-            l_board [0][2][0][1] = 7;
-            l_board [0][2][0][2] = 4;
-            l_board [0][2][1][0] = 6;
-            l_board [0][2][1][1] = 1;
-            l_board [0][2][1][2] = 3;
-            l_board [0][2][2][0] = 2;
-            l_board [0][2][2][1] = 8;
-            l_board [0][2][2][2] = 9;
+            l_board [0][2][0][0] = "5";
+            l_board [0][2][0][1] = "";
+            l_board [0][2][0][2] = "4";
+            l_board [0][2][1][0] = "6";
+            l_board [0][2][1][1] = "1";
+            l_board [0][2][1][2] = "";
+            l_board [0][2][2][0] = "";
+            l_board [0][2][2][1] = "";
+            l_board [0][2][2][2] = "";
             //Block #4
-            l_board [1][0][0][0] = 6;
-            l_board [1][0][0][1] = 2;
-            l_board [1][0][0][2] = 5;
-            l_board [1][0][1][0] = 9;
-            l_board [1][0][1][1] = 3;
-            l_board [1][0][1][2] = 1;
-            l_board [1][0][2][0] = 4;
-            l_board [1][0][2][1] = 7;
-            l_board [1][0][2][2] = 8;
+            l_board [1][0][0][0] = "6";
+            l_board [1][0][0][1] = "";
+            l_board [1][0][0][2] = "5";
+            l_board [1][0][1][0] = "9";
+            l_board [1][0][1][1] = "";
+            l_board [1][0][1][2] = "";
+            l_board [1][0][2][0] = "";
+            l_board [1][0][2][1] = "7";
+            l_board [1][0][2][2] = "";
             //Block #5
-            l_board [1][1][0][0] = 8;
-            l_board [1][1][0][1] = 9;
-            l_board [1][1][0][2] = 7;
-            l_board [1][1][1][0] = 4;
-            l_board [1][1][1][1] = 2;
-            l_board [1][1][1][2] = 6;
-            l_board [1][1][2][0] = 5;
-            l_board [1][1][2][1] = 3;
-            l_board [1][1][2][2] = 1;
+            l_board [1][1][0][0] = "";
+            l_board [1][1][0][1] = "9";
+            l_board [1][1][0][2] = "7";
+            l_board [1][1][1][0] = "";
+            l_board [1][1][1][1] = "";
+            l_board [1][1][1][2] = "";
+            l_board [1][1][2][0] = "5";
+            l_board [1][1][2][1] = "";
+            l_board [1][1][2][2] = "1";
             //Block #6
-            l_board [1][2][0][0] = 3;
-            l_board [1][2][0][1] = 4;
-            l_board [1][2][0][2] = 1;
-            l_board [1][2][1][0] = 8;
-            l_board [1][2][1][1] = 5;
-            l_board [1][2][1][2] = 7;
-            l_board [1][2][2][0] = 9;
-            l_board [1][2][2][1] = 2;
-            l_board [1][2][2][2] = 6;
+            l_board [1][2][0][0] = "3";
+            l_board [1][2][0][1] = "";
+            l_board [1][2][0][2] = "";
+            l_board [1][2][1][0] = "";
+            l_board [1][2][1][1] = "5";
+            l_board [1][2][1][2] = "";
+            l_board [1][2][2][0] = "9";
+            l_board [1][2][2][1] = "";
+            l_board [1][2][2][2] = "6";
             //Block #7
-            l_board [2][0][0][0] = 1;
-            l_board [2][0][0][1] = 6;
-            l_board [2][0][0][2] = 7;
-            l_board [2][0][1][0] = 8;
-            l_board [2][0][1][1] = 5;
-            l_board [2][0][1][2] = 9;
-            l_board [2][0][2][0] = 3;
-            l_board [2][0][2][1] = 4;
-            l_board [2][0][2][2] = 2;
+            l_board [2][0][0][0] = "1";
+            l_board [2][0][0][1] = "";
+            l_board [2][0][0][2] = "";
+            l_board [2][0][1][0] = "";
+            l_board [2][0][1][1] = "5";
+            l_board [2][0][1][2] = "";
+            l_board [2][0][2][0] = "";
+            l_board [2][0][2][1] = "4";
+            l_board [2][0][2][2] = "2";
             //Block #8
-            l_board [2][1][0][0] = 2;
-            l_board [2][1][0][1] = 5;
-            l_board [2][1][0][2] = 3;
-            l_board [2][1][1][0] = 7;
-            l_board [2][1][1][1] = 6;
-            l_board [2][1][1][2] = 4;
-            l_board [2][1][2][0] = 1;
-            l_board [2][1][2][1] = 8;
-            l_board [2][1][2][2] = 9;
+            l_board [2][1][0][0] = "2";
+            l_board [2][1][0][1] = "";
+            l_board [2][1][0][2] = "3";
+            l_board [2][1][1][0] = "";
+            l_board [2][1][1][1] = "";
+            l_board [2][1][1][2] = "";
+            l_board [2][1][2][0] = "";
+            l_board [2][1][2][1] = "8";
+            l_board [2][1][2][2] = "9";
             //Block #9
-            l_board [2][2][0][0] = 4;
-            l_board [2][2][0][1] = 9;
-            l_board [2][2][0][2] = 8;
-            l_board [2][2][1][0] = 1;
-            l_board [2][2][1][1] = 3;
-            l_board [2][2][1][2] = 2;
-            l_board [2][2][2][0] = 7;
-            l_board [2][2][2][1] = 6;
-            l_board [2][2][2][2] = 5;
+            l_board [2][2][0][0] = "";
+            l_board [2][2][0][1] = "";
+            l_board [2][2][0][2] = "8";
+            l_board [2][2][1][0] = "";
+            l_board [2][2][1][1] = "3";
+            l_board [2][2][1][2] = "";
+            l_board [2][2][2][0] = "7";
+            l_board [2][2][2][1] = "";
+            l_board [2][2][2][2] = "5";
 
             return l_board;
-
-//            int[][][][] l_board = new int [3][3][3][3];
+/************* THE COMMENTED OUT CODE BELOW IS A SUBSTITUTE FOR THE ABOVE CODE
+ ************* WHICH GIVES A BOARD THAT IS 1 CELL AWAY FROM A WINNER. THIS CAN
+ ************* BE USED FOR TESTING OR PRESENTATION PURPOSES*/
 //            //Block #1
-//            l_board [0][0][0][0] = 2;
-//            l_board [0][0][0][1] = 0;
-//            l_board [0][0][0][2] = 6;
-//            l_board [0][0][1][0] = 0;
-//            l_board [0][0][1][1] = 0;
-//            l_board [0][0][1][2] = 0;
-//            l_board [0][0][2][0] = 7;
-//            l_board [0][0][2][1] = 1;
-//            l_board [0][0][2][2] = 0;
+//            l_board [0][0][0][0] = "2";
+//            l_board [0][0][0][1] = "9";
+//            l_board [0][0][0][2] = "6";
+//            l_board [0][0][1][0] = "5";
+//            l_board [0][0][1][1] = "8";
+//            l_board [0][0][1][2] = "4";
+//            l_board [0][0][2][0] = "7";
+//            l_board [0][0][2][1] = "1";
+//            l_board [0][0][2][2] = "3";
 //            //Block #2
-//            l_board [0][1][0][0] = 0;
-//            l_board [0][1][0][1] = 1;
-//            l_board [0][1][0][2] = 8;
-//            l_board [0][1][1][0] = 0;
-//            l_board [0][1][1][1] = 0;
-//            l_board [0][1][1][2] = 0;
-//            l_board [0][1][2][0] = 6;
-//            l_board [0][1][2][1] = 0;
-//            l_board [0][1][2][2] = 5;
+//            l_board [0][1][0][0] = "3";
+//            l_board [0][1][0][1] = "1";
+//            l_board [0][1][0][2] = "8";
+//            l_board [0][1][1][0] = "9";
+//            l_board [0][1][1][1] = "7";
+//            l_board [0][1][1][2] = "2";
+//            l_board [0][1][2][0] = "6";
+//            l_board [0][1][2][1] = "4";
+//            l_board [0][1][2][2] = "5";
 //            //Block #3
-//            l_board [0][2][0][0] = 5;
-//            l_board [0][2][0][1] = 0;
-//            l_board [0][2][0][2] = 4;
-//            l_board [0][2][1][0] = 6;
-//            l_board [0][2][1][1] = 1;
-//            l_board [0][2][1][2] = 0;
-//            l_board [0][2][2][0] = 0;
-//            l_board [0][2][2][1] = 0;
-//            l_board [0][2][2][2] = 0;
+//            l_board [0][2][0][0] = "5";
+//            l_board [0][2][0][1] = "7";
+//            l_board [0][2][0][2] = "4";
+//            l_board [0][2][1][0] = "6";
+//            l_board [0][2][1][1] = "1";
+//            l_board [0][2][1][2] = "3";
+//            l_board [0][2][2][0] = "2";
+//            l_board [0][2][2][1] = "8";
+//            l_board [0][2][2][2] = "9";
 //            //Block #4
-//            l_board [1][0][0][0] = 6;
-//            l_board [1][0][0][1] = 0;
-//            l_board [1][0][0][2] = 5;
-//            l_board [1][0][1][0] = 9;
-//            l_board [1][0][1][1] = 0;
-//            l_board [1][0][1][2] = 0;
-//            l_board [1][0][2][0] = 0;
-//            l_board [1][0][2][1] = 7;
-//            l_board [1][0][2][2] = 0;
+//            l_board [1][0][0][0] = "6";
+//            l_board [1][0][0][1] = "2";
+//            l_board [1][0][0][2] = "5";
+//            l_board [1][0][1][0] = "9";
+//            l_board [1][0][1][1] = "3";
+//            l_board [1][0][1][2] = "1";
+//            l_board [1][0][2][0] = "4";
+//            l_board [1][0][2][1] = "7";
+//            l_board [1][0][2][2] = "8";
 //            //Block #5
-//            l_board [1][1][0][0] = 0;
-//            l_board [1][1][0][1] = 9;
-//            l_board [1][1][0][2] = 7;
-//            l_board [1][1][1][0] = 0;
-//            l_board [1][1][1][1] = 0;
-//            l_board [1][1][1][2] = 0;
-//            l_board [1][1][2][0] = 5;
-//            l_board [1][1][2][1] = 0;
-//            l_board [1][1][2][2] = 1;
+//            l_board [1][1][0][0] = "8";
+//            l_board [1][1][0][1] = "9";
+//            l_board [1][1][0][2] = "7";
+//            l_board [1][1][1][0] = "4";
+//            l_board [1][1][1][1] = "2";
+//            l_board [1][1][1][2] = "6";
+//            l_board [1][1][2][0] = "5";
+//            l_board [1][1][2][1] = "3";
+//            l_board [1][1][2][2] = "1";
 //            //Block #6
-//            l_board [1][2][0][0] = 3;
-//            l_board [1][2][0][1] = 0;
-//            l_board [1][2][0][2] = 0;
-//            l_board [1][2][1][0] = 0;
-//            l_board [1][2][1][1] = 5;
-//            l_board [1][2][1][2] = 0;
-//            l_board [1][2][2][0] = 9;
-//            l_board [1][2][2][1] = 0;
-//            l_board [1][2][2][2] = 6;
+//            l_board [1][2][0][0] = "3";
+//            l_board [1][2][0][1] = "4";
+//            l_board [1][2][0][2] = "1";
+//            l_board [1][2][1][0] = "8";
+//            l_board [1][2][1][1] = "5";
+//            l_board [1][2][1][2] = "7";
+//            l_board [1][2][2][0] = "9";
+//            l_board [1][2][2][1] = "2";
+//            l_board [1][2][2][2] = "6";
 //            //Block #7
-//            l_board [2][0][0][0] = 1;
-//            l_board [2][0][0][1] = 0;
-//            l_board [2][0][0][2] = 0;
-//            l_board [2][0][1][0] = 0;
-//            l_board [2][0][1][1] = 5;
-//            l_board [2][0][1][2] = 0;
-//            l_board [2][0][2][0] = 0;
-//            l_board [2][0][2][1] = 4;
-//            l_board [2][0][2][2] = 2;
+//            l_board [2][0][0][0] = "1";
+//            l_board [2][0][0][1] = "6";
+//            l_board [2][0][0][2] = "7";
+//            l_board [2][0][1][0] = "8";
+//            l_board [2][0][1][1] = "5";
+//            l_board [2][0][1][2] = "9";
+//            l_board [2][0][2][0] = "3";
+//            l_board [2][0][2][1] = "4";
+//            l_board [2][0][2][2] = "2";
 //            //Block #8
-//            l_board [2][1][0][0] = 2;
-//            l_board [2][1][0][1] = 0;
-//            l_board [2][1][0][2] = 3;
-//            l_board [2][1][1][0] = 0;
-//            l_board [2][1][1][1] = 0;
-//            l_board [2][1][1][2] = 0;
-//            l_board [2][1][2][0] = 0;
-//            l_board [2][1][2][1] = 8;
-//            l_board [2][1][2][2] = 9;
+//            l_board [2][1][0][0] = "2";
+//            l_board [2][1][0][1] = "5";
+//            l_board [2][1][0][2] = "3";
+//            l_board [2][1][1][0] = "7";
+//            l_board [2][1][1][1] = "6";
+//            l_board [2][1][1][2] = "4";
+//            l_board [2][1][2][0] = "1";
+//            l_board [2][1][2][1] = "8";
+//            l_board [2][1][2][2] = "9";
 //            //Block #9
-//            l_board [2][2][0][0] = 0;
-//            l_board [2][2][0][1] = 0;
-//            l_board [2][2][0][2] = 8;
-//            l_board [2][2][1][0] = 0;
-//            l_board [2][2][1][1] = 3;
-//            l_board [2][2][1][2] = 0;
-//            l_board [2][2][2][0] = 7;
-//            l_board [2][2][2][1] = 0;
-//            l_board [2][2][2][2] = 5;
+//            l_board [2][2][0][0] = "4";
+//            l_board [2][2][0][1] = "9";
+//            l_board [2][2][0][2] = "8";
+//            l_board [2][2][1][0] = "1";
+//            l_board [2][2][1][1] = "3";
+//            l_board [2][2][1][2] = "2";
+//            l_board [2][2][2][0] = "7";
+//            l_board [2][2][2][1] = "6";
+//            l_board [2][2][2][2] = "5";
 //
 //            return l_board;
-        }
+    }
     
     
     

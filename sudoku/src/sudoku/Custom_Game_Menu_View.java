@@ -7,14 +7,20 @@ Class Description: Representation of the sudoku Main Menu.
 
 public class Custom_Game_Menu_View extends Menu_View 
 {
-
+/**************************
+        CONSTRUCTORS:
+***************************/    
     public Custom_Game_Menu_View() 
             // default constructor
         {
             super(Custom_Game_Menu_View.menu_items);
             get_player_input();
         } 
-
+    
+    
+/**************************
+       BASIC METHODS:
+***************************/    
     @Override
     public void get_player_input()
             //Display the main menu and get the player's input
@@ -50,7 +56,11 @@ public class Custom_Game_Menu_View extends Menu_View
             while (!l_command.equals("X"));
             return;
         }
+
     
+/**************************
+        CONSTANTS:
+***************************/    
     private Custom_Game_Menu_Control internal_custom_game_menu_control = new Custom_Game_Menu_Control();
             // Internal instance of Main_Menu_Control
     
