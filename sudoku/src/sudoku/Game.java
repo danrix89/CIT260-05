@@ -21,15 +21,11 @@ public class Game implements java.io.Serializable
         CONSTRUCTORS:
 ***************************/
     public Game(String a_name)
-            // Creates a brand version of Current.
+            // Creates a brand new version of Current.
         {
             player = new Player();
             player.set_name(a_name);
-            //print("\n\tYour player name has been set to: " + a_name);
-            
             board = new Board();
-            //new Player_Input_View(this);
-            //check_for_winner();
         }
     
     public Game(Game a_loaded_game)
@@ -38,8 +34,6 @@ public class Game implements java.io.Serializable
             player = a_loaded_game.player;
             board = a_loaded_game.board;
             board.display();
-            new Player_Input_View(this);
-            check_for_winner();
         }
     
     
@@ -49,19 +43,6 @@ public class Game implements java.io.Serializable
     String file_name;
     Board board;
     Player player;
-
-    private void check_for_winner()
-            // Checks to see if the board is a winner.
-        {
-            if(board.is_winner())
-                {
-                    print(
-                            "\n\n\t**************************************" +
-                            "\n\n\t************** YOU WON! **************" +
-                            "\n\n\t**************************************"
-                            );
-                }
-        }
 
     
 /**************************
@@ -90,12 +71,6 @@ public class Game implements java.io.Serializable
             // Makes a call to set_cell.
         {
             board.set_cell(Y, X, y, x, a_number);
-        }
-    
-    public void display_board()
-            // Makes a call to display the board.
-        {
-            board.display();
         }
 
     

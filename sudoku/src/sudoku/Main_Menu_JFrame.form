@@ -24,17 +24,16 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="main_menu_label" pref="200" max="32767" attributes="0"/>
-                  <Component id="new_game_button" max="32767" attributes="0"/>
-                  <Component id="load_game_button" alignment="0" max="32767" attributes="0"/>
-                  <Component id="help_menu_button" alignment="0" max="32767" attributes="0"/>
-                  <Component id="exit_game_button" max="32767" attributes="0"/>
-                  <Component id="sudoku_label" alignment="0" pref="200" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="sudoku_label" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="main_menu_label" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="new_game_button" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="load_game_button" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="exit_game_button" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="50" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,17 +42,15 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="sudoku_label" min="-2" pref="59" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="main_menu_label" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="new_game_button" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="load_game_button" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="help_menu_button" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Component id="exit_game_button" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="57" max="32767" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,15 +72,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="load_game_buttonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="java.awt.Button" name="help_menu_button">
-      <Properties>
-        <Property name="label" type="java.lang.String" value="Help Menu"/>
-      </Properties>
-    </Component>
     <Component class="java.awt.Button" name="exit_game_button">
       <Properties>
         <Property name="label" type="java.lang.String" value="Exit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exit_game_buttonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="java.awt.Label" name="sudoku_label">
       <Properties>

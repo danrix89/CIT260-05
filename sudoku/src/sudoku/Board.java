@@ -168,7 +168,7 @@ public class Board implements java.io.Serializable
                                 {
                                     for (int x=0; x<=2; x++)
                                         {
-                                            if (four_dimensional_playable[Y][X][y][x] == four_dimensional_solution[Y][X][y][x])
+                                            if (four_dimensional_playable[Y][X][y][x].equals(four_dimensional_solution[Y][X][y][x]))
                                                 {
                                                     l_result = true;
                                                 }
@@ -411,8 +411,8 @@ public class Board implements java.io.Serializable
 /************* THE COMMENTED OUT CODE BELOW IS A SUBSTITUTE FOR THE ABOVE CODE
  ************* WHICH GIVES A BOARD THAT IS 1 CELL AWAY FROM A WINNER. THIS CAN
  ************* BE USED FOR TESTING OR PRESENTATION PURPOSES*/
-//            //Block #1
-//            l_board [0][0][0][0] = "2";
+            //Block #1
+//            l_board [0][0][0][0] = "";
 //            l_board [0][0][0][1] = "9";
 //            l_board [0][0][0][2] = "6";
 //            l_board [0][0][1][0] = "5";

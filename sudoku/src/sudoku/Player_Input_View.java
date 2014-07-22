@@ -139,7 +139,6 @@ public class Player_Input_View extends Menu_View
             while (l_command.equals("") || Integer.parseInt(l_number)<1 || Integer.parseInt(l_number)>9);
                        
             game.set_cell(l_block[0], l_block[1], l_cell[0], l_cell[1], l_number);
-            game.display_board();
         }
     
     private void set_user_specified_file_name()

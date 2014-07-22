@@ -28,7 +28,6 @@ public class Main_Menu_JFrame extends javax.swing.JFrame {
 
         new_game_button = new java.awt.Button();
         load_game_button = new java.awt.Button();
-        help_menu_button = new java.awt.Button();
         exit_game_button = new java.awt.Button();
         sudoku_label = new java.awt.Label();
         main_menu_label = new java.awt.Label();
@@ -50,9 +49,12 @@ public class Main_Menu_JFrame extends javax.swing.JFrame {
             }
         });
 
-        help_menu_button.setLabel("Help Menu");
-
         exit_game_button.setLabel("Exit");
+        exit_game_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit_game_buttonActionPerformed(evt);
+            }
+        });
 
         sudoku_label.setAlignment(java.awt.Label.CENTER);
         sudoku_label.setFont(new java.awt.Font("Impact", 2, 24)); // NOI18N
@@ -69,32 +71,29 @@ public class Main_Menu_JFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(main_menu_label, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(new_game_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(load_game_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(help_menu_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(exit_game_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sudoku_label, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sudoku_label, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(main_menu_label, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(new_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(load_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exit_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sudoku_label, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(main_menu_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(new_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(load_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(help_menu_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exit_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         pack();
@@ -103,19 +102,22 @@ public class Main_Menu_JFrame extends javax.swing.JFrame {
     private void load_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_load_game_buttonActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Load_Game_Dialog_JFrame().setVisible(true);
+                new Load_Game_Dialog().setVisible(true);
             }
         });
     }//GEN-LAST:event_load_game_buttonActionPerformed
 
     private void new_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_game_buttonActionPerformed
-        // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Game_JFrame_1().setVisible(true);
             }
         });
     }//GEN-LAST:event_new_game_buttonActionPerformed
+
+    private void exit_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit_game_buttonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exit_game_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,7 +158,6 @@ public class Main_Menu_JFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button exit_game_button;
-    private java.awt.Button help_menu_button;
     private java.awt.Button load_game_button;
     private java.awt.Label main_menu_label;
     private java.awt.Button new_game_button;
