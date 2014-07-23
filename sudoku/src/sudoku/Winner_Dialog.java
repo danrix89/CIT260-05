@@ -1,5 +1,8 @@
 package sudoku;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 public class Winner_Dialog extends javax.swing.JFrame 
 {
 
@@ -10,6 +13,8 @@ public class Winner_Dialog extends javax.swing.JFrame
     public Winner_Dialog() 
         {
             initComponents();
+            Dimension l_dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setLocation(l_dimension.width/2-this.getSize().width/2, l_dimension.height/2-this.getSize().height/2);
         }
     
     

@@ -1,4 +1,6 @@
 package sudoku;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,9 +15,13 @@ public class Load_Game_Dialog extends javax.swing.JFrame
 /**************************
        CONSTRUCTORS:
 ***************************/
-    public Load_Game_Dialog() 
+
+    public Load_Game_Dialog(javax.swing.JFrame a_parent_frame) 
         {
             initComponents();
+            Dimension l_dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setLocation(l_dimension.width/2-this.getSize().width/2, l_dimension.height/2-this.getSize().height/2);
+            parent_frame = a_parent_frame;
         }
 
     
@@ -28,7 +34,7 @@ public class Load_Game_Dialog extends javax.swing.JFrame
 
         jFileChooser1 = new javax.swing.JFileChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Larry\\Documents\\NetBeansProjects\\CIT260-05\\sudoku"));
         jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +66,7 @@ public class Load_Game_Dialog extends javax.swing.JFrame
             {
                 Logger.getLogger(Load_Game_Dialog.class.getName()).log(Level.SEVERE, null, ex);
             }
+        parent_frame.dispose();
         this.dispose();
     }//GEN-LAST:event_jFileChooser1ActionPerformed
 
@@ -104,6 +111,7 @@ public class Load_Game_Dialog extends javax.swing.JFrame
     private Game game;
     boolean save_game;
     String file_name;
+    javax.swing.JFrame parent_frame;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;
     // End of variables declaration//GEN-END:variables

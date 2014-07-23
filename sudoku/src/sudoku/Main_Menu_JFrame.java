@@ -1,5 +1,8 @@
 package sudoku;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 public class Main_Menu_JFrame extends javax.swing.JFrame 
 {
 /**************************
@@ -8,6 +11,8 @@ public class Main_Menu_JFrame extends javax.swing.JFrame
     public Main_Menu_JFrame() 
         {
             initComponents();
+            Dimension l_dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setLocation(l_dimension.width/2-this.getSize().width/2, l_dimension.height/2-this.getSize().height/2);
         }
 
 /**************************
@@ -90,12 +95,12 @@ public class Main_Menu_JFrame extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void load_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_load_game_buttonActionPerformed
+        final Main_Menu_JFrame l_menu_frame = this;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Load_Game_Dialog().setVisible(true);
+                new Load_Game_Dialog(l_menu_frame).setVisible(true);
             }
         });
-        this.dispose();
     }//GEN-LAST:event_load_game_buttonActionPerformed
 
     private void new_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_game_buttonActionPerformed

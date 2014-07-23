@@ -1,4 +1,6 @@
 package sudoku;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,6 +20,8 @@ public class Save_Game_Dialog extends javax.swing.JFrame
         {
             initComponents();
             game = a_game;
+            Dimension l_dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setLocation(l_dimension.width/2-this.getSize().width/2, l_dimension.height/2-this.getSize().height/2);
         }
     
     
@@ -30,14 +34,14 @@ public class Save_Game_Dialog extends javax.swing.JFrame
 
         jFileChooser1 = new javax.swing.JFileChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         jFileChooser1.setApproveButtonText("Save");
         jFileChooser1.setApproveButtonToolTipText("Save your sudoku game");
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Larry\\Documents\\NetBeansProjects\\CIT260-05\\sudoku"));
         jFileChooser1.setDialogTitle("Save Your Sudoku Game");
-        jFileChooser1.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0\\.game"));
+        jFileChooser1.setSelectedFile(new java.io.File("C:\\Program Files\\NetBeans 8.0\\.game"));
         jFileChooser1.setToolTipText("");
         jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
