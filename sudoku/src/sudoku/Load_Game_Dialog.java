@@ -80,7 +80,7 @@ public class Load_Game_Dialog extends javax.swing.JFrame
 
                         Game l_loaded_game = (Game)l_input_stream.readObject();                            
 
-                        new Game_JFrame_1(l_loaded_game).setVisible(true);
+                        new Game_JFrame(l_loaded_game).setVisible(true);
                     }
                     catch (FileNotFoundException l_error)
                         {

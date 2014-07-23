@@ -1,18 +1,18 @@
 package sudoku;
 
-public class Game_JFrame_1 extends javax.swing.JFrame 
+public class Game_JFrame extends javax.swing.JFrame 
 {
 /**************************
         CONSTRUCTORS:
 ***************************/
-    public Game_JFrame_1() 
+    public Game_JFrame() 
         {
             initComponents();
             game = new Game("NAME_OF_PLAYER_NEEDS_TO_GO_HERE"); // A New_Game_Dialog should be created to get the player's name.
             display_board_values();
         }
 
-    public Game_JFrame_1(Game a_game) 
+    public Game_JFrame(Game a_game) 
         {
             initComponents();
             game = a_game;
@@ -26,6 +26,10 @@ public class Game_JFrame_1 extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        help_dialog = new javax.swing.JDialog();
+        help_dialog_text_pane = new javax.swing.JScrollPane();
+        help_dialog_text_area = new javax.swing.JTextArea();
+        help_dialog_label = new javax.swing.JLabel();
         b1_c1 = new java.awt.Label();
         b1_c2 = new java.awt.Label();
         b1_c3 = new java.awt.Label();
@@ -147,8 +151,50 @@ public class Game_JFrame_1 extends javax.swing.JFrame
         file_option = new javax.swing.JMenu();
         new_game_menu_item = new javax.swing.JMenuItem();
         save_game_menu_item = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        load_game_menu_item = new javax.swing.JMenuItem();
         help_option = new javax.swing.JMenu();
+        rules_help_menu_item = new javax.swing.JMenuItem();
+        board_help_menu_item = new javax.swing.JMenuItem();
+        difficulty_help_menu_item = new javax.swing.JMenuItem();
+        scoring_help_menu_item = new javax.swing.JMenuItem();
+
+        help_dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        help_dialog.setTitle("Sudoku: Help");
+        help_dialog.setAlwaysOnTop(true);
+        help_dialog.setMaximumSize(new java.awt.Dimension(250, 275));
+        help_dialog.setMinimumSize(new java.awt.Dimension(250, 275));
+        help_dialog.setModal(true);
+        help_dialog.setName("help_dialog"); // NOI18N
+        help_dialog.setResizable(false);
+
+        help_dialog_text_area.setEditable(false);
+        help_dialog_text_area.setColumns(20);
+        help_dialog_text_area.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        help_dialog_text_area.setLineWrap(true);
+        help_dialog_text_area.setRows(5);
+        help_dialog_text_area.setWrapStyleWord(true);
+        help_dialog_text_area.setFocusable(false);
+        help_dialog_text_area.setVerifyInputWhenFocusTarget(false);
+        help_dialog_text_pane.setViewportView(help_dialog_text_area);
+
+        help_dialog_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        help_dialog_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        help_dialog_label.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout help_dialogLayout = new javax.swing.GroupLayout(help_dialog.getContentPane());
+        help_dialog.getContentPane().setLayout(help_dialogLayout);
+        help_dialogLayout.setHorizontalGroup(
+            help_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(help_dialog_text_pane, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(help_dialog_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        help_dialogLayout.setVerticalGroup(
+            help_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(help_dialogLayout.createSequentialGroup()
+                .addComponent(help_dialog_label, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(help_dialog_text_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 204, 255));
@@ -725,18 +771,51 @@ public class Game_JFrame_1 extends javax.swing.JFrame
         });
         file_option.add(save_game_menu_item);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Load Game");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        load_game_menu_item.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        load_game_menu_item.setText("Load Game");
+        load_game_menu_item.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                load_game_menu_itemActionPerformed(evt);
             }
         });
-        file_option.add(jMenuItem1);
+        file_option.add(load_game_menu_item);
 
         game_menu_bar.add(file_option);
 
         help_option.setText("Help");
+
+        rules_help_menu_item.setText("Rules");
+        rules_help_menu_item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rules_help_menu_itemActionPerformed(evt);
+            }
+        });
+        help_option.add(rules_help_menu_item);
+
+        board_help_menu_item.setText("Board");
+        board_help_menu_item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                board_help_menu_itemActionPerformed(evt);
+            }
+        });
+        help_option.add(board_help_menu_item);
+
+        difficulty_help_menu_item.setText("Difficulty");
+        difficulty_help_menu_item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                difficulty_help_menu_itemActionPerformed(evt);
+            }
+        });
+        help_option.add(difficulty_help_menu_item);
+
+        scoring_help_menu_item.setText("Scoring");
+        scoring_help_menu_item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scoring_help_menu_itemActionPerformed(evt);
+            }
+        });
+        help_option.add(scoring_help_menu_item);
+
         game_menu_bar.add(help_option);
 
         setJMenuBar(game_menu_bar);
@@ -1377,14 +1456,38 @@ public class Game_JFrame_1 extends javax.swing.JFrame
         });
     }//GEN-LAST:event_save_game_menu_itemActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void load_game_menu_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_load_game_menu_itemActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Load_Game_Dialog().setVisible(true);
             }
         });
         this.dispose();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_load_game_menu_itemActionPerformed
+
+    private void rules_help_menu_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rules_help_menu_itemActionPerformed
+        help_dialog_label.setText("Rules of Sudoku:");
+        help_dialog_text_area.setText("Fill in each cell with the numbers 1-9, ensuring that teach row, column, and 3x3 block has no duplicates. Each row should have it's own set of numbers starting from 1 going to 9 without duplicates. Each column and 3x3 block should do the same. There is only one solution for each game.");
+        help_dialog.show();
+    }//GEN-LAST:event_rules_help_menu_itemActionPerformed
+
+    private void board_help_menu_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_board_help_menu_itemActionPerformed
+        help_dialog_label.setText("The Sudoku board:");
+        help_dialog_text_area.setText("Cells - Individual boxes that you place a number into. \nRows - Set of nine cells going horizontally across the board. \nColumns - Set of nine cells going vertically across the board. \nBlocks - 3x3 set of cells \"blocked\" together. There are nine of each, all holding the numbers 1-9 with no duplicates.");
+        help_dialog.show();
+    }//GEN-LAST:event_board_help_menu_itemActionPerformed
+
+    private void difficulty_help_menu_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_difficulty_help_menu_itemActionPerformed
+        help_dialog_label.setText("Difficulty Types:");
+        help_dialog_text_area.setText("Easy: 25 cells are prefilled at the beginning of the game with 3 hints. Medium: 20 cells are prefilled at the beginning of the game with 2 hints. Hard: 10 cells are prefilled at the beginning of the game with 1 hint.");
+        help_dialog.show();
+    }//GEN-LAST:event_difficulty_help_menu_itemActionPerformed
+
+    private void scoring_help_menu_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoring_help_menu_itemActionPerformed
+        help_dialog_label.setText("High Scores:");
+        help_dialog_text_area.setText("First, scoring is calculated by how long it takes a player to complete a game. A high score is achieved when a player completes a board with less time than the three previous high scores. There also three categories of high scores depending on dificulty of the game played.");
+        help_dialog.show();
+    }//GEN-LAST:event_scoring_help_menu_itemActionPerformed
 
 
 /**************************
@@ -1607,6 +1710,7 @@ public class Game_JFrame_1 extends javax.swing.JFrame
     private java.awt.Button block_button_9;
     private java.awt.TextField block_field;
     private java.awt.Label block_label;
+    private javax.swing.JMenuItem board_help_menu_item;
     private java.awt.Button cell_button_1;
     private java.awt.Button cell_button_2;
     private java.awt.Button cell_button_3;
@@ -1618,13 +1722,20 @@ public class Game_JFrame_1 extends javax.swing.JFrame
     private java.awt.Button cell_button_9;
     private java.awt.TextField cell_field;
     private java.awt.Label cell_label;
+    private javax.swing.JMenuItem difficulty_help_menu_item;
     private javax.swing.JMenu file_option;
     private javax.swing.JMenuBar game_menu_bar;
+    private javax.swing.JDialog help_dialog;
+    private javax.swing.JLabel help_dialog_label;
+    private javax.swing.JTextArea help_dialog_text_area;
+    private javax.swing.JScrollPane help_dialog_text_pane;
     private javax.swing.JMenu help_option;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem load_game_menu_item;
     private javax.swing.JLabel message_label;
     private javax.swing.JMenuItem new_game_menu_item;
+    private javax.swing.JMenuItem rules_help_menu_item;
     private javax.swing.JMenuItem save_game_menu_item;
+    private javax.swing.JMenuItem scoring_help_menu_item;
     private javax.swing.JButton set_value_button;
     private javax.swing.JButton set_value_button1;
     private java.awt.Button value_button_1;

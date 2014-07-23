@@ -24,7 +24,7 @@ public class Main_Menu_Control
             //Game_View l_game = new Game_View();
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    new Game_JFrame_1().setVisible(true);
+                    new Game_JFrame().setVisible(true);
                 }
             });
 

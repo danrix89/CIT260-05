@@ -101,7 +101,7 @@ public class Main_Menu_JFrame extends javax.swing.JFrame
     private void new_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_game_buttonActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Game_JFrame_1().setVisible(true);
+                new Game_JFrame().setVisible(true);
             }
         });
         this.dispose();
