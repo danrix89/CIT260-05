@@ -1,4 +1,5 @@
-package sudoku;
+package GUI;
+import MODEL.Game;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
@@ -7,8 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Scanner;
-import static sudoku.Menu_View.print;
 
 
 public class Save_Game_Dialog extends javax.swing.JFrame 
@@ -41,7 +40,7 @@ public class Save_Game_Dialog extends javax.swing.JFrame
         jFileChooser1.setApproveButtonToolTipText("Save your sudoku game");
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\Users\\Larry\\Documents\\NetBeansProjects\\CIT260-05\\sudoku"));
         jFileChooser1.setDialogTitle("Save Your Sudoku Game");
-        jFileChooser1.setSelectedFile(new java.io.File("C:\\Program Files\\NetBeans 8.0\\.game"));
+        jFileChooser1.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0\\.game"));
         jFileChooser1.setToolTipText("");
         jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

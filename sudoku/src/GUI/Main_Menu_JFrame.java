@@ -1,4 +1,4 @@
-package sudoku;
+package GUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

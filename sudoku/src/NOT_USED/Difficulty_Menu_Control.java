@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
-package sudoku;
+package NOT_USED;
 
 /**
  *
- * @author drix
+ * @author Larry
  */
-class Jframe {
+public class Difficulty_Menu_Control 
+{
     
 }

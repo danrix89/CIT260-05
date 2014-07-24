@@ -1,5 +1,5 @@
 
-package sudoku;
+package NOT_USED;
 
 import java.util.Scanner;
 

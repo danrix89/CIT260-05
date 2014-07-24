@@ -1,5 +1,6 @@
-package sudoku;
+package GUI;
 
+import MODEL.Game;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -13,8 +14,8 @@ public class Game_JFrame extends javax.swing.JFrame
             initComponents();
             game = new Game("NAME_OF_PLAYER_NEEDS_TO_GO_HERE"); // A New_Game_Dialog should be created to get the player's name.
             display_board_values();
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+            Dimension l_dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setLocation(l_dimension.width/2-this.getSize().width/2, l_dimension.height/2-this.getSize().height/2);
         }
 
     public Game_JFrame(Game a_game) 
@@ -22,8 +23,8 @@ public class Game_JFrame extends javax.swing.JFrame
             initComponents();
             game = a_game;
             display_board_values();
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);            
+            Dimension l_dimension = Toolkit.getDefaultToolkit().getScreenSize();
+            this.setLocation(l_dimension.width/2-this.getSize().width/2, l_dimension.height/2-this.getSize().height/2);            
         }
     
 /**************************
@@ -767,6 +768,11 @@ public class Game_JFrame extends javax.swing.JFrame
 
         new_game_menu_item.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         new_game_menu_item.setText("New Game");
+        new_game_menu_item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                new_game_menu_itemActionPerformed(evt);
+            }
+        });
         file_option.add(new_game_menu_item);
 
         save_game_menu_item.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
@@ -975,7 +981,7 @@ public class Game_JFrame extends javax.swing.JFrame
                             .addComponent(b3_c3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(b3_c9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(b3_c6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -1421,7 +1427,7 @@ public class Game_JFrame extends javax.swing.JFrame
                 game.set_cell(Y, X, y, x, (value_field.getText()));
                 display_board_values(); // Repaints the labels for the board
                 clear_user_values();
-                if(game.board.is_winner())
+                if(game.is_winner())
                     {
                         java.awt.EventQueue.invokeLater(new Runnable() {
                            public void run() {
@@ -1450,10 +1456,10 @@ public class Game_JFrame extends javax.swing.JFrame
     }//GEN-LAST:event_save_game_menu_itemActionPerformed
 
     private void load_game_menu_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_load_game_menu_itemActionPerformed
-        final Game_JFrame l_game_frame = this;
+        final Game_JFrame l_parent_frame = this;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Load_Game_Dialog(l_game_frame).setVisible(true);
+                new Load_Game_Dialog(l_parent_frame).setVisible(true);
             }
         });
     }//GEN-LAST:event_load_game_menu_itemActionPerformed
@@ -1490,6 +1496,15 @@ public class Game_JFrame extends javax.swing.JFrame
         help_dialog.setLocation(l_dimension.width/2-this.getSize().width/2, l_dimension.height/2-this.getSize().height/2);
         help_dialog.show();
     }//GEN-LAST:event_scoring_help_menu_itemActionPerformed
+
+    private void new_game_menu_itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_game_menu_itemActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Game_JFrame().setVisible(true);
+            }
+        });
+        this.dispose();
+    }//GEN-LAST:event_new_game_menu_itemActionPerformed
 
 
 /**************************

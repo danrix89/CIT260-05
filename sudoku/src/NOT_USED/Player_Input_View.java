@@ -1,4 +1,5 @@
-package sudoku;
+package NOT_USED;
+import MODEL.Game;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

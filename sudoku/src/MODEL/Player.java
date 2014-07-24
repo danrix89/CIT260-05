@@ -1,4 +1,4 @@
-package sudoku;
+package MODEL;
 
 /*
 Class Description: Representation of the Sudoku Game Player.
@@ -10,7 +10,6 @@ public class Player implements java.io.Serializable
      INSTANCE VARIABLES:
 ***************************/   
     String name;
-            // Name of Current.
 
     
 /**************************

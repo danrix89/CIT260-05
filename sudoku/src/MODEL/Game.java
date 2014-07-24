@@ -1,15 +1,5 @@
-package sudoku;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+package MODEL;
 import java.io.Serializable;
-import java.text.DateFormat;
 
 /*
 Class Description: Representation of a sudoku game.
@@ -31,9 +21,8 @@ public class Game implements java.io.Serializable
     public Game(Game a_loaded_game)
             // Creates a loaded version of Current.
         {
-            player = a_loaded_game.player;
-            board = a_loaded_game.board;
-            board.display();
+            set_player(a_loaded_game.player);
+            set_board(a_loaded_game.board);
         }
     
     
@@ -41,9 +30,19 @@ public class Game implements java.io.Serializable
     INSTANCE VARIABLES:
 ***************************/    
     String file_name;
-    Board board;
+    public Board board;
     Player player;
 
+
+/**************************
+         SETTINGS:
+***************************/
+    public boolean is_winner()
+            //
+        {
+            return board.is_winner();
+        }
+    
     
 /**************************
          SETTINGS:

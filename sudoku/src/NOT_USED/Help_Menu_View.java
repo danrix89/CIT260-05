@@ -1,23 +1,23 @@
-package sudoku;
+package NOT_USED;
 import java.util.Scanner;
 
 /*
-Class Description: Representation of the sudoku difficulty menu.
+Class Description: Representation of the Help Menu interface.
 */
 
-public final class Difficulty_Menu_View extends Menu_View
+public class Help_Menu_View extends Menu_View
 {
-    
+
 /**************************
         CONSTRUCTORS:
 ***************************/    
-    public Difficulty_Menu_View() 
+    public Help_Menu_View() 
             // default constructor
-        {   
-            super(Difficulty_Menu_View.menu_items);
-            get_player_input();  
+        {
+            super(Help_Menu_View.menu_items);
+            get_player_input();
         } 
-
+    
     
 /**************************
         BASIC METHODS:
@@ -35,15 +35,18 @@ public final class Difficulty_Menu_View extends Menu_View
                 l_command = l_command.trim().toUpperCase();
                 switch (l_command) 
                     {
-                    case "A":
-                        // internal_game.set_difficulty
+                    case "R":
+                        this.internal_help_menu.display_rules();
                         break;
                     case "B":
-                        // internal_game.set_difficulty
+                        this.internal_help_menu.display_board_help();
                         break;
-                    case "C":
-                        // internal_game.set_difficulty
-                        break;
+                    case "D":
+                        this.internal_help_menu.display_difficulty_help();
+                        break;                  
+                    case "S":
+                        this.internal_help_menu.display_scoring_help();
+                        break; 
                     case "X": 
                         break;
                     default: 
@@ -54,18 +57,20 @@ public final class Difficulty_Menu_View extends Menu_View
             while (!l_command.equals("X"));
             return;
         }    
- 
+    
     
 /**************************
         CONSTANTS:
 ***************************/    
+    private Help_Menu_Control internal_help_menu = new Help_Menu_Control();
+            // Internal instance of Help_Menu_Control
+    
     public final static String[][] menu_items = {
-                                                    {"A", "25 cells are prefilled with 3 hints"},
-                                                    {"B", "20 cells are prefilled with 2 hints"}, 
-                                                    {"C", "10 cells are prefilled with 1 hints"},
+                                                    {"R", "Rules of Sudoku"},
+                                                    {"B", "Board layout"}, 
+                                                    {"D", "Difficulty definitions"},
+                                                    {"S", "Scoring in Sudoku"},        
                                                     {"X", "Exit Menu"}        
                                                  };
 
 }
-
-

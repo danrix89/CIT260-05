@@ -1,4 +1,5 @@
-package sudoku;
+package GUI;
+import MODEL.Game;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.FileInputStream;

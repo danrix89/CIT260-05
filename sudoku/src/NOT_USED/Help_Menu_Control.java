@@ -1,4 +1,4 @@
-package sudoku;
+package NOT_USED;
 
 /*
 Class Description: Representation of the sudoku Help Menu controls.

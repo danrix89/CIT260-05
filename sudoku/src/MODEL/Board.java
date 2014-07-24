@@ -1,4 +1,4 @@
-package sudoku;
+package MODEL;
 
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
@@ -81,13 +81,11 @@ public class Board implements java.io.Serializable
 /**************************
     INSTANCE VARIABLES:
 ***************************/
-    String [][][][] four_dimensional_solution;
+    public String [][][][] four_dimensional_solution;
             // Four dimensional version of the solution Board.
     
-    String [][][][] four_dimensional_playable;
+    public String [][][][] four_dimensional_playable;
             // Four dimensional version of the playable Board.
-    
-    int difficulty = 5;
     
 /**************************
          SETTINGS:
@@ -107,41 +105,7 @@ public class Board implements java.io.Serializable
 
 /**************************
           BASIC:
-***************************/
-    public void display()
-            // Displays the board.
-                {            
-            for(int Y=0; Y<=2; Y++)
-                {
-                    print ("\n_____________________________________");
-                    for(int y=0; y<=2; y++)
-                        {
-                            print ("\n|           |           |           |\n");
-                            for(int X=0; X<=2; X++)
-                                {
-                                    for(int x=0; x<=2; x++)
-                                        {
-                                            if (x==0)
-                                                {
-                                                    print("|");
-                                                }
-                                            else
-                                                {
-                                                    print(" "); 
-                                                }
-                                            print (" " + four_dimensional_playable[Y][X][y][x] + " ");
-                                            if (X==2 && x==2)
-                                                {
-                                                    print("|");
-                                                }
-                                        }
-                                }
-                        }
-                }
-            print ("\n_____________________________________");
-            print("\n");
-        }
-    
+***************************/    
     public void set_cell(int Y, int X, int y, int x, String a_number)
             //
         {
@@ -408,101 +372,6 @@ public class Board implements java.io.Serializable
             l_board [2][2][2][2] = "5";
 
             return l_board;
-/************* THE COMMENTED OUT CODE BELOW IS A SUBSTITUTE FOR THE ABOVE CODE
- ************* WHICH GIVES A BOARD THAT IS 1 CELL AWAY FROM A WINNER. THIS CAN
- ************* BE USED FOR TESTING OR PRESENTATION PURPOSES*/
-            //Block #1
-//            l_board [0][0][0][0] = "";
-//            l_board [0][0][0][1] = "9";
-//            l_board [0][0][0][2] = "6";
-//            l_board [0][0][1][0] = "5";
-//            l_board [0][0][1][1] = "8";
-//            l_board [0][0][1][2] = "4";
-//            l_board [0][0][2][0] = "7";
-//            l_board [0][0][2][1] = "1";
-//            l_board [0][0][2][2] = "3";
-//            //Block #2
-//            l_board [0][1][0][0] = "3";
-//            l_board [0][1][0][1] = "1";
-//            l_board [0][1][0][2] = "8";
-//            l_board [0][1][1][0] = "9";
-//            l_board [0][1][1][1] = "7";
-//            l_board [0][1][1][2] = "2";
-//            l_board [0][1][2][0] = "6";
-//            l_board [0][1][2][1] = "4";
-//            l_board [0][1][2][2] = "5";
-//            //Block #3
-//            l_board [0][2][0][0] = "5";
-//            l_board [0][2][0][1] = "7";
-//            l_board [0][2][0][2] = "4";
-//            l_board [0][2][1][0] = "6";
-//            l_board [0][2][1][1] = "1";
-//            l_board [0][2][1][2] = "3";
-//            l_board [0][2][2][0] = "2";
-//            l_board [0][2][2][1] = "8";
-//            l_board [0][2][2][2] = "9";
-//            //Block #4
-//            l_board [1][0][0][0] = "6";
-//            l_board [1][0][0][1] = "2";
-//            l_board [1][0][0][2] = "5";
-//            l_board [1][0][1][0] = "9";
-//            l_board [1][0][1][1] = "3";
-//            l_board [1][0][1][2] = "1";
-//            l_board [1][0][2][0] = "4";
-//            l_board [1][0][2][1] = "7";
-//            l_board [1][0][2][2] = "8";
-//            //Block #5
-//            l_board [1][1][0][0] = "8";
-//            l_board [1][1][0][1] = "9";
-//            l_board [1][1][0][2] = "7";
-//            l_board [1][1][1][0] = "4";
-//            l_board [1][1][1][1] = "2";
-//            l_board [1][1][1][2] = "6";
-//            l_board [1][1][2][0] = "5";
-//            l_board [1][1][2][1] = "3";
-//            l_board [1][1][2][2] = "1";
-//            //Block #6
-//            l_board [1][2][0][0] = "3";
-//            l_board [1][2][0][1] = "4";
-//            l_board [1][2][0][2] = "1";
-//            l_board [1][2][1][0] = "8";
-//            l_board [1][2][1][1] = "5";
-//            l_board [1][2][1][2] = "7";
-//            l_board [1][2][2][0] = "9";
-//            l_board [1][2][2][1] = "2";
-//            l_board [1][2][2][2] = "6";
-//            //Block #7
-//            l_board [2][0][0][0] = "1";
-//            l_board [2][0][0][1] = "6";
-//            l_board [2][0][0][2] = "7";
-//            l_board [2][0][1][0] = "8";
-//            l_board [2][0][1][1] = "5";
-//            l_board [2][0][1][2] = "9";
-//            l_board [2][0][2][0] = "3";
-//            l_board [2][0][2][1] = "4";
-//            l_board [2][0][2][2] = "2";
-//            //Block #8
-//            l_board [2][1][0][0] = "2";
-//            l_board [2][1][0][1] = "5";
-//            l_board [2][1][0][2] = "3";
-//            l_board [2][1][1][0] = "7";
-//            l_board [2][1][1][1] = "6";
-//            l_board [2][1][1][2] = "4";
-//            l_board [2][1][2][0] = "1";
-//            l_board [2][1][2][1] = "8";
-//            l_board [2][1][2][2] = "9";
-//            //Block #9
-//            l_board [2][2][0][0] = "4";
-//            l_board [2][2][0][1] = "9";
-//            l_board [2][2][0][2] = "8";
-//            l_board [2][2][1][0] = "1";
-//            l_board [2][2][1][1] = "3";
-//            l_board [2][2][1][2] = "2";
-//            l_board [2][2][2][0] = "7";
-//            l_board [2][2][2][1] = "6";
-//            l_board [2][2][2][2] = "5";
-//
-//            return l_board;
     }
     
     
@@ -1259,6 +1128,40 @@ public class Board implements java.io.Serializable
 //                        }
 //                }
 //            return l_result;
+//        }
+//
+//    public void display()
+//            // Displays the board.
+//                {            
+//            for(int Y=0; Y<=2; Y++)
+//                {
+//                    print ("\n_____________________________________");
+//                    for(int y=0; y<=2; y++)
+//                        {
+//                            print ("\n|           |           |           |\n");
+//                            for(int X=0; X<=2; X++)
+//                                {
+//                                    for(int x=0; x<=2; x++)
+//                                        {
+//                                            if (x==0)
+//                                                {
+//                                                    print("|");
+//                                                }
+//                                            else
+//                                                {
+//                                                    print(" "); 
+//                                                }
+//                                            print (" " + four_dimensional_playable[Y][X][y][x] + " ");
+//                                            if (X==2 && x==2)
+//                                                {
+//                                                    print("|");
+//                                                }
+//                                        }
+//                                }
+//                        }
+//                }
+//            print ("\n_____________________________________");
+//            print("\n");
 //        }
 
 }

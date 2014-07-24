@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package sudoku;
+package NOT_USED;
 
+import MODEL.Game;
 import java.util.Scanner;
 
 /**
